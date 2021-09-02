@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="./paginaPersonale.js" charset="utf-8"></script>
+    <title>Pagina Personale</title>
+    <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
+  </head>
+  <body onload="CreatePage()" >
+     <!-- navigation -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./index.html">Home</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a id='user' onclick='pagPersonale()' class="nav-link active" aria-current="page" >User <i class="far fa-user-circle"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li style='margin-right:8em;'class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-right : 0px!important;">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <!--
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li>
+            -->
+            </ul>
+  
+            <form id='search_bar_form' class="d-flex" style=" width:60%;">
+              <input style='width:600px;display:inline-block;'class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search">
+              <button type='submit' class="search" ><i class="fas fa-search"></i></button>
+            </form>
+            <form action="./signup.html">
+            <button class='logout' id='submit' type="submit" onclick="window.localStorage.setItem('active_user', null);" >Logout <i class="fas fa-sign-out-alt"></i></button>
+          </form>
+          </div>
+        </div>
+      </nav>
+      
+      
+      <div id='containerpagPers' class="container" style='margin: 2em!important;'>
+          <div id='row1' class="row">
+              <div class="col-md-4" id="anagrafica"> 
+                <!-- anagrafica -->
+                <h5>Riepilogo Dati</h5>
+                <form id="form_anagrafica" action="" method="POST" style='width:350px;'>
+
+                </form>
+
+              </div>
+              <div class="col-md-8" id="funzionalità">
+                <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
+                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
+                    <!-- javascript -->
+                    <button style='display:block;' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
+                </div>
+                
+               
+                <div id = "div_film_preferiti" class="border border-dark rounded" style="display: none; background-color: black; color:white">
+                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Film Preferiti</h5>
+                      <!-- javascript -->
+                      <button style='display:block;margin-left:0,5em' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><a href="index.html" style='text-decoration: none;color:black'><i class="fas fa-plus"></i> Aggiungi un film</a> </button>
+
+                </div>          
+              </div>
+          </div>
+          <script>
+            type_active_user = JSON.parse(window.localStorage.getItem("active_user"));
+            // da sistemare il meccanismo 
+            if ( type_active_user==null){
+             
+              row1 = document.getElementById('row1');
+              row1.style.display='none';
+              div=document.createElement('div');
+              div.style='font-size:x-large!important';
+              a = document.createElement('a');
+              a.href='./signup.html';
+              div.innerHTML = 'Login errato ,'
+              a.innerHTML='Clicca per riprovare';
+              div.appendChild(a);
+              document.body.appendChild(div);
+              div.style='margin:3em;font-size:x-large;width:400px;'
+              
+            } else if (type_active_user.type == "venditore") {
+              document.getElementById("div_film_venduti").style.display = "";
+            } else if (type_active_user.type == "cliente") {
+              document.getElementById("div_film_preferiti").style.display = "";
+            }
+          </script>
+        
+        <!-- Modal -->
+        <div style='color: black!important;' class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Elimina Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                Sei sicuro di voler eliminare il tuo account definitivamente?<br>L'operazione è irreversibile
+                </div>
+                <div class="modal-footer">
+                  <!--
+                    C'è un modo per farlo meglio ? problema è che quando rimando la gestione a signup.html mi 
+                    si ricaricano gli utenti e risulta come se non lo avessi davvero eliminato ma solo fatto Logout
+                  -->
+                <form action="./signup.html">
+                <button id='Elimina_Account' type="submit" class="btn btn-danger" href='./signup.html' onclick="elimina_account()">Elimina Account</button>
+              </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    
+      </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
