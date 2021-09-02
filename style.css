@@ -1,0 +1,260 @@
+#titolo {width:150px;margin:5px;}
+#immagine { border-radius:15px; width:150px;}
+  #overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
+  input {
+    border-radius:10em;
+  }
+ #submit , #submit_registrazione {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center;
+  text-align:center; 
+  width:90px; 
+  height:38px; 
+  margin-top:1em;
+  margin-bottom:1em;
+  color: black;
+  background: white;
+  transition: .2s;
+  }
+  body{
+    background-color: black!important;
+    color:white!important;
+    font-weight: lighter!important;
+  }
+  .login#submit:hover  , #submit_registrazione:hover  {
+  box-shadow: 0 8px 15px rgba(120,120,120,0.9);
+  color:white;
+  background-color: #0d6efd;
+  transform: translateY(-2px);
+  }
+
+  .logout#submit:hover {
+  box-shadow: 0 8px 15px rgba(120,120,120,0.9);
+  color:white;
+  background-color: red;
+  transform: translateY(-2px);
+  }
+.search{
+  background-color: rgba(31,36,40);
+  border-color: rgb(31,36,40);
+  color:white;
+  border-radius: 2em;
+  width:40px;
+  height: 40px;
+}
+.search:hover {
+  background-color: white;
+  border-color: rgb(31,36,40);
+  color:rgb(31,36,40);
+}
+.search_bar {
+  border-radius: 5em!important;
+  width:400px;
+}
+
+#closebtn {
+  position: relative;
+  font-size: 40px;
+  cursor: pointer;
+  color: black;
+  }
+  .overlay_recensione {
+      position: relative;
+      width: 70%;
+      height: 70%;
+      background-color: rgb(233, 233, 233);
+      border: 0.2em solid white;
+      z-index: 2;
+      margin-top: 3em;
+  }
+  @media only screen and (max-width: 900px) {
+      .overlay_recensione {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(233, 233, 233);
+      border: 0.2em solid white;
+      z-index: 2;
+      margin-top: 0em;
+      }
+  }
+  .fab {
+      font-size:25px;
+  }
+  #scroller_reg img {
+    width:325px;
+    border-radius: 0.5em;
+    box-shadow: #938888;
+    margin: 0.2em;
+  }
+ 
+  @media only screen and (max-width: 800px) {
+    #scroller_reg {
+   display:none;
+    }
+    #formRegistrazione {
+      width:450px!important;
+    }
+
+   
+
+}
+#scroller_popolari img {
+  height:200px;
+  width:140px;
+  border-color: white;
+}
+#scroller_popolari div {
+  width:8rem!important;
+  padding:0px;
+  font-size: small;
+  text-align: center;
+  
+}
+#scroller_toprated img {
+  height:200px;
+  width:140px;
+  border-color: white;
+}
+#scroller_toprated div {
+  width:8rem!important;
+  padding:0px;
+  font-size: small;
+  text-align: center;
+  
+}
+#scroller_upcoming img {
+  height:200px;
+  width:140px;
+  border-color: white;
+}
+#scroller_upcoming div {
+  width:8rem!important;
+  padding:0px;
+  font-size: small;
+  text-align: center;
+}
+#scroller_popolari1 img {
+  height:200px;
+  width:140px;
+  border-color: white;
+}
+#scroller_popolari1 div {
+  width:8rem!important;
+  padding:0px;
+  font-size: small;
+  text-align: center;
+}
+
+#trashbutton {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center!important;
+  vertical-align: center!important;
+  width:30px; 
+  height:30px; 
+  background-color: #ff0000;
+  color: white;
+  transition: .2s;
+  margin-bottom:1em;
+  margin-top:1em;
+
+}
+ #trashbutton:hover{
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.9);
+  color:white;
+  background-color: rgb(143, 8, 8);
+  transform: translateY(-2px);
+
+
+ }
+
+ #aggiungibutton {
+  border-radius: 3em;
+  border: #524f4e;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.9);
+  text-align: center!important;
+  vertical-align: center!important;
+  width:200px; 
+  height:30px; 
+  background-color: #938888;
+  color: white!important;
+  transition: .2s;
+  margin-top:1em;
+  margin-bottom: 1em;
+  margin-left: 0.5em;
+ }
+ #aggiungibutton:hover {
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.3);
+  color:black;
+  background-color: rgb(255, 255, 255);
+  transform: translateY(-2px);
+
+ }
+ #Aggiorna_Parametri {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center;
+  text-align:center; 
+  width:90px; 
+  height:38px; 
+  margin-top:1em;
+  margin-bottom:1em;
+  color: white;
+  background: #0d6efd;
+  transition: .2s;
+ }
+ #Elimina_Account {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center;
+  text-align:center; 
+  width:160px; 
+  height:38px; 
+  
+  margin-bottom:1em;
+  color: white;
+  background: #ff0000;
+  transition: .2s;
+
+
+ }
+ #Aggiorna_Parametri:hover {
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.3);
+  color:white;
+  background-color: #1555b4;
+  transform: translateY(-2px);
+ }
+
+ #Elimina_Account:hover {
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.3);
+  color:white;
+  background-color: #990505;
+  transform: translateY(-2px);
+ }
+
+#form_anagrafica input {
+  border-radius: 2em;
+}
