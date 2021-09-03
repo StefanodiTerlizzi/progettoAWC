@@ -141,8 +141,12 @@ function registrazione() {
 
 
 function init() {
-  window.localStorage.setItem("venditori", JSON.stringify(data.venditori));
-  window.localStorage.setItem("clienti", JSON.stringify(data.clienti));
+    if (window.localStorage.hasOwnProperty("venditori") && window.localStorage.hasOwnProperty("clienti")) {
+        return
+    } else {
+        window.localStorage.setItem("venditori", JSON.stringify(data.venditori));
+        window.localStorage.setItem("clienti", JSON.stringify(data.clienti));
+    }
 }
 
 function login() {
@@ -570,18 +574,39 @@ function genera_descrizione() {
         var btn_trailer = document.createElement("button");
         btn_trailer.setAttribute("type", "button");
 
-        col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
-                                '<div class="col-md-4" style="margin-top: 2em;">'+
-                                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-shopping-cart"></i> Acquista</button>'+
-                                '</div>'+
-                                '<div class="col-md-4" style="margin-top: 2em;">'+
-                                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
-                                '</div>'+
-                                '<div class="col-md-4" style="margin-top: 2em;">'+
-                                    '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti()"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button>'+
-                                '</div>'+
-                            '</div>'
 
+
+        if (window.localStorage.hasOwnProperty("active_user")) {
+            active_user = JSON.parse(window.localStorage.getItem("active_user"));
+            if (active_user.type == "venditore") {
+
+                col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
+                '<div class="col-md-4" style="margin-top: 2em;">'+
+                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-shopping-cart"></i> Acquista</button>'+
+                '</div>'+
+                '<div class="col-md-4" style="margin-top: 2em;">'+
+                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
+                '</div>'
+
+                col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
+                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiVendita()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>'
+
+            } else {
+
+                col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
+                '<div class="col-md" style="margin-top: 2em;">'+
+                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-shopping-cart"></i> Acquista</button>'+
+                '</div>'+
+                '<div class="col-md" style="margin-top: 2em;">'+
+                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
+                '</div>'
+
+                col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
+                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti()"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button></div></div>'
+
+            }
+
+        }
         
 
         
@@ -636,6 +661,17 @@ function genera_descrizione() {
 
 
 }
+
+function aggiungiVendita(){
+    id = get_from_url("id=");
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    active_user.film_vendita.push(id);
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+    
+}
+
 function aggiungiPreferiti(){
     id = get_from_url("id=");
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
