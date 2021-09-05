@@ -87,12 +87,22 @@ function cardOverlay(film) {
     title.style.fontSize='small';
     a.appendChild(title);
 
+
     var btn_el = document.createElement("button");
    // btn_el.className = "btn btn-danger";
     btn_el.setAttribute("id","trashbutton");
     btn_el.style.alignItems='center';
     btn_el.innerHTML = "<i class='fas fa-trash-alt'></i>";
-    btn_el.setAttribute("onclick", "elimina_film_venditore(this)")
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"))
+
+    if (active_user.type == "venditore" ) {
+        btn_el.setAttribute("onclick", "elimina_film_venditore(this)")
+    } else {
+        btn_el.setAttribute("onclick", "elimina_film_cliente(this)")
+    }
+
+    
     div_ov.style.textAlign='center';
     div_ov.appendChild(btn_el);
 
@@ -130,6 +140,40 @@ function elimina_film_venditore(btn) {
     window.location.reload();
 
 }
+
+function elimina_film_cliente(btn) {
+    
+    id = btn.parentNode.parentNode.id;
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    clienti = JSON.parse(window.localStorage.getItem("clienti"));
+
+
+    filtered = active_user.film_preferiti.filter(DeleteFilminArray, id);
+    active_user.film_preferiti = filtered;
+
+    for (let i = 0; i < clienti.length; i++) {
+        if (clienti[i].email == active_user.email) {
+            filtered = clienti[i].film_preferiti.filter(DeleteFilminArray, id);
+            clienti[i].film_preferiti = filtered;
+            break;
+        }
+    }
+
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    window.localStorage.setItem("clienti", JSON.stringify(clienti));
+    window.location.reload();
+
+
+    function DeleteFilminArray(idFilm) {
+    return idFilm != this;
+    }
+
+}
+
+
+
+
 // passo un film , mi crea una card per quel film 
 function createCard(film){
         card = document.createElement("div");
