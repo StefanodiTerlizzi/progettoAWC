@@ -430,56 +430,6 @@ function get(url, callback) {
   
     xhr.send();
   
-  }
-
-
-function steapi() {
-    get("https://api.themoviedb.org/3/movie/top_rated?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-       //  scroller = document.getElementById("scroller_film");
-        
-        for ( i = 0 ; i<response.results.length; i++){
-
-            film = response.results[i];
-            console.log(film);
-
-           /* card = document.createElement("div");
-            card.className = "card";
-            card.style = "width: 18rem; display:inline-block;";
-
-
-            immagine_link = document.createElement("a");
-            immagine_link.setAttribute("href","./film_description.html?id="+ film.id);
-            
-
-            image = document.createElement("img");
-            image.src="https://www.themoviedb.org/t/p/original"+ film.poster_path;
-            image.className = "card-img-top";
-            image.style="border-radius:15px;"
-
-            immagine_link.appendChild(image);
-          
-
-            card.appendChild(immagine_link);
-            
-            div_card = document.createElement("div");
-            div_card.className="card-body";
-            div_card.style="heigth:200px;!important"
-            
-            title = document.createElement("h7");
-            title.className = "card-title";
-            title.innerHTML = film.original_title;
-            div_card.appendChild(title);
-
-            card.appendChild(div_card);
-
-            scroller.appendChild(card);
-            */
-        
-        
-        }
-    
-        
-    });
 }
 
 //gerazione pagina descrizione
@@ -578,6 +528,7 @@ function genera_descrizione() {
 
         if (window.localStorage.hasOwnProperty("active_user")) {
             active_user = JSON.parse(window.localStorage.getItem("active_user"));
+
             if (active_user.type == "venditore") {
 
                 col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
@@ -588,8 +539,16 @@ function genera_descrizione() {
                     '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
                 '</div>'
 
-                col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
+
+                if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
+                    col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
                 '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiVendita()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>'
+                } else {
+                    col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
+                '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già in vendita </button></div></div>'
+                }
+
+                
 
             } else {
 
@@ -601,8 +560,18 @@ function genera_descrizione() {
                     '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
                 '</div>'
 
-                col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
+
+                if (active_user.film_preferiti.find(searchFilminArray, id) == undefined ) {
+                    col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
                 '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti()"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button></div></div>'
+                } else {
+                    col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
+                '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già nei preferiti</button></div></div>'
+                }
+
+
+
+                
 
             }
 
@@ -663,13 +632,40 @@ function genera_descrizione() {
 }
 
 function aggiungiVendita(){
+    
     id = get_from_url("id=");
+
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
-    active_user.film_vendita.push(id);
-    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    
+    if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
+        active_user.film_vendita.push(id);
+        window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    } else {
+        return alert('film già presente');
+    }
 
     venditori = JSON.parse(window.localStorage.getItem("venditori"));
-    
+
+    for ( i=0 ; i<venditori.length; i++) {
+        
+        if (venditori[i].email==active_user.email) {
+
+            if (venditori[i].film_vendita.find(searchFilminArray, id) == undefined ) {
+                venditori[i].film_vendita.push(id);
+                window.localStorage.setItem("venditori", JSON.stringify(venditori));
+                break;
+            }
+
+        }
+
+    }
+
+}
+
+
+//restituisce indice successivo a quello trovato, undefined altrimenti
+function searchFilminArray(film) {
+    return film == this;
 }
 
 function aggiungiPreferiti(){
@@ -684,8 +680,8 @@ function aggiungiPreferiti(){
     var presente = false ; 
     for ( i=0 ; i<clienti.length; i++){
         if (clienti[i].email==active_user.email){
-            console.log("trovato");
-            console.log(clienti[i].film_preferiti);
+            //console.log("trovato");
+            //console.log(clienti[i].film_preferiti);
             film_cliente = clienti[i].film_preferiti;
             for (j = 0; j<film_cliente.length; j++){
                 if ( film_cliente[j]==id){
@@ -713,8 +709,9 @@ function aggiungiPreferiti(){
 function stopvideo() {
     document.getElementById("TrailerFilm").src = document.getElementById("TrailerFilm").src;
 }
+/*
 function getPaginaFilm(){ 
-        get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
+     get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
         scroller = document.getElementById('scroller_popolari');
         for ( i = 0 ; i<response.results.length; i++){
             film = response.results[i];
@@ -722,6 +719,7 @@ function getPaginaFilm(){
             scroller.appendChild(card);
         }
      });
+
      get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=2", function(response){
         scroller = document.getElementById('scroller_popolari1');
         for ( i = 0 ; i<response.results.length; i++){
@@ -739,6 +737,7 @@ function getPaginaFilm(){
             scroller1.appendChild(card); 
          }
      });
+
      get("https://api.themoviedb.org/3/movie/upcoming?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
         scroller2 = document.getElementById("scroller_upcoming");
        for ( i = 0 ; i<response.results.length; i++){
@@ -749,6 +748,7 @@ function getPaginaFilm(){
    });
 
 }
+*/
 // passo un film , mi crea una card per quel film 
 function createCard(film){
 
