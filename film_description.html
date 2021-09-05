@@ -59,41 +59,11 @@
         </div>
         </div>
     </nav>
+    <!-- /navigation -->
+
     <!-- content -->
     <div class="container-fluid">
-        <div id="overlay" class="align-middle">
-            <div id="overlay_recensione" class="overlay_recensione mx-auto align-middle">
-                <i id="closebtn" class="fas fa-times" onclick="overlay_rec_off()"></i>
-
-                <div id="testo_overlay" class="mx-auto" style="color:black;">
-                    <h5>Lascia la tua recensione...</h5>
-                    <p> Vota il film esprimendo il tuo giudizio da 0 a 10</p>
-                  
-                         <div class="votazione">
-                            <input name="rating" type="radio" id="rate1" value="1" /> 
-                            <label for="rate1"></label>
-                        
-                            <input name="rating" type="radio" id="rate2" value="2" />
-                            <label for="rate2"></label>
-                        
-                            <input name="rating" type="radio" id="rate3" value="3" />
-                            <label for="rate3"></label>
-                        
-                            <input name="rating" type="radio" id="rate4" value="4" />
-                            <label for="rate4"></label>
-                        
-                            <input name="rating" type="radio" id="rate5" value="5" checked />
-                            <label for="rate5"></label> 
-                        </div>
-                    
-                      
-                   
-                </div>
-              
-                
-            </div>
-        </div>
-
+        
         <div class="row" id="rigaDescrizione">
             <div class="row" style="background-color: rgba(0,0,0,0.85); margin: 0em; padding: 2em;">
                 <div class="col-md-4 d-flex align-items-center">
@@ -104,14 +74,65 @@
                     <h1 style="color: white;"></h1>
                     <p style="font-size: medium; color: #c1c1c1;"></p>
                     <div style="color: yellow; margin-bottom: 1em;">
-                        <i></i><i></i><i></i><i></i><i style="margin-right: 1em;"></i>
-                        <button id="recensione" class="btn btn-outline-warning" onclick="overlay_rec_on()" >Lascia una recensione</button>
-                    </div>
-                    <a target="_blank" rel="noopener noreferrer" style="display:none;">
                         
+                        <i></i><i></i><i></i><i></i><i style="margin-right: 1em;"></i>
+                        <!--
+                        <button id="recensione" class="btn btn-outline-warning" onclick="overlay_rec_on('overlay')" >Lascia una recensione</button>
+                        -->
+                        <a target="_blank" rel="noopener noreferrer">
+                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#ReviewModal"><i class="fab fa-youtube" style="font-size: 1em; margin-right: 0.2em;"></i><span> Review</span></button>
+                        </a>
+                        <!-- OVERLAY REVIEW -->
+                        <div class="modal fade" id="ReviewModal" tabindex="-1" aria-labelledby="ReviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content bg-dark text-white">
+                                    <div class="modal-header" style="border-bottom: 0px;">
+                                        <h5 class="modal-title" id="ReviewModalLabel">Review</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Lascia la tua recensione...</h5>
+                                        <p>Vota il film</p>
+                                        
+                                        <form id="ratingForm">
+
+                                            <div class="votazione">
+                                                <input name="rating" type="radio" id="rate1" value="1" /> 
+                                                <label for="rate1">1</label>
+                                            
+                                                <input name="rating" type="radio" id="rate2" value="2" />
+                                                <label for="rate2">2</label>
+                                            
+                                                <input name="rating" type="radio" id="rate3" value="3" />
+                                                <label for="rate3">3</label>
+                                            
+                                                <input name="rating" type="radio" id="rate4" value="4" />
+                                                <label for="rate4">4</label>
+                                            
+                                                <input name="rating" type="radio" id="rate5" value="5" checked />
+                                                <label for="rate5">5</label> 
+                                            </div>
+
+                                            <input type="hidden" name="id" id="IdFilm">
+
+                                            <script>
+                                                id = get_from_url("id=");
+                                                document.getElementById("IdFilm").value = id;
+                                            </script>
+
+                                            <button type="submit" onclick="RatingFilm()">vote</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- OVERLAY -->
+                    </div>
+                    
+                    <a target="_blank" rel="noopener noreferrer" style="display:none;">
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#TrailerModal"><i class="fab fa-youtube" style="font-size: 1em; margin-right: 0.2em;"></i><span> Guarda il Trailer</span></button>
                     </a>
-                    <!-- OVERLAY -->
+                    <!-- OVERLAY TRAILER -->
                     <div class="modal fade" id="TrailerModal" tabindex="-1" aria-labelledby="TrailerModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content bg-dark text-white">
@@ -128,6 +149,8 @@
                         </div>
                     </div>
                     <!-- OVERLAY -->
+
+                    
         
                     
 
@@ -136,13 +159,18 @@
             
         </div>
 
-        
-
         <div class="row" id="rigaCorrelati" ><!-- correlati -->
             <div id="scroller_film_correlati" class="align-top overflow-auto" style="white-space: nowrap" >
             </div>
         </div>
 
+    </div>
+    <!-- /content -->
+
+
+
+    <!-- footer -->
+    <div class="container-fluid">
         <!-- produzione -->
         <div class ="row" id="rigaOtherInfo" >
             <div class="col-md-1"></div>
@@ -184,8 +212,8 @@
                 
 
         </div>
-        
     </div>
+    <!-- /footer -->
 
     
 
