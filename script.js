@@ -818,27 +818,19 @@ function getFilmCorr(id){
     });
 }
 
-function overlay_rec_on() {
-    document.getElementById("overlay").style.display = "block";
-    document.getElementsByTagName('body')[0].style.overflow = "hidden";
-  }
-  function overlay_rec_off() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementsByTagName('body')[0].style.overflow = "";
-  }
-  function sfondo(){
-      sfondo=document.getElementById('sfondo');  
-      get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+function sfondo(){
+    sfondo=document.getElementById('sfondo');  
+    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
         var immagini = [];
         len = response.results.length;
         for ( i = 0 ; i<response.results.length; i++){
             immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
         }
-       num =  getRandomInt(len);
-     //  console.log(immagini);
-
-       sfondo.background=immagini[num];
-       sfondo.style='background-repeat:no-repeat; background-size:1480px 850px; background-position:scroll; background-color:rgba(0,0,0,0.5);';
+        
+        num =  getRandomInt(len);
+        
+        sfondo.background=immagini[num];
+        sfondo.style='background-repeat:no-repeat; background-size:1480px 850px; background-position:scroll; background-color:rgba(0,0,0,0.5);';
 
     
       
@@ -848,6 +840,7 @@ function overlay_rec_on() {
  function getRandomInt(max) {
         return Math.floor(Math.random() * max);
       }
+
 function pagPersonale(){
     if ( window.localStorage.getItem('active_user')!='null'){
         console.log(window.localStorage.getItem('active_user'));
