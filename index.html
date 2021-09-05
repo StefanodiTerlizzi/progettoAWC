@@ -12,7 +12,7 @@
     <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
     <title>home</title>
   </head>
-  <body onload="getPaginaFilm(), init()" >
+  <body onload="init()" >
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
@@ -56,28 +56,72 @@
         </div>
       </div>
     </nav>
+    <!-- navigation -->
+
     
 
     <div class='row'>
       <div class='col-md-3' style='background-color: white; height: 600px; color:black'> Altre Cose --> indice su cosa si puo trovare nella pagina </div>
       <div class='col-md-9'>
-      <div style ='border-top:2px solid gray'class='row' id="film_popolari">
-        <h4 style='margin: 1em;font-weight:lighter;'>Film Popolari</h4>
-        <div id="scroller_popolari" class="align-top overflow-auto" style="white-space: nowrap"></div>
+        <!-- film_popolari-->
+        <div style ='border-top:2px solid gray'class='row' id="film_popolari">
+          <h4 style='margin: 1em;font-weight:lighter;'>Film Popolari</h4>
+          <div id="scroller_popolari" class="align-top overflow-auto" style="white-space: nowrap"></div>
+        </div>
+        <!-- scroller_popolari1 -->
+        <div id="scroller_popolari1" class="align-top overflow-auto" style="white-space: nowrap">
+        </div>
       </div>
-      <div id="scroller_popolari1" class="align-top overflow-auto" style="white-space: nowrap"></div>
-      </div>
-      <div  class='row' id="film_toprated">
+      <!-- film_toprated -->
+      <div  class='row'>
         <h4 style='margin: 1em;font-weight:lighter;'>Film Top Rated </h4>
         <div id="scroller_toprated" class="align-top overflow-auto" style="white-space: nowrap"></div>
       </div>
-      <div  class='row' id="film_toprated">
+      <!-- film_toprated -->
+      <div class='row'>
         <h4 style='margin: 1em;font-weight:lighter;'>Film In Arrivo </h4>
         <div id="scroller_upcoming" class="align-top overflow-auto" style="white-space: nowrap"></div>
       </div>
+    </div>
+
+    <!-- script recupero film x scroller -->
+    <script>
+      get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
+          scroller = document.getElementById('scroller_popolari');
+          for ( i = 0 ; i<response.results.length; i++){
+              film = response.results[i];
+              card = createCard(film);
+              scroller.appendChild(card);
+          }
+      });
+
+      get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=2", function(response){
+          scroller = document.getElementById('scroller_popolari1');
+          for ( i = 0 ; i<response.results.length; i++){
+              film = response.results[i];
+              card = createCard(film);
+              scroller.appendChild(card);
+          }
+      });
+
+      get("https://api.themoviedb.org/3/movie/top_rated?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
+            scroller1 = document.getElementById("scroller_toprated");
+          for ( i = 0 ; i<response.results.length; i++){
+              film = response.results[i];
+              card = createCard(film);
+              scroller1.appendChild(card); 
+          }
+      });
       
-    </div>
-    </div>
+      get("https://api.themoviedb.org/3/movie/upcoming?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
+          scroller2 = document.getElementById("scroller_upcoming");
+        for ( i = 0 ; i<response.results.length; i++){
+            film = response.results[i];
+            card = createCard(film);
+            scroller2.appendChild(card); 
+        }
+      });
+    </script>
 
     <div style='margin:2em;border-top:2px solid gray;'class="row">
       <div class="col-md-4" style ="margin-top:1em; margin-bottom:2em; color:#c1c1c1">
