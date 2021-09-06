@@ -26,36 +26,44 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./paginaPersonale.html">User <i class="fas fa-users-cog"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-right : 0px!important;">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./paginaPersonale.html">User <i class="fas fa-users-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-right : 0px!important;">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
             <!--
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
                 -->
-                </ul>
-                <form class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
-                <input class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search">
+            </ul>
+            <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
+                <input class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search" name="QueryToSearch">
+                <select id="TypeOfSearch" name="TypeOfSearch">
+                    <option value="movie">movie</option>
+                    <option value="person">person</option>
+                    <option value="company">company</option>
+                    <option value="collection">collection</option>
+                    <option value="keyword">keyword</option>
+                    <option value="multi">multi</option>
+                  </select>
                 <button type='submit' class="search" ><i class="fas fa-search"></i></button>
-              </form>
-              <form action="./signup.html">
-            <button class='logout'  id='submit' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
-              </form>
+            </form>
+            <form action="./signup.html">
+                <button class='logout'  id='submit' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
+            </form>
         </div>
         </div>
     </nav>
@@ -125,13 +133,7 @@
                                                 <label for="rate1">10</label>
                                             </div>
 
-                                            <input type="hidden" name="id" id="IdFilm">
                                             <input type="hidden" id="rating">
-
-                                            <script>
-                                                id = get_from_url("id=");
-                                                document.getElementById("IdFilm").value = id;
-                                            </script>
 
                                             <button onclick="RatingFilm()" type="button" class="btn-white" data-bs-dismiss="modal" aria-label="Close">vote</button>
                                     </div>
@@ -252,13 +254,13 @@
 
 <script>
 function RatingFilm() {
-    id = get_from_url("id=");
+    idFilm = get_from_url("id=");
     vote = document.getElementById("rating").value;
-    if (id != null && vote >= 1 && vote <= 10) {
+    if (idFilm != null && vote >= 1 && vote <= 10) {
         //alert("film: "+id+" voto: "+vote)
         get("https://api.themoviedb.org/3/authentication/guest_session/new?api_key="+"2bb75004dddb3cae50be3c30cc0f551d", function(response){
             
-            //console.log(response);
+            //console.log("get response: ", response);
             
             idFilm = get_from_url("id=");
             vote = Number(document.getElementById("rating").value);
@@ -273,8 +275,14 @@ function RatingFilm() {
 
             xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                console.log(xhr.response);
-                console.log(xhr.status);
+                if (xhr.status == 201) {
+                    alert("grazie per la tua recensione");
+                } else {
+                    alert("mi dispiace c'è stato un problema, riprova");
+                }
+                //console.log("post response", xhr.response);
+                //console.log("post status: ", xhr.status);
+
             }};
 
             var data = '{"value":'+vote+'}';

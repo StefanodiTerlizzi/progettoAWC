@@ -898,3 +898,63 @@ function sfondo_reg(){
        */
     });
 }
+
+//search
+function createResult(TypeOfSearch, query) {
+    //coding
+    switch (TypeOfSearch) {
+        case "movie":
+            get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){
+                
+                console.log("get response: ", response.results);
+                
+                for (film of response.results) {
+                    console.log(film)
+                    var card = `
+                        <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
+                            <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${film.title}</h5>
+                                
+                                <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById("results").innerHTML += card;
+                }
+            });
+            
+            break;
+
+        case "person":
+            get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){
+                
+                console.log("get response: ", response.results);
+
+
+                for (film of response.results) {
+                    console.log(film)
+                    var card = `
+                    <div class="col-sm-3">
+                        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                            <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${film.title}</h5>
+                                <p class="card-text">${film.overview}</p>
+                                <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    document.getElementById("results").innerHTML += card;
+                }
+
+                
+            });
+            
+            break;
+    
+        default:
+            break;
+    }
+}
