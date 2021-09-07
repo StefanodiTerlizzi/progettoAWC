@@ -49,10 +49,15 @@
             </li>
                 -->
                 </ul>
-                <form class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
+            <form class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
                 <input class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search">
                 <button type='submit' class="search" ><i class="fas fa-search"></i></button>
-              </form>
+            </form>
+
+
+
+
+            
               <form action="./signup.html">
             <button class='logout'  id='submit' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
               </form>
@@ -63,6 +68,26 @@
 
     <!-- content -->
     <div class="container-fluid" style="padding-right: inherit; padding-left: inherit;">
+        <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
+
+            <label>search by genere</label>
+            <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(document.getElementById('genere').value == 'null') ? (document.getElementById('searchGenere').disabled =  true) : (document.getElementById('searchGenere').disabled =  false)">
+                <option value=null selected></option>
+                <script>
+                    get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){                
+                        //console.log("get response: ", response);
+                        for (obj of response.genres) {
+                            //console.log(obj)
+                            document.getElementById("genere").innerHTML +=  `
+                            <option value="${obj.id}">${obj.name}</option>
+                            `;
+                        }
+                    });
+
+                </script>
+            </select>
+            <button disabled type='submit' class="search" id="searchGenere" ><i class="fas fa-search"></i></button>
+        </form>
         <div class="row" id="resultsFilms">
             <h5>FILMS</h5>
         </div>
@@ -71,8 +96,11 @@
         </div>
 
         <script>
-            query = get_from_url("QueryToSearch=");
-            TypeOfSearch = get_from_url("TypeOfSearch=");
+            if (((query = get_from_url("QueryToSearch=")) != false) && ((TypeOfSearch = get_from_url("TypeOfSearch=")) != false) ) {
+                //console.log("query", query);
+                //console.log("TypeofSearch", TypeOfSearch);
+                multiSearchResult(TypeOfSearch, query);
+            }
             /* examples
             https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
             https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
@@ -82,7 +110,10 @@
             https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
             */
 
-            createResult(TypeOfSearch, query);
+            if ( (genere = get_from_url("genere=")) != false) {
+                //console.log("idgenere", genere);
+                genereSearchResult(genere);
+            }
             
         </script>
     </div>

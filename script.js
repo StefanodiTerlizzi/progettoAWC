@@ -435,6 +435,9 @@ function get(url, callback) {
 //gerazione pagina descrizione
 function get_from_url(key){ // key è il prametro che volgio ottenere , nel nostro caso è id per avere id del film
     var indice = window.location.href.indexOf(key);
+    if (indice == -1) {
+        return false;
+    }
    //?id=432432432?color=red
    var sottostringa = window.location.href.slice(indice+key.length,window.location.href.length);
    var id = "";
@@ -900,7 +903,7 @@ function sfondo_reg(){
 }
 
 //search
-function screateResult(TypeOfSearch, query) {
+function AcreateResult(TypeOfSearch, query) {
     //coding
     switch (TypeOfSearch) {
         case "movie":
@@ -1037,7 +1040,7 @@ function screateResult(TypeOfSearch, query) {
     }
 }
 
-function createResult(TypeOfSearch, query) {
+function multiSearchResult(TypeOfSearch, query) {
     get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){                
         //console.log("get response: ", response.results);
 
@@ -1056,6 +1059,19 @@ function createResult(TypeOfSearch, query) {
             }
         }               
     });
+}
+
+function genereSearchResult(genere) {
+    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_genres="+genere, function(response){                
+        //console.log("get response: ", response.results);
+        for (obj of response.results) {
+            document.getElementById("resultsFilms").innerHTML += createFilm(obj)
+        }
+    });
+    
+    
+//    https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_genres=azione
+
 }
 
 
@@ -1139,3 +1155,5 @@ function createActor(obj) {
     card += carousel+"</div></div></div></div>";
     return card;
 }
+
+
