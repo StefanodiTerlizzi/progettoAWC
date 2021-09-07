@@ -16,7 +16,7 @@
     <title>Pagina Personale</title>
     <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
   </head>
-  <body onload="CreatePage()" >
+  <body onload="CreatePage(),scegli_genere_preferenze()" >
 
     <!-- navigation -->
     <script>document.write(navbar)</script>
@@ -33,6 +33,53 @@
 
               </div>
               <div class="col-md-8" id="funzionalità">
+                <div id = "completa_account" class="border border-dark rounded" style="display: none; background-color: black; color:white;">
+                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Preferenze e Privacy</h5>
+                      <!-- javascript -->
+                      <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
+                          <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
+                            <span  id='completa_account_form'>
+                             
+                            </span>
+                          </div>
+                          <!---->
+                          <script>
+                            function scegli_genere_preferenze(){
+                              form = document.getElementById('completa_account_form');
+                              get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
+                               // console.log(response);
+                                for ( i=0; i<response.genres.length ; i++){
+                                 generi = response.genres[i];
+                                  console.log( generi.name);
+                                 input = document.createElement('input');
+                                 input.setAttribute('type',"checkbox");
+                                 input.className='btn-check';
+                                 input.setAttribute('id',generi.name);
+                                 label.style='margin-right:0.2em!important; ';
+                                 label = document.createElement('label');
+                                 label.className='btn btn-outline-secondary';
+                                 label.setAttribute('for',generi.name);
+                                 label.innerHTML=generi.name;
+                                 form.appendChild(input);
+                                 form.appendChild(label);
+                                }
+                                button = document.createElement('button');
+                                button.setAttribute('type','submit');
+                                button.className='btn btn-primary';
+                                button.innerHTML='Invia';
+                                button.style='margin-top:0.5em;float:left';
+                                button.setAttribute('onclick','gestisci_generi_pref()');
+                                form.appendChild(button);
+
+                               });
+                            }
+                            function gestisci_generi_pref(){
+                              div = document.getElementById('completa_account_form');
+                              console.log(div.childNodes);
+                            }
+
+                          </script>
+                </div> 
                 <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
                   <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
                     <!-- javascript -->
@@ -45,19 +92,17 @@
                       <!-- javascript -->
                       <button style='display:block;margin-left:0,5em' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><a href="index.html" style='text-decoration: none;color:black'><i class="fas fa-plus"></i> Aggiungi un film</a> </button>
 
-                </div>          
+                </div> 
+                
+
+                <div id='rowStoricoAcquisti' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
+                </div>
+
               </div>
           </div>
           
-          <div id='rowStoricoAcquisti' class="row border rounded">
-
-
-
-            <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
-            
           
-          
-          </div>
 
           <script>
             type_active_user = JSON.parse(window.localStorage.getItem("active_user"));
@@ -80,6 +125,8 @@
               document.getElementById("div_film_venduti").style.display = "";
             } else if (type_active_user.type == "cliente") {
               document.getElementById("div_film_preferiti").style.display = "";
+              document.getElementById("completa_account").style.display="";
+              document.getElementById("rowStoricoAcquisti").style.display="";
             }
           </script>
         

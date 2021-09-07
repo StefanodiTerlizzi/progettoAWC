@@ -17,7 +17,7 @@
   input {
     border-radius:10em;
   }
- #submit , #submit_registrazione {
+ #submit_logout ,#submit_login,  #submit_registrazione {
   border-radius: 5em;
   border: #524f4e;
   display: inline-block;
@@ -37,14 +37,14 @@
     color:white!important;
     font-weight: lighter!important;
   }
-  .login#submit:hover  , #submit_registrazione:hover  {
+  #submit_login:hover  , #submit_registrazione:hover  {
   box-shadow: 0 8px 15px rgba(120,120,120,0.9);
   color:white;
   background-color: #0d6efd;
   transform: translateY(-2px);
   }
 
-  .logout#submit:hover {
+  #submit_logout:hover {
   box-shadow: 0 8px 15px rgba(120,120,120,0.9);
   color:white;
   background-color: red;
@@ -111,51 +111,14 @@
     #formRegistrazione {
       width:450px!important;
     }
-
-   
-
 }
-#scroller_popolari img {
+ 
+#scroller_upcoming img,#scroller_popolari1 img,#scroller_toprated img ,#scroller_popolari img  {
   height:200px;
   width:140px;
   border-color: white;
 }
-#scroller_popolari div {
-  width:8rem!important;
-  padding:0px;
-  font-size: small;
-  text-align: center;
-  
-}
-#scroller_toprated img {
-  height:200px;
-  width:140px;
-  border-color: white;
-}
-#scroller_toprated div {
-  width:8rem!important;
-  padding:0px;
-  font-size: small;
-  text-align: center;
-  
-}
-#scroller_upcoming img {
-  height:200px;
-  width:140px;
-  border-color: white;
-}
-#scroller_upcoming div {
-  width:8rem!important;
-  padding:0px;
-  font-size: small;
-  text-align: center;
-}
-#scroller_popolari1 img {
-  height:200px;
-  width:140px;
-  border-color: white;
-}
-#scroller_popolari1 div {
+#scroller_upcoming div,#scroller_popolari1 div ,#scroller_toprated div ,#scroller_popolari div {
   width:8rem!important;
   padding:0px;
   font-size: small;
@@ -178,16 +141,14 @@
   margin-top:1em;
 
 }
- #trashbutton:hover{
+ #trashbutton:hover {
   box-shadow: 0 8px 15px rgba(232, 228, 228, 0.9);
   color:white;
   background-color: rgb(143, 8, 8);
   transform: translateY(-2px);
-
-
  }
 
- #aggiungibutton {
+ #aggiungibutton , #completa_account_button {
   border-radius: 3em;
   border: #524f4e;
   box-shadow: 0 2px 3px rgba(0,0,0,0.9);
@@ -196,13 +157,13 @@
   width:200px; 
   height:30px; 
   background-color: #938888;
-  color: white!important;
+  color: black!important;
   transition: .2s;
   margin-top:1em;
   margin-bottom: 1em;
   margin-left: 0.5em;
  }
- #aggiungibutton:hover {
+ #aggiungibutton:hover  ,#completa_account_button:hover{
   box-shadow: 0 8px 15px rgba(232, 228, 228, 0.3);
   color:black;
   background-color: rgb(255, 255, 255);
@@ -233,7 +194,6 @@
   text-align:center; 
   width:160px; 
   height:38px; 
-  
   margin-bottom:1em;
   color: white;
   background: #ff0000;

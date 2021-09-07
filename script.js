@@ -875,30 +875,6 @@ function sfondo_reg(){
            scroller.appendChild(listadiv[i]);
        }
 
-      /* div1 = document.getElementById('img1');
-       img1=document.createElement('img');
-       img1.src=immagini[num];
-       img1.style='height:200px;';
-       div1.append(img1);
-
-       div2 = document.getElementById('img2');
-       img2=document.createElement('img');
-       img2.src=immagini[num+1];
-       img2.style='height:200px;';
-       div2.append(img2);
-
-       div3 = document.getElementById('img3');
-       img3=document.createElement('img');
-       img3.src=immagini[num+2];
-       img3.style='height:200px;';
-       div3.append(img3);
-
-       div4 = document.getElementById('img4');
-       img4=document.createElement('img');
-       img4.src=immagini[num+3];
-       img4.style='height:200px;';
-       div4.append(img4);
-       */
     });
 }
 

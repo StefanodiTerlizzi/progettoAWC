@@ -47,7 +47,7 @@ var navbar = `
             <button type='submit' class="search" ><i class="fas fa-search"></i></button>
         </form>
         <form action="./signup.html">
-            <button class='logout'  id='submit' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
+            <button   id='submit_logout' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
         </form>
     </div>
     </div>

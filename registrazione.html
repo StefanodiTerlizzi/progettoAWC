@@ -36,6 +36,32 @@
         <div id='scroller_reg' class="align-top overflow-auto" style='height:200px;white-space: nowrap'>
           
           </div>
+          <script>
+            function sfondo_reg(){
+    scroller=document.getElementById('scroller_reg');
+    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+        var immagini = [];
+        len = response.results.length;
+        for ( i = 0 ; i<response.results.length; i++){
+            immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
+        }
+        var listadiv = [];
+       for (i=0 ; i<immagini.length; i++){
+           div= document.createElement('div');
+           div.style='display:inline-block;'
+           img= document.createElement('img');
+           img.src=immagini[i];
+           div.appendChild(img);
+           listadiv.push(div);
+       }
+       console.log(listadiv[0].childNodes[0]);
+       for ( i=0 ; i<listadiv.length; i++){
+           scroller.appendChild(listadiv[i]);
+       }
+
+    });
+}
+          </script>
         
         <div style='text-align:center;' class='row'>
         <h3 class='mx-auto align-middle' style='margin-top:3em;color: white;'>Registrazione</h3><br>
