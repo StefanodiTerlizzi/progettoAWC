@@ -5,6 +5,7 @@ function CreatePage() {
     } else if (JSON.parse(window.localStorage.getItem("active_user")).type == "venditore") {
         createVenditore();
         getFilmVenduti();
+
        
     } else if (JSON.parse(window.localStorage.getItem("active_user")).type == "cliente") {
         createCliente();
@@ -28,25 +29,38 @@ function get(url, callback) {
 
 function getFilmVenduti(){ 
     film = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
-   // console.log(film); 
+    // console.log(film); 
     for(i=0 ; i<film.length; i++){
         get("https://api.themoviedb.org/3/movie/"+film[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
             div = document.getElementById("div_film_venduti");
-                card = cardOverlay(response);
-               // console.log(card);
-                div.appendChild(card);
+            card = cardOverlay(response);
+            // console.log(card);
+            div.appendChild(card);
          });
     }
 }
 
 function getFilmPreferiti(){ 
     film = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
-    console.log(film); 
+    //console.log(film); 
     for(i=0 ; i<film.length; i++){
         get("https://api.themoviedb.org/3/movie/"+film[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
             div = document.getElementById("div_film_preferiti");
-                card = cardOverlay(response);
-                div.appendChild(card);
+            card = cardOverlay(response);
+            div.appendChild(card);
+         });
+    }
+}
+
+function getFilms(divToAppend, films){
+    //coding
+    //film = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
+    //console.log(film); 
+    for(i=0 ; i<films.length; i++){
+        get("https://api.themoviedb.org/3/movie/"+films[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+            //div = document.getElementById("div_film_preferiti");
+            card = cardOverlay(response);
+            divToAppend.appendChild(card);
          });
     }
 }
