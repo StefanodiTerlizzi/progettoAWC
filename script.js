@@ -903,145 +903,8 @@ function sfondo_reg(){
 }
 
 //search
-function AcreateResult(TypeOfSearch, query) {
-    //coding
-    switch (TypeOfSearch) {
-        case "movie":
-            get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){
-                
-                console.log("get response: ", response.results);
-                
-                for (film of response.results) {
-                    console.log(film)
-                    var card = `
-                        <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
-                            <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">${film.title}</h5>
-                                
-                                <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
-                            </div>
-                        </div>
-                    `;
-                    document.getElementById("results").innerHTML += card;
-                }
-            });
-            
-            break;
-
-        case "multi":
-            get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){
-                
-                console.log("get response: ", response.results);
-
-
-                for (obj of response.results) {
-                    switch (obj.media_type) {
-                        case "movie":
-                            var card = `
-                            <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
-                                <img src="https://www.themoviedb.org/t/p/original${obj.poster_path}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">${obj.title}</h5>
-                                    
-                                    <a href="./film_description.html?id=${obj.id}" class="btn btn-primary">visualizza</a>
-                                </div>
-                            </div>
-                            `;
-                            document.getElementById("results").innerHTML += card;
-                            break;
-                        case "person":
-                            var card = `
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                    <div class="card bg-dark text-white">
-                                        <img src="https://www.themoviedb.org/t/p/original${obj.profile_path}" class="card-img" alt="...">
-                                        <div class="card-img-overlay">
-                                            <h5 class="card-title">${obj.name}</h5>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                    <div class="card-body">
-
-
-
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-
-
-                            `;
-
-                            for (film of object.known_for) {
-
-                            }
-
-                            var carousel = `
-                            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                    <img src="..." class="d-block w-100" alt="...">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>First slide label</h5>
-                                        <p>Some representative placeholder content for the first slide.</p>
-                                    </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                    <img src="..." class="d-block w-100" alt="...">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>Second slide label</h5>
-                                        <p>Some representative placeholder content for the second slide.</p>
-                                    </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                    <img src="..." class="d-block w-100" alt="...">
-                                    <div class="carousel-caption d-none d-md-block">
-                                        <h5>Third slide label</h5>
-                                        <p>Some representative placeholder content for the third slide.</p>
-                                    </div>
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
-                            `;
-
-                            card += "</div></div></div></div>";
-                            
-                            document.getElementById("results").innerHTML += card;
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                }
-
-                
-            });
-            
-            break;
-    
-        default:
-            break;
-    }
-}
-
-function multiSearchResult(TypeOfSearch, query) {
-    get("https://api.themoviedb.org/3/search/"+TypeOfSearch+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){                
+function multiSearchResult(query) {
+    get("https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){                
         //console.log("get response: ", response.results);
 
         for (obj of response.results) {
@@ -1053,9 +916,6 @@ function multiSearchResult(TypeOfSearch, query) {
                 case "person":
                     document.getElementById("resultsActors").innerHTML += createActor(obj)
                     break;
-            
-                default:
-                    break;
             }
         }               
     });
@@ -1063,16 +923,13 @@ function multiSearchResult(TypeOfSearch, query) {
 
 function genereSearchResult(genere) {
     get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_genres="+genere, function(response){                
-        //console.log("get response: ", response.results);
         for (obj of response.results) {
             document.getElementById("resultsFilms").innerHTML += createFilm(obj)
         }
     });
-    
-    
-//    https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_genres=azione
-
 }
+
+
 
 
 function createFilm(obj) {
@@ -1111,7 +968,6 @@ function createActor(obj) {
 
     first = true;
     for (film of obj.known_for) {
-        //console.log(obj.name, film)
         if (film.media_type == "movie") {
             if (first) {
                 carousel += `
@@ -1134,7 +990,6 @@ function createActor(obj) {
                 `;
             }
             
-            //card += `<a href="./film_description.html?id=${film.id}" class="btn btn-primary">${film.title}</a><br>`;
         }
     }
 
@@ -1155,5 +1010,7 @@ function createActor(obj) {
     card += carousel+"</div></div></div></div>";
     return card;
 }
+
+
 
 

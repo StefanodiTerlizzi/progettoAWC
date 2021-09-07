@@ -32,6 +32,8 @@ var navbar = `
         </ul>
         <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
             <input class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search" name="QueryToSearch">
+            <input type="hidden" name="TypeOfSearch" value="multi">
+            <!--
             <select id="TypeOfSearch" name="TypeOfSearch">
                 <option value="movie">movie</option>
                 <option value="person">person</option>
@@ -39,7 +41,9 @@ var navbar = `
                 <option value="collection">collection</option>
                 <option value="keyword">keyword</option>
                 <option value="multi">multi</option>
-                </select>
+            </select>
+            -->
+            
             <button type='submit' class="search" ><i class="fas fa-search"></i></button>
         </form>
         <form action="./signup.html">
@@ -61,12 +65,15 @@ var navbar = `
             </div>
             <div class="modal-body">
 
+
             </div>
         </div>
     </div>
 </div>
 <!-- OVERLAY -->
 `;
+
+
 
 var footer = `
 <div style='margin:2em;border-top:2px solid gray;'class="row">
@@ -103,3 +110,32 @@ var footer = `
     </div>
 </div>
 `;
+
+/*
+companies search
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_companies=query
+
+
+
+people
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_people=query
+
+
+anno
+
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&year=key
+
+
+examples
+https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+*/
+
+

@@ -27,7 +27,7 @@
         <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
 
             <label>search by genere</label>
-            <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(document.getElementById('genere').value == 'null') ? (document.getElementById('searchGenere').disabled =  true) : (document.getElementById('searchGenere').disabled =  false)">
+            <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(this.value == 'null') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
                 <option value=null selected></option>
                 <script>
                     get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){                
@@ -55,8 +55,9 @@
             if (((query = get_from_url("QueryToSearch=")) != false) && ((TypeOfSearch = get_from_url("TypeOfSearch=")) != false) ) {
                 //console.log("query", query);
                 //console.log("TypeofSearch", TypeOfSearch);
-                multiSearchResult(TypeOfSearch, query);
+                multiSearchResult(query);
             }
+
             /* examples
             https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
             https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
@@ -66,7 +67,7 @@
             https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
             */
 
-            if ( (genere = get_from_url("genere=")) != false) {
+            if ( (genere = get_from_url("genere=")) != false ) {
                 //console.log("idgenere", genere);
                 genereSearchResult(genere);
             }
