@@ -1,6 +1,6 @@
 var data = {
   "venditori" : [
-    {"nomenegozio": "Euronics","telefono": "3336098348","partitaiva": "0234532","email": "euronics@gmail.com","password": "xx1","type": "venditore","film_vendita": ["399566", "791373", "527774","379686","385128","588228"]},
+    {"nomenegozio": "Euronics","telefono": "3336098348","partitaiva": "0234532","email": "euronics@gmail.com","password": "xx1","type": "venditore","film_vendita": [{"id": "399566","prezzo": 1},{"id": "791373","prezzo": 2},{"id": "527774","prezzo": 3},{"id": "379686","prezzo": 4},{"id": "385128","prezzo": 5},{"id": "588228","prezzo": 6}]},
     {"nomenegozio": "Blockbuster", "telefono": "345672890", "partitaiva": "5532090", "email": "x2@gmail.com", "password": "xx2", "type": "venditore",  "film_vendita": ["399566", "791373", "527774"]},
     ],
   "clienti" : [

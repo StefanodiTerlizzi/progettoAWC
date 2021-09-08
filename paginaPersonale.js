@@ -28,16 +28,32 @@ function get(url, callback) {
   }
 
 function getFilmVenduti(){ 
-    film = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
-    // console.log(film); 
-    for(i=0 ; i<film.length; i++){
-        get("https://api.themoviedb.org/3/movie/"+film[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+    
+    films = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
+
+
+    for (film of films) {
+
+
+
+
+        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
             div = document.getElementById("div_film_venduti");
             card = cardOverlay(response);
             // console.log(card);
             div.appendChild(card);
-         });
+        });
+
+//        console.log(typeof(film.id));
+
+    //console.log( toString(film.id) );
+    //    console.log(document)
+    //console.log(document.getElementById(film.id) );
+    //document.getElementById(toString(film.id)).innerHTML += "<p>"+film.prezzo+"</p>";
+        
+        
     }
+
 }
 
 function getFilmPreferiti(){ 
