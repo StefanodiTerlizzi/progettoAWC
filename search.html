@@ -23,58 +23,36 @@
     <script>document.write(navbar)</script>
 
     <!-- content -->
-    <div class="container-fluid" style="padding-right: inherit; padding-left: inherit;">
-        <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
-
-            <label>search by genere</label>
-            <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(this.value == 'null') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
-                <option value=null selected></option>
-                <script>
-                    get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){                
-                        //console.log("get response: ", response);
-                        for (obj of response.genres) {
-                            //console.log(obj)
-                            document.getElementById("genere").innerHTML +=  `
-                            <option value="${obj.id}">${obj.name}</option>
-                            `;
-                        }
-                    });
-
-                </script>
-            </select>
-            <button disabled type='submit' class="search" id="searchGenere" ><i class="fas fa-search"></i></button>
-        </form>
-        <div class="row" id="resultsFilms">
-            <h5>FILMS</h5>
-        </div>
-        <div class="row" id="resultsActors">
-            <h5>ACTORS</h5>
-        </div>
-
-        <script>
-            if (((query = get_from_url("QueryToSearch=")) != false) && ((TypeOfSearch = get_from_url("TypeOfSearch=")) != false) ) {
-                //console.log("query", query);
-                //console.log("TypeofSearch", TypeOfSearch);
-                multiSearchResult(query);
-            }
-
-            /* examples
-            https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-            */
-
-            if ( (genere = get_from_url("genere=")) != false ) {
-                //console.log("idgenere", genere);
-                genereSearchResult(genere);
-            }
-            
-        </script>
+    <div class="row" id="resultsFilms">
+        <h5>FILMS</h5>
     </div>
-    <!-- /content -->
+    <div class="row" id="resultsActors">
+        <h5>ACTORS</h5>
+    </div>
+
+    <div class="row" id="resultsCompanies">
+        <h5>COMPANIES</h5>
+    </div>
+
+    <script>
+        if (((query = get_from_url("QueryToSearch=")) != false) && ((TypeOfSearch = get_from_url("TypeOfSearch=")) != false) ) {
+            //console.log("query", query);
+            //console.log("TypeofSearch", TypeOfSearch);
+            multiSearchResult(query);
+        }
+
+        if ( (genere = get_from_url("genere=")) != false ) {
+            //console.log("idgenere", genere);
+            genereSearchResult(genere);
+        }
+
+        if ( (company = get_from_url("company=")) != false ) {
+            //console.log("idgenere", genere);
+            companySearchResult(company);
+        }
+        
+    </script>
+    
 
 
 
@@ -92,3 +70,44 @@
     -->
   </body>
 </html>
+
+<!--
+ examples
+https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+companies search
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_companies=query
+
+
+
+people
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_people=query
+
+
+anno
+
+
+https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&year=key
+
+
+examples
+https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
+
+-->

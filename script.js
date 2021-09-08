@@ -905,6 +905,15 @@ function genereSearchResult(genere) {
     });
 }
 
+function companySearchResult(company) {
+    get("https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+company, function(response){                
+        console.log("company", response.results)
+        x = response.results
+        for (obj of response.results) {
+            document.getElementById("resultsCompanies").innerHTML += createCompany(obj)
+        }
+    });
+}
 
 
 
@@ -937,56 +946,103 @@ function createActor(obj) {
             <div class="col-md-8">
             <div class="card-body">
     `;
+
+    films = obj.known_for.filter(film => film.media_type == "movie") // tiene film con media_type == "movie"
+
+    card += createCarousel(obj.id, films)
+    
+
+    card += "</div></div></div></div>";
+    return card;
+}
+
+function createCarousel(id, films) {
+    if (films.length == 0) {
+        return "<p>no films</p>";
+    }
     var carousel = `
-    <div id="carousel${obj.id}" class="carousel slide" data-bs-ride="carousel">
+    <div id="carousel${id}" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
     `;
 
     first = true;
-    for (film of obj.known_for) {
-        if (film.media_type == "movie") {
-            if (first) {
-                carousel += `
-                    <div class="carousel-item active">
-                    <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
-                    </div>
-                    </div>
-                `;
-                first = false;
-            } else {
-                carousel += `
-                    <div class="carousel-item">
-                    <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
-                    </div>
-                    </div>
-                `;
-            }
-            
+    for (film of films) {
+
+        if (first) {
+            carousel += `
+                <div class="carousel-item active">
+                <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
+                </div>
+                </div>
+            `;
+            first = false;
+        } else {
+            carousel += `
+                <div class="carousel-item">
+                <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
+                </div>
+                </div>
+            `;
         }
+            
+        
     }
 
     carousel += `
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carousel${obj.id}" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel${id}" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carousel${obj.id}" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel${id}" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
     </div>
     `;
-    
 
-    card += carousel+"</div></div></div></div>";
-    return card;
+    return carousel;
+
 }
 
+function createCompany(obj) {
+    var card = `
+    <div class="card text-white bg-dark mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <div class="card bg-dark text-white">
+    `;
+    if (obj.logo_path != null) {
+        card += `<img src="https://www.themoviedb.org/t/p/original${obj.logo_path}" class="card-img" alt="...">`;
+    } else {
+        card += `<img src="" class="card-img" alt="...">`;
+    }
+    card += `
+                <div class="card-img-overlay">
+                    <h5 class="card-title">${obj.name}</h5>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+    `;
 
+    var request = new XMLHttpRequest();
+    
+    request.open('GET', "https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_companies="+obj.id, false);  // `false` makes the request synchronous
+    
+    request.send();
 
+    if (request.status === 200) {
+        card += createCarousel(obj.id, JSON.parse(request.response).results)
+    }
+
+    card += "</div></div></div></div>";
+
+    return card;
+}
 

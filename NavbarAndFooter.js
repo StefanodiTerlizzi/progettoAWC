@@ -31,7 +31,7 @@ var navbar = `
             -->
         </ul>
         <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
-            <input class="form-control me-2 search_bar" type="search" placeholder="Search" aria-label="Search" name="QueryToSearch">
+            <input class="form-control me-2 search_bar" type="search" placeholder="Search Movie and Person" aria-label="Search" name="QueryToSearch">
             <input type="hidden" name="TypeOfSearch" value="multi">
             <!--
             <select id="TypeOfSearch" name="TypeOfSearch">
@@ -52,10 +52,10 @@ var navbar = `
     </div>
     </div>
 </nav>
+`;
 
-
-
-<!-- OVERLAY TRAILER -->
+navbar += `
+<!-- OVERLAY SEARCH -->
 <div class="modal fade" id="SearchModal" tabindex="-1" aria-labelledby="SearchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-white">
@@ -64,15 +64,34 @@ var navbar = `
                 <button onclick="stopvideo()" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div class="modal-body">
+                <!-- search genere -->
+                <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
+                    <label>search by genere</label>
+                    <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(this.value == 'null') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
+                        <option value=null selected>seleziona genere</option>
+                    </select>
+                    <button disabled type='submit' class="search" id="searchGenere" ><i class="fas fa-search"></i></button>
+                </form>
+                <!-- search genere -->
+                <!-- search company -->
+                <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
 
+                    <label>search by company</label>
+                    <input type="text" name="company" placeholder="Company name" onchange="(this.value == '') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
 
+                    <button disabled type='submit' class="search" id="searchGenere" ><i class="fas fa-search"></i></button>
+                </form>
+                <!-- search company -->
             </div>
         </div>
     </div>
 </div>
 <!-- OVERLAY -->
-`;
 
+<script>
+generate_complete_search()
+</script>
+`;
 
 
 var footer = `
@@ -111,31 +130,17 @@ var footer = `
 </div>
 `;
 
-/*
-companies search
+function generate_complete_search() {
+    //genere search
+    get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){                
+        //console.log("get response: ", response);
+        //console.log("funzione search")
+        for (obj of response.genres) {
+            //console.log(obj)
+            document.getElementById("genere").innerHTML +=  `
+            <option value="${obj.id}">${obj.name}</option>
+            `;
+        }
+    });
 
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_companies=query
-
-
-
-people
-
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_people=query
-
-
-anno
-
-
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&year=key
-
-
-examples
-https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-*/
-
-
+}
