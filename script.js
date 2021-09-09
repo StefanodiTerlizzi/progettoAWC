@@ -1,18 +1,74 @@
 var data = {
   "venditori" : [
-    {"nomenegozio": "Euronics","telefono": "3336098348","partitaiva": "0234532","email": "euronics@gmail.com","password": "xx1","type": "venditore","film_vendita": [{"id": "399566","prezzo": 1},{"id": "791373","prezzo": 2},{"id": "527774","prezzo": 3},{"id": "379686","prezzo": 4},{"id": "385128","prezzo": 5},{"id": "588228","prezzo": 6}]},
-    {"nomenegozio": "Blockbuster", "telefono": "345672890", "partitaiva": "5532090", "email": "x2@gmail.com", "password": "xx2", "type": "venditore",  "film_vendita": ["399566", "791373", "527774"]},
+    {   "nomenegozio": "Euronics",
+        "telefono": "3336098348",
+        "partitaiva": "0234532",
+        "email": "euronics@gmail.com",
+        "password": "xx1",
+        "portafogli":   {   "saldo": 0  },
+        "type": "venditore",
+        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1},
+                            {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "379686","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "588228","prezzoVendita": 1, "prezzoNoleggio": 0.5}
+                        ]
+    },
+
+    {   "nomenegozio": "Blockbuster",
+        "telefono": "345672890",
+        "partitaiva": "5532090",
+        "email": "x2@gmail.com",
+        "password": "xx2",
+        "portafogli":   {   "saldo": 0  },
+        "type": "venditore",
+        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1},
+                            {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "379686","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5},
+                            {"id": "588228","prezzoVendita": 1, "prezzoNoleggio": 0.5}
+                        ]
+    },
     ],
   "clienti" : [
-    {"nome": "Giacomo","cognome":"Rossi","data":"1996-10-04","telefono":"3465889485","via":"viale dei santi","numcivico":"3", "citta":"milano","provincia":"milano", "nazione":"italia","email":"giacomorossi@gmail.com","password":"1","type": "cliente","film_preferiti": [{"id": "10674"}, {"id":"10020"}],"generi_preferiti": [],"film_acquistati": [{"id": "11224","data": "20-09-2020"}, {"id": "8587","data": "10-05-2020"}],"film_noleggiati": [{"id": "420818","data": "23-04-2020"}, {"id": "155","data": "23-04-2020"}]
+    {   "nome": "Giacomo",
+        "cognome":"Rossi",
+        "data":"1996-10-04",
+        "telefono":"3465889485",
+        "via":"viale dei santi",
+        "numcivico":"3",
+        "citta":"milano",
+        "provincia":"milano",
+        "nazione":"italia",
+        "email":"giacomorossi@gmail.com",
+        "password":"1",
+        "portafogli":   {   "metodo": "carta di credito",
+                            "saldo": 100
+                        },
+        "type": "cliente",
+        "film_preferiti":   [   {"id": "10674"},
+                                {"id":"10020"}
+                            ],
+
+        "generi_preferiti": [],
+
+        "film_acquistati":  [   {"id": "11224","data": "20-09-2020"},
+                                {"id": "8587","data": "10-05-2020"}
+                            ],
+
+        "film_noleggiati": [    {"id": "420818","data": "23-04-2020"}, 
+                                {"id": "155","data": "23-04-2020"}
+                            ]
     },
   ]
 }
 
 var structData = {
-    "venditore" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "type": "venditore", "film_vendita": []},
-    "cliente" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"", "type": "cliente"},
-  }
+    "venditore" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita": []},
+    "cliente" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
+}
 
 var key = "?api_key=2bb75004dddb3cae50be3c30cc0f551d";
 
@@ -554,14 +610,18 @@ function genera_descrizione() {
                 
 
             } else {
-
-                col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
-                '<div class="col-md" style="margin-top: 2em;">'+
-                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-shopping-cart"></i> Acquista</button>'+
-                '</div>'+
-                '<div class="col-md" style="margin-top: 2em;">'+
-                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
-                '</div>'
+                
+                col8.innerHTML += `
+                <div class="row" id="rigaPulsanti">
+                    <div class="col-md" style="margin-top: 2em;">
+                        <a target="_blank" rel="noopener noreferrer">
+                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#NegoziModal"><i class="fas fa-shopping-cart"></i> Acquista</button>
+                        </a>
+                    </div>
+                    <div class="col-md" style="margin-top: 2em;">
+                        <button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>
+                    </div>
+                `;
 
 
                 if (active_user.film_preferiti.find(searchFilminArray, id) == undefined ) {
@@ -579,10 +639,37 @@ function genera_descrizione() {
             }
 
         }
-        
 
-        
+        for (venditore of JSON.parse(window.localStorage.getItem("venditori")) ) {
+            index = venditore.film_vendita.findIndex(film => film.id === id);
 
+            if (index != -1) {
+                console.log(venditore.film_vendita[index])
+                document.getElementById("elencoNegozi").innerHTML += `
+                <div class="card text-white bg-dark" style="border: 1px, solid,  white;">
+                    <div class="card-header">
+                        ${venditore.nomenegozio}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">prezzo di vendita: ${venditore.film_vendita[index].prezzoVendita}</p>
+                        <a href="#" class="btn btn-primary">Compra</a>
+                        <p class="card-text">prezzo di noleggio: ${venditore.film_vendita[index].prezzoNoleggio}</p>
+                        <a href="#" class="btn btn-primary">Noleggia</a>
+                    </div>
+                </div>
+                `;
+            }
+
+            //console.log(index); // 3
+            //console.log(fruits[index]); // blueberries
+
+            //email_cliente =
+            //email_venditore = 
+            //id
+            //document.getElementById("elencoNegozi").innerHTML +=
+
+        }
+        
 
 
         //riga OtherInfo

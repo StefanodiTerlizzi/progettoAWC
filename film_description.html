@@ -110,12 +110,33 @@
                             <div class="modal-content bg-dark text-white">
                                 <div class="modal-header" style="border-bottom: 0px;">
                                     <h5 class="modal-title" id="TrailerModalLabel">Trailer</h5>
-                                    <button onclick="stopvideo()" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                    <button onclick="stopvideo()" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="ratio ratio-16x9">
                                         <iframe id="TrailerFilm" allowfullscreen></iframe>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- OVERLAY -->
+
+
+                    <a target="_blank" rel="noopener noreferrer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#NegoziModal">
+                            <i class="fab fa-youtube" style="font-size: 1em; margin-right: 0.2em;"></i><span>negozi</span>
+                        </button>
+                    </a>
+                    <!-- OVERLAY negozi -->
+                    <div class="modal fade" id="NegoziModal" tabindex="-1" aria-labelledby="NegoziModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content bg-dark text-white">
+                                <div class="modal-header" style="border-bottom: 0px;">
+                                    <h5 class="modal-title" id="NegoziModalLabel">negozi</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="elencoNegozi">
                                 </div>
                             </div>
                         </div>

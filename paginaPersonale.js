@@ -55,19 +55,18 @@ function getFilmPreferiti(){
     }
 }
 
-function getFilms(divToAppend, films){
-    //coding
-    //film = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
-    //console.log(film); 
+// TODO: generalizzare getFilmPreferiti, getFilmVenduti
+function getFilms(divToAppend, films){ 
     for(i=0 ; i<films.length; i++){
         get("https://api.themoviedb.org/3/movie/"+films[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
-            //div = document.getElementById("div_film_preferiti");
             card = cardOverlay(response);
             divToAppend.appendChild(card);
          });
     }
 }
 
+
+// TODO: cancellare XcardOverlay
 function XcardOverlay(film) {
     var card = document.createElement("div");
     card.className = "card bg-dark text-white rounded";
@@ -174,16 +173,20 @@ function UpdatePrice(id) {
     
     for (film of active_user.film_vendita) {
         if (film.id == id) {
-            document.getElementById('oldPrice').value = film.prezzo;
+            document.getElementById('oldPriceVendita').value = film.prezzoVendita;
+            document.getElementById('oldPriceNoleggio').value = film.prezzoNoleggio;
         }
     }
 
 }
 
-function modificaPrezzoFilm(idFilm, newPrice) {
+function modificaPrezzoVendita(idFilm, newPrice) {
 
-    console.log("idFilm: ",idFilm)
-    console.log("newPrice: ",newPrice)
+    if (newPrice == "" || Number(newPrice) < 0) {
+        alert("error, please insert valid price");
+        return;
+    }
+    newPrice = Number(newPrice)
 
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     venditori = JSON.parse(window.localStorage.getItem("venditori"));
@@ -203,17 +206,60 @@ function modificaPrezzoFilm(idFilm, newPrice) {
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
     window.localStorage.setItem("active_user", JSON.stringify(active_user));
 
-    alert("prezzo aggiornato con successo")
+    alert("prezzo Vendita aggiornato con successo");
 
     window.location.reload();
 
     function AggiornaPrezzoInLista(list, idFilm, newPrice) {
         objIndex = list.findIndex((obj => obj.id == idFilm));
-        list[objIndex].prezzo = newPrice;
+        list[objIndex].prezzoVendita = newPrice;
         return list
     }
 
 }
+
+
+function modificaPrezzoNoleggio(idFilm, newPrice) {
+
+//    console.log("idFilm: ",idFilm)
+//    console.log("newPrice: ",newPrice)
+
+    if (newPrice == "" || Number(newPrice) < 0) {
+        alert("error, please insert valid price");
+        return;
+    }
+    newPrice = Number(newPrice)
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    //objIndex = myArray.findIndex((obj => obj.id == 1));
+
+    active_user.film_vendita = AggiornaPrezzoInLista(active_user.film_vendita, idFilm, newPrice)
+
+    for (let i = 0; i < venditori.length; i++) {
+        if (venditori[i].email == active_user.email) {
+            venditori[i].film_vendita = AggiornaPrezzoInLista(venditori[i].film_vendita, idFilm, newPrice)
+            break;
+        }
+    }
+
+
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+
+    alert("prezzo Noleggio aggiornato con successo");
+
+    window.location.reload();
+
+    function AggiornaPrezzoInLista(list, idFilm, newPrice) {
+        objIndex = list.findIndex((obj => obj.id == idFilm));
+        list[objIndex].prezzoNoleggio = newPrice;
+        return list
+    }
+
+}
+
 
 function elimina_film_venditore(btn) {
 
