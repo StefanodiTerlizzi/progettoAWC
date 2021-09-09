@@ -610,7 +610,7 @@ function genera_descrizione() {
                 
 
             } else {
-                
+
                 col8.innerHTML += `
                 <div class="row" id="rigaPulsanti">
                     <div class="col-md" style="margin-top: 2em;">
@@ -641,6 +641,7 @@ function genera_descrizione() {
         }
 
         for (venditore of JSON.parse(window.localStorage.getItem("venditori")) ) {
+
             index = venditore.film_vendita.findIndex(film => film.id === id);
 
             if (index != -1) {
@@ -652,7 +653,7 @@ function genera_descrizione() {
                     </div>
                     <div class="card-body">
                         <p class="card-text">prezzo di vendita: ${venditore.film_vendita[index].prezzoVendita}</p>
-                        <a href="#" class="btn btn-primary">Compra</a>
+                        <button class="btn btn-primary" onclick="AcquistaFilm(JSON.parse(window.localStorage.getItem('active_user')).email, '${venditore.email}', '${id}', ${venditore.film_vendita[index].prezzoVendita})">Compra</button>
                         <p class="card-text">prezzo di noleggio: ${venditore.film_vendita[index].prezzoNoleggio}</p>
                         <a href="#" class="btn btn-primary">Noleggia</a>
                     </div>
@@ -1133,3 +1134,33 @@ function createCompany(obj) {
     return card;
 }
 
+function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
+    //console.log("emailCliente: ", typeof(emailCliente))
+    //console.log("emailVenditore: ", typeof(emailVenditore))
+    //console.log("idFilm: ", typeof(idFilm))
+    //console.log("price: ", typeof(price))
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    clienti = JSON.parse(window.localStorage.getItem("clienti"));
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    if (active_user.portafogli.saldo < price) {
+        alert("non hai abbastanza soldi per compare questo film")
+        return;
+    }
+
+    active_user.portafogli.saldo -= price;
+    active_user.film_acquistati.push({"id": idFilm, "data": (new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear())})
+
+    index = clienti.findIndex(cliente => cliente.email === emailCliente);
+    clienti[index] = active_user;
+
+    index = venditori.findIndex(venditore => venditore.email === emailVenditore);
+    venditori[index].portafogli.saldo += price;
+
+
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    window.localStorage.setItem("clienti", JSON.stringify(clienti));
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
+}
