@@ -125,7 +125,7 @@
   text-align: center;
 }
 
-#trashbutton {
+.trashButton {
   border-radius: 5em;
   border: #524f4e;
   display: inline-block;
@@ -139,12 +139,35 @@
   transition: .2s;
   margin-bottom:1em;
   margin-top:1em;
-
 }
- #trashbutton:hover {
+
+.trashButton:hover {
   box-shadow: 0 8px 15px rgba(232, 228, 228, 0.9);
   color:white;
   background-color: rgb(143, 8, 8);
+  transform: translateY(-2px);
+}
+
+.modifybutton {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center!important;
+  vertical-align: center!important;
+  width:30px; 
+  height:30px; 
+  background-color: #0091ff;
+  color: white;
+  transition: .2s;
+  margin-bottom:1em;
+  margin-top:1em;
+
+}
+.modifybutton:hover {
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.9);
+  color:white;
+  background-color: #0091ff;
   transform: translateY(-2px);
  }
 

@@ -28,14 +28,9 @@ function get(url, callback) {
   }
 
 function getFilmVenduti(){ 
-    
     films = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
 
-
     for (film of films) {
-
-
-
 
         get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
             div = document.getElementById("div_film_venduti");
@@ -43,24 +38,16 @@ function getFilmVenduti(){
             // console.log(card);
             div.appendChild(card);
         });
-
-//        console.log(typeof(film.id));
-
-    //console.log( toString(film.id) );
-    //    console.log(document)
-    //console.log(document.getElementById(film.id) );
-    //document.getElementById(toString(film.id)).innerHTML += "<p>"+film.prezzo+"</p>";
-        
-        
+   
     }
 
 }
 
 function getFilmPreferiti(){ 
-    film = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
+    films = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
     //console.log(film); 
-    for(i=0 ; i<film.length; i++){
-        get("https://api.themoviedb.org/3/movie/"+film[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+    for (film of films) {
+        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
             div = document.getElementById("div_film_preferiti");
             card = cardOverlay(response);
             div.appendChild(card);
@@ -81,7 +68,7 @@ function getFilms(divToAppend, films){
     }
 }
 
-function cardOverlay(film) {
+function XcardOverlay(film) {
     var card = document.createElement("div");
     card.className = "card bg-dark text-white rounded";
     card.style = "width: 190px!important;margin: 0.5em;";
@@ -128,64 +115,145 @@ function cardOverlay(film) {
 
     if (active_user.type == "venditore" ) {
         btn_el.setAttribute("onclick", "elimina_film_venditore(this)")
+        
     } else {
         btn_el.setAttribute("onclick", "elimina_film_cliente(this)")
+        
     }
 
-    
+
     div_ov.style.textAlign='center';
     div_ov.appendChild(btn_el);
 
     return card;    
 }
 
-function elimina_film_venditore(btn) {
-    id = btn.parentNode.parentNode.id;
-   // console.log(id);
+function cardOverlay(film) {
+    var card = document.createElement("div");
+    card.className = "card bg-dark text-white rounded";
+    card.style = "width: 190px!important;margin: 0.5em;";
+    card.style.display = "inline-block";
+    card.setAttribute("id", film.id);
+    //console.log(card);
+    //card.style.borderRadius = "1.5em";
+    active_user = JSON.parse(window.localStorage.getItem("active_user"))
+    typeAccount = "cliente"
+    if (active_user.type == "venditore" ) {
+        typeAccount = "venditore";
+    }
+
+    card.innerHTML += `
+    <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
+    <div class=" rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
+        <a href="./film_description.html?id=${film.id}" style="color: white; text-align: center;">
+            <h6 class="card-title" style="font-size: small;">
+                <br>${film.original_title}
+            </h6>
+        </a>
+        <button class="trashButton" style="align-items: center;" onclick="elimina_film_${typeAccount}(this)">
+            <i class="fas fa-trash-alt" aria-hidden="true"></i>
+        </button>
+        <a target="_blank" rel="noopener noreferrer">
+            <button class="modifybutton" style="align-items: center;" data-bs-toggle="modal" data-bs-target="#PriceModal" onclick="UpdatePrice(this.parentNode.parentElement.parentElement.id)">
+                <i class="fas fa-pen-alt"></i>
+            </button>
+        </a>
+
+    </div>
+    `;
+
+    
+    return card;
+    //document.getElementById("idFilm").value = this.parentNode.parentNode.parentnode.value
+}
+
+function UpdatePrice(id) {
+    document.getElementById('idFilm').value = id;
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    
+    for (film of active_user.film_vendita) {
+        if (film.id == id) {
+            document.getElementById('oldPrice').value = film.prezzo;
+        }
+    }
+
+}
+
+function modificaPrezzoFilm(idFilm, newPrice) {
+
+    console.log("idFilm: ",idFilm)
+    console.log("newPrice: ",newPrice)
+
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     venditori = JSON.parse(window.localStorage.getItem("venditori"));
 
-    for (venditore of venditori) {
-       
-        // tolgo film del venditore 
-        if (JSON.stringify(active_user) == JSON.stringify(venditore)) {
-            for (i = 0; i < venditore.film_vendita.length; i++) {
-                if (venditore.film_vendita[i] == id) {
-                    lista1 =  venditore.film_vendita.slice(0,i);
-                    lista2 = venditore.film_vendita.slice(i+1,venditore.film_vendita.length);
-                    venditore.film_vendita = lista1.concat(lista2);
+    //objIndex = myArray.findIndex((obj => obj.id == 1));
 
-                    lista3 =  active_user.film_vendita.slice(0,i);
-                    lista4 = active_user.film_vendita.slice(i+1,active_user.film_vendita.length);
-                    active_user.film_vendita = lista3.concat(lista4);
+    active_user.film_vendita = AggiornaPrezzoInLista(active_user.film_vendita, idFilm, newPrice)
 
-                    break;
-                }
-            }
+    for (let i = 0; i < venditori.length; i++) {
+        if (venditori[i].email == active_user.email) {
+            venditori[i].film_vendita = AggiornaPrezzoInLista(venditori[i].film_vendita, idFilm, newPrice)
+            break;
         }
-        //console.log(JSON.stringify(venditore));
     }
+
+
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+
+    alert("prezzo aggiornato con successo")
+
+    window.location.reload();
+
+    function AggiornaPrezzoInLista(list, idFilm, newPrice) {
+        objIndex = list.findIndex((obj => obj.id == idFilm));
+        list[objIndex].prezzo = newPrice;
+        return list
+    }
+
+}
+
+function elimina_film_venditore(btn) {
+
+    id = btn.parentNode.parentNode.id;
+
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    active_user.film_vendita = DeleteFilmFromList(id, active_user.film_vendita);
+
+    for (let i = 0; i < venditori.length; i++) {
+        if (venditori[i].email == active_user.email) {
+            venditori[i].film_vendita = DeleteFilmFromList(id, venditori[i].film_vendita)
+            break;
+        }
+    }
+
+
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
     window.localStorage.setItem("active_user", JSON.stringify(active_user));
     window.location.reload();
 
 }
 
+
 function elimina_film_cliente(btn) {
-    
+
+
     id = btn.parentNode.parentNode.id;
 
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     clienti = JSON.parse(window.localStorage.getItem("clienti"));
 
+    active_user.film_preferiti = DeleteFilmFromList(id, active_user.film_preferiti);
 
-    filtered = active_user.film_preferiti.filter(DeleteFilminArray, id);
-    active_user.film_preferiti = filtered;
+
 
     for (let i = 0; i < clienti.length; i++) {
         if (clienti[i].email == active_user.email) {
-            filtered = clienti[i].film_preferiti.filter(DeleteFilminArray, id);
-            clienti[i].film_preferiti = filtered;
+            clienti[i].film_preferiti = DeleteFilmFromList(id, clienti[i].film_preferiti)
             break;
         }
     }
@@ -194,14 +262,33 @@ function elimina_film_cliente(btn) {
     window.localStorage.setItem("clienti", JSON.stringify(clienti));
     window.location.reload();
 
+}
 
-    function DeleteFilminArray(idFilm) {
-    return idFilm != this;
+
+
+function DeleteFilmFromList(filmId, list) {
+
+    return list.filter(DeleteFilminArray, filmId);
+
+    function DeleteFilminArray(film) {
+        return film.id != this;
     }
 
 }
 
 
+
+
+
+function modifica_film_cliente(btn) {
+
+}
+
+function modifica_film_venditore(id) {
+    img
+    titolo
+    prezzo
+}
 
 
 // passo un film , mi crea una card per quel film 

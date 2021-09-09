@@ -19,7 +19,28 @@
 
     <!-- navigation -->
     <script>document.write(navbar)</script>
-      
+
+    <!-- OVERLAY modifica prezzo -->
+    <div class="modal fade" id="PriceModal" tabindex="-1" aria-labelledby="PriceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header" style="border-bottom: 0px;">
+                    <h5 class="modal-title" id="PriceModalLabel">Trailer</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="prezzoFilm" id="idFilm" >
+                  <label>old price</label>
+                  <input type="text" id="oldPrice" disabled="disabled">
+                  <label>new price</label>
+                  <input type="number" id="newPrice" min="0">
+                  <button onclick="modificaPrezzoFilm(document.getElementById('idFilm').value, document.getElementById('newPrice').value)">update Price</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- OVERLAY -->
+        
       
       <div id='containerpagPers' class="container" style='margin: 2em!important;'>
           <div id='row1' class="row">
@@ -127,6 +148,9 @@
                 <div id='rowStoricoAcquisti' class="row border-dark rounded" style="display: none; background-color: black; color:white">
                   <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
                 </div>
+
+
+                
 
               </div>
           </div>

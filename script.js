@@ -4,7 +4,7 @@ var data = {
     {"nomenegozio": "Blockbuster", "telefono": "345672890", "partitaiva": "5532090", "email": "x2@gmail.com", "password": "xx2", "type": "venditore",  "film_vendita": ["399566", "791373", "527774"]},
     ],
   "clienti" : [
-    {"nome": "Giacomo","cognome":"Rossi","data":"1996-10-04","telefono":"3465889485","via":"viale dei santi","numcivico":"3", "citta":"milano","provincia":"milano", "nazione":"italia","email":"giacomorossi@gmail.com","password":"1","type": "cliente","film_preferiti": ["10674", "10020"],"generi_preferiti": [],"film_acquistati": [{"id": "11224","data": "20-09-2020"}, {"id": "8587","data": "10-05-2020"}],"film_noleggiati": [{"id": "420818","data": "23-04-2020"}, {"id": "155","data": "23-04-2020"}]
+    {"nome": "Giacomo","cognome":"Rossi","data":"1996-10-04","telefono":"3465889485","via":"viale dei santi","numcivico":"3", "citta":"milano","provincia":"milano", "nazione":"italia","email":"giacomorossi@gmail.com","password":"1","type": "cliente","film_preferiti": [{"id": "10674"}, {"id":"10020"}],"generi_preferiti": [],"film_acquistati": [{"id": "11224","data": "20-09-2020"}, {"id": "8587","data": "10-05-2020"}],"film_noleggiati": [{"id": "420818","data": "23-04-2020"}, {"id": "155","data": "23-04-2020"}]
     },
   ]
 }
