@@ -11,10 +11,9 @@
 
     <!-- NavBar + Footer -->
     <script src="./NavbarAndFooter.js"></script>
-
-
-    <title>Pagina Personale</title>
+    <script src='./script.js'></script>
     <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
+    <title>Pagina Personale</title>
   </head>
   <body onload="CreatePage(),scegli_genere_preferenze()" >
 
@@ -38,9 +37,9 @@
                       <!-- javascript -->
                       <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
                           <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
-                            <span  id='completa_account_form'>
+                            <form  method='GET' id='completa_account_form'>
                              
-                            </span>
+                            </form>
                           </div>
                           <!---->
                           <script>
@@ -50,8 +49,10 @@
                                // console.log(response);
                                 for ( i=0; i<response.genres.length ; i++){
                                  generi = response.genres[i];
-                                  console.log( generi.name);
+                                // console.log( generi.name);
                                  input = document.createElement('input');
+                                 input.setAttribute('name','genere'+i);
+                                 input.setAttribute('value',generi.name);
                                  input.setAttribute('type',"checkbox");
                                  input.className='btn-check';
                                  input.setAttribute('id',generi.name);
@@ -63,20 +64,22 @@
                                  form.appendChild(input);
                                  form.appendChild(label);
                                 }
-                                button = document.createElement('button');
+                                button = document.createElement('input');
                                 button.setAttribute('type','submit');
                                 button.className='btn btn-primary';
                                 button.innerHTML='Invia';
                                 button.style='margin-top:0.5em;float:left';
-                                button.setAttribute('onclick','gestisci_generi_pref()');
+                                button.setAttribute('onclick','gestisci__generi_preferiti()');
                                 form.appendChild(button);
 
                                });
                             }
-                            function gestisci_generi_pref(){
-                              div = document.getElementById('completa_account_form');
-                              console.log(div.childNodes);
+                            function gestisci_generi_preferiti(){
+                              
                             }
+
+                            
+                            
 
                           </script>
                 </div> 
