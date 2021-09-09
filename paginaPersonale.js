@@ -31,8 +31,8 @@ function getFilmVenduti(){
     films = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
 
     for (film of films) {
-
-        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
+        console.log(film.id);
+        get("https://api.themoviedb.org/3/movie/"+film+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
             div = document.getElementById("div_film_venduti");
             card = cardOverlay(response);
             // console.log(card);
@@ -45,9 +45,10 @@ function getFilmVenduti(){
 
 function getFilmPreferiti(){ 
     films = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
-    //console.log(film); 
+    console.log(films); 
     for (film of films) {
-        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+        console.log(film);
+        get("https://api.themoviedb.org/3/movie/"+film+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
             div = document.getElementById("div_film_preferiti");
             card = cardOverlay(response);
             div.appendChild(card);

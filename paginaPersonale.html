@@ -76,6 +76,8 @@
                           </div>
                           <!---->
                           <script>
+                             act = JSON.parse(window.localStorage.getItem('active_user'));
+                                console.log(act);
                             var array_generi=[];
                             function scegli_genere_preferenze(){
                               form = document.getElementById('completa_account_form');
@@ -85,7 +87,6 @@
                                 for ( i=0; i<response.genres.length ; i++){
                                  generi = response.genres[i];
                                  array_generi.push(generi.name);        
-                                                         // console.log( generi.name);
                                  input = document.createElement('input');
                                 
                                  input.setAttribute('name',generi.name);
@@ -108,8 +109,7 @@
                                 button.setAttribute('onclick','gestisci_generi_preferiti()');
                                 form.appendChild(button);
 
-                                
-
+                            
                                });
                                
                             }
@@ -118,9 +118,7 @@
                             function gestisci_generi_preferiti(){
                               var array_generi_scelti =[];
                               console.log(array_generi);
-                              if ( get_from_url('Action=')=='on'){
-                                alert('trovato');
-                              }
+                            
                                 for (i=0 ; i<array_generi.length; i++ ){
                                    // console.log(array_generi[i]);
                                     if(get_from_url(array_generi[i]+'=')=='on'){
@@ -128,9 +126,9 @@
                                     }
                                
                                 }
-                               // alert(array_generi_scelti);
+                               
+                                window.localStorage.getItem('clienti')
                                 console.log(array_generi_scelti);
-                            //  console.log(array_generi);
                           
                               }
 

@@ -44,7 +44,7 @@ var data = {
         "nazione":"italia",
         "email":"giacomorossi@gmail.com",
         "password":"1",
-        "portafogli":   {   "metodo": "carta di credito",
+        "portafogli":  {   "metodo": "carta di credito",
                             "saldo": 100
                         },
         "type": "cliente",
@@ -66,7 +66,7 @@ var data = {
 }
 
 var structData = {
-    "venditore" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita": []},
+    "venditore" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita" : []},
     "cliente" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
 }
 
