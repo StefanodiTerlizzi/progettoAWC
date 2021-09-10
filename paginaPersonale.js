@@ -2,15 +2,14 @@ function get(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true); 
     xhr.responseType = 'json';
-  
-    xhr.onload = function() { // cosa fa quando ottengo la risposta
-      callback(xhr.response);
-    }; // fine cosa fa quando ottengo la risposta
-  
-    xhr.send();
-  
-}
 
+    xhr.onload = function() { // cosa fa quando ottengo la risposta
+    callback(xhr.response);
+    }; // fine cosa fa quando ottengo la risposta
+
+    xhr.send();
+
+}
 
 function CreatePage() {
     active_user = JSON.parse(window.localStorage.getItem("active_user"))
@@ -19,17 +18,15 @@ function CreatePage() {
     } else if (active_user.type == "venditore") {
         //createVenditore();
         document.getElementById("form_anagrafica").innerHTML += createVenditore2(JSON.parse(window.localStorage.getItem("active_user")) )
-        getFilms( document.getElementById("div_film_venduti"), active_user.film_vendita)
+        getFilms( document.getElementById("div_film_venduti"), active_user.film_vendita, "complete", true)
 
        
     } else if (active_user.type == "cliente") {
         //createCliente();
         document.getElementById("form_anagrafica").innerHTML += createCliente2(JSON.parse(window.localStorage.getItem("active_user")) )
-        getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti );
+        getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti);
         getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati ,'noButton');
-        getFilms( document.getElementById("rowStoricoNoleggi"),
-                    active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72),
-                    "noButton" );
+        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButton" );
                     // funzione anonima : definisce senza bisongo di crare una funzione , il comportamento della filter . 
                   //  differenza in millisecondi trasformata in secondi e poi in ore . se è maggiore di 72 ore il noleggio , non è più disponibile --> storico . 
         getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72), "noButton" );
@@ -42,13 +39,34 @@ function CreatePage() {
 // !ps: typeCard di default è "complete" a meno che si specificaquando viene chiamata la funzione
 //'complete' = card con bottoni , 'noButton'=no bottoni sulla card .  
 // crea card con film e le appende nel div .
-function getFilms(divToAppend, films, typeCard = "complete" ){
+function getFilms(divToAppend, films, typeCard = "complete", price = false ){
+    
+    function get(url, callback, otherParams = null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true); 
+        xhr.responseType = 'json';
+    
+        xhr.onload = function() { // cosa fa quando ottengo la risposta
+        callback(xhr.response, otherParams);
+        }; // fine cosa fa quando ottengo la risposta
+    
+        xhr.send();
+    
+    }
 
+    active_user = JSON.parse(window.localStorage.getItem("active_user"))
+    
     for (film of films) {
-        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
+        prices = null
+        if (price) {
+            objIndex = active_user.film_vendita.findIndex(obj => obj.id == film.id)
+            prices = {"vendita": active_user.film_vendita[objIndex].prezzoVendita, "noleggio": active_user.film_vendita[objIndex].prezzoNoleggio} 
+        }
+        
+        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response, otherParams){
             switch (typeCard) {
                 case "complete":
-                    card = cardOverlay(response);
+                    card = cardOverlay(response, otherParams);
                     break;
                 case "noButton":
                     card = cardOverlayNoButton(response);
@@ -57,7 +75,7 @@ function getFilms(divToAppend, films, typeCard = "complete" ){
                     break;
             }
             divToAppend.appendChild(card);
-         });
+         }, prices);
     }
 
 }
@@ -149,7 +167,7 @@ function cardOverlayNoButton(film) {
     //document.getElementById("idFilm").value = this.parentNode.parentNode.parentnode.value
 }
 
-function cardOverlay(film) {
+function cardOverlay(film, price = null) {
     var card = document.createElement("div");
     card.className = "card bg-dark text-white rounded";
     card.style = "width: 190px!important;margin: 0.5em;";
@@ -162,6 +180,25 @@ function cardOverlay(film) {
     if (active_user.type == "venditore" ) {
         typeAccount = "venditore";
     }
+
+    priceDiv = '';
+
+    if (price != null) {
+        priceDiv = `
+        <h6 class="card-title" style="font-size: lighter;">
+            <div>
+            prezzo vendita: ${price.vendita}
+            <button class="modifybutton"><i class="fas fa-pen-alt"></i></button>
+            </div>
+            <div>
+            prezzo Noleggio: ${price.noleggio}
+            <button class="modifybutton"><i class="fas fa-pen-alt"></i></button>
+            </div>
+        </h6>
+        `;
+    }
+
+
     //${ }--> consente di prendere il valore della variabile e concatenare testo
     card.innerHTML += `
     <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
@@ -171,6 +208,8 @@ function cardOverlay(film) {
                 ${film.original_title}
             </h6>
         </a>
+        ${priceDiv}
+
         <button class="trashButton" style="align-items: center;" onclick="elimina_film_${typeAccount}(this)">
             <i class="fas fa-trash-alt" aria-hidden="true"></i>
         </button>
@@ -179,7 +218,6 @@ function cardOverlay(film) {
                 <i class="fas fa-pen-alt"></i>
             </button>
         </a>
-
     </div>
     `;
 
