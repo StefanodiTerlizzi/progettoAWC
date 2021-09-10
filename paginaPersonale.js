@@ -1,19 +1,3 @@
-
-function CreatePage() {
-    if (JSON.parse(window.localStorage.getItem("active_user"))==null) {
-       
-    } else if (JSON.parse(window.localStorage.getItem("active_user")).type == "venditore") {
-        createVenditore();
-        getFilmVenduti();
-
-       
-    } else if (JSON.parse(window.localStorage.getItem("active_user")).type == "cliente") {
-        createCliente();
-        getFilmPreferiti();
-    } 
-    
-}
-
 function get(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true); 
@@ -25,41 +9,37 @@ function get(url, callback) {
   
     xhr.send();
   
-  }
+}
 
-function getFilmVenduti(){ 
-    films = JSON.parse(window.localStorage.getItem("active_user")).film_vendita;
 
-    for (film of films) {
-        console.log(film.id);
-        get("https://api.themoviedb.org/3/movie/"+film+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
-            div = document.getElementById("div_film_venduti");
-            card = cardOverlay(response);
-            // console.log(card);
-            div.appendChild(card);
-        });
-   
+function CreatePage() {
+    active_user = JSON.parse(window.localStorage.getItem("active_user"))
+    if (active_user==null) {
+       
+    } else if (active_user.type == "venditore") {
+        //createVenditore();
+        document.getElementById("form_anagrafica").innerHTML += createVenditore2(JSON.parse(window.localStorage.getItem("active_user")) )
+        getFilms( document.getElementById("div_film_venduti"), active_user.film_vendita)
+
+       
+    } else if (active_user.type == "cliente") {
+        //createCliente();
+        document.getElementById("form_anagrafica").innerHTML += createCliente2(JSON.parse(window.localStorage.getItem("active_user")) )
+        getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti );
+        getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati );
+        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-film.data) / 1000 ) / 3600) > 72) );
+        getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-film.data) / 1000 ) / 3600) <= 72) );
+
     }
 
 }
 
-function getFilmPreferiti(){ 
-    films = JSON.parse(window.localStorage.getItem("active_user")).film_preferiti;
-    console.log(films); 
-    for (film of films) {
-        console.log(film);
-        get("https://api.themoviedb.org/3/movie/"+film+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
-            div = document.getElementById("div_film_preferiti");
-            card = cardOverlay(response);
-            div.appendChild(card);
-         });
-    }
-}
+
 
 // TODO: generalizzare getFilmPreferiti, getFilmVenduti
-function getFilms(divToAppend, films){ 
-    for(i=0 ; i<films.length; i++){
-        get("https://api.themoviedb.org/3/movie/"+films[i]+"?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+function getFilms(divToAppend, films){
+    for (film of films) {
+        get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
             card = cardOverlay(response);
             divToAppend.appendChild(card);
          });
@@ -601,7 +581,7 @@ function controllo(campo){
         return false;
     }
 }
-
+// TODO: cancellare createCliente
 function createCliente() {
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     var form = document.getElementById('form_anagrafica');
@@ -701,7 +681,7 @@ function createCliente() {
 
     
 }
-
+// TODO: cancellare createVenditore
 function createVenditore() {
     utente = JSON.parse(window.localStorage.getItem("active_user"));
     form = document.getElementById("form_anagrafica");
@@ -775,10 +755,107 @@ function createVenditore() {
     
 }
 
+function createVenditore2(venditore) {
+    return `
+    <div class="mb-3">
+        <label class="form-label" for="Nome del negozio"><b>Nome del negozio:</b></label>
+        <input type="text" value="${venditore.nomenegozio}" id="Nome del negozio" name="nomenegozio" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Numero di Telefono"><b>Numero di Telefono:</b></label>
+        <input type="text" value="${venditore.telefono}" id="Numero di Telefono" name="telefono" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Partita Iva"><b>Partita Iva:</b></label>
+        <input type="text" value="${venditore.partitaiva}" id="Partita Iva" name="partitaiva" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Saldo:</b></label>
+        <input class="form-control" type="text" value="${venditore.portafogli.saldo}"  disabled readonly>
+    </div>
+    <div style="margin-bottom: 1em;">
+        <a href="#" onclick="cambiaPassword()">Cambia Password</a>
+    </div>
+    <div class="mb-3" id="changePassword" style="display: none; margin-bottom: 1em;">
+        <label class="form-label" for="Password"><b>Password:</b></label>
+        <input type="password" id="Password" name="password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3" id="changeConfPassword" style="display: none; margin-bottom: 1em;">
+        <label class="form-label" for="Conferma password" style="margin-right: 0.2em !important;"><b>Conferma password:</b></label>
+        <input type="password" id="Conferma password" name="conferma_password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <a><button type="submit" id="Aggiorna_Parametri" style="display: block;" disabled="" onclick="AggiornaParametri()">Aggiorna</button></a>
+    <button type="button" id="Elimina_Account" style="width: 150px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
+    `;
+}
+// TODO: fare select box con i imetodi e far apparire quello scelto dall'utente come default
+function createCliente2(cliente) {
+    return `
+    <div class="mb-3">
+        <label class="form-label" for="Nome"><b>Nome:</b></label>
+        <input type="text" value="${cliente.nome}" id="Nome" name="nome" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Cognome"><b>Cognome:</b></label>
+        <input type="text" value="${cliente.cognome}" id="Cognome" name="cognome" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Data di nascita"><b>Data di nascita:</b></label>
+        <input type="date" value="${cliente.data}" id="Data di nascita" name="data" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Telefono"><b>Telefono:</b></label>
+        <input type="text" value="${cliente.telefono}" id="Telefono" name="telefono" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Via"><b>Via:</b></label>
+        <input type="text" value="${cliente.via}" id="Via" name="via" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Numero Civico"><b>Numero Civico:</b></label>
+        <input type="text" value="${cliente.numcivico}" id="Numero Civico" name="numcivico" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Città"><b>Città:</b></label>
+        <input type="text" value="${cliente.citta}" id="Città" name="citta" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Provincia"><b>Provincia:</b></label>
+        <input type="text" value="${cliente.provincia}" id="Provincia" name="provincia" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="Nazione"><b>Nazione:</b></label>
+        <input type="text" value="${cliente.nazione}" id="Nazione" name="nazione" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Saldo:</b></label>
+        <input class="form-control" type="text" value="${cliente.portafogli.metodo}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Saldo:</b></label>
+        <input class="form-control" type="text" value="${cliente.portafogli.saldo}"  disabled readonly>
+    </div>
+    <div style="margin-bottom: 1em;">
+        <a href="#" onclick="cambiaPassword()">Cambia Password</a>
+    </div>
+    <div class="mb-3" id="changePassword" style="display: none; margin-bottom: 1em;"><label class="form-label" for="Password"><b>Password:</b></label>
+        <input type="password" id="Password" name="password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3" id="changeConfPassword" style="display: none; margin-bottom: 1em;">
+        <label class="form-label" for="Conferma password"><b>Conferma password:</b></label>
+        <input type="password" id="Conferma password" name="conferma_password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <a>
+        <button type="submit" style="display: block;" id="Aggiorna_Parametri" disabled="" onclick="AggiornaParametri()">Aggiorna</button>
+    </a>
+    <button type="button" id="Elimina_Account" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
+
+    `;
+}
+
 function cambiaPassword(){
     password = document.getElementById("changePassword");
     password.style.display="block";
-
 
     /*conf_password = document.getElementById("changeConfPassword");
     conf_password.style.display="block";

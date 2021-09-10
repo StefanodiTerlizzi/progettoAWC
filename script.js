@@ -58,8 +58,8 @@ var data = {
                                 {"id": "8587","data": "10-05-2020"}
                             ],
 
-        "film_noleggiati": [    {"id": "420818","data": "23-04-2020"}, 
-                                {"id": "155","data": "23-04-2020"}
+        "film_noleggiati": [    {"id": "420818","data": 1631271727109}, 
+                                {"id": "155","data": 1631271727109}
                             ]
     },
   ]
@@ -1098,6 +1098,7 @@ function createCarousel(id, films) {
 }
 
 function createCompany(obj) {
+
     var card = `
     <div class="card text-white bg-dark mb-3" style="max-width: 540px;">
         <div class="row g-0">
@@ -1135,10 +1136,6 @@ function createCompany(obj) {
 }
 
 function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
-    //console.log("emailCliente: ", typeof(emailCliente))
-    //console.log("emailVenditore: ", typeof(emailVenditore))
-    //console.log("idFilm: ", typeof(idFilm))
-    //console.log("price: ", typeof(price))
 
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     clienti = JSON.parse(window.localStorage.getItem("clienti"));
@@ -1146,6 +1143,44 @@ function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
 
     if (active_user.portafogli.saldo < price) {
         alert("non hai abbastanza soldi per compare questo film")
+        return;
+    }
+
+    if (active_user.film_acquistati.find(element => element.id == idFilm) != undefined) {
+        alert("film già acquistato")
+        return;
+    }
+
+    active_user.portafogli.saldo -= price;
+//    active_user.film_acquistati.push({"id": idFilm, "data": (new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear())})
+    active_user.film_acquistati.push({"id": idFilm, "data": new Date()})
+
+    index = clienti.findIndex(cliente => cliente.email === emailCliente);
+    clienti[index] = active_user;
+
+    index = venditori.findIndex(venditore => venditore.email === emailVenditore);
+    venditori[index].portafogli.saldo += price;
+
+
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    window.localStorage.setItem("clienti", JSON.stringify(clienti));
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
+}
+
+function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
+    
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    clienti = JSON.parse(window.localStorage.getItem("clienti"));
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    if (active_user.portafogli.saldo < price) {
+        alert("non hai abbastanza soldi per compare questo film")
+        return;
+    }
+
+    if (active_user.film_acquistati.find(element => element.id == idFilm) != undefined) {
+        alert("film già acquistato")
         return;
     }
 

@@ -93,8 +93,9 @@
                                  input.setAttribute('type',"checkbox");
                                  input.className='btn-check';
                                  input.setAttribute('id',generi.name);
-                                 label.style='margin-right:0.2em!important; ';
                                  label = document.createElement('label');
+                                 label.style='margin-right:0.2em!important; ';
+
                                  label.className='btn btn-outline-secondary';
                                  label.setAttribute('for',generi.name);
                                  label.innerHTML=generi.name;
@@ -159,6 +160,14 @@
                   <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
                 </div>
 
+                <div id='rowStoricoNoleggi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Storico Noleggi</h5>
+                </div>
+
+                <div id='rowNoleggiAttivi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
+                </div>
+
 
                 
 
@@ -190,6 +199,8 @@
               document.getElementById("div_film_preferiti").style.display = "";
               document.getElementById("completa_account").style.display="";
               document.getElementById("rowStoricoAcquisti").style.display="";
+              document.getElementById("rowStoricoNoleggi").style.display="";
+              document.getElementById("rowNoleggiAttivi").style.display="";
             }
           </script>
         
