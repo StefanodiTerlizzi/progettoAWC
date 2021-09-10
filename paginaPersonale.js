@@ -26,8 +26,12 @@ function CreatePage() {
         //createCliente();
         document.getElementById("form_anagrafica").innerHTML += createCliente2(JSON.parse(window.localStorage.getItem("active_user")) )
         getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti );
-        getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati );
-        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButton" );
+        getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati ,'noButton');
+        getFilms( document.getElementById("rowStoricoNoleggi"),
+                    active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72),
+                    "noButton" );
+                    // funzione anonima : definisce senza bisongo di crare una funzione , il comportamento della filter . 
+                  //  differenza in millisecondi trasformata in secondi e poi in ore . se è maggiore di 72 ore il noleggio , non è più disponibile --> storico . 
         getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72), "noButton" );
 
     }
@@ -36,6 +40,8 @@ function CreatePage() {
 
 
 // !ps: typeCard di default è "complete" a meno che si specificaquando viene chiamata la funzione
+//'complete' = card con bottoni , 'noButton'=no bottoni sulla card .  
+// crea card con film e le appende nel div .
 function getFilms(divToAppend, films, typeCard = "complete" ){
 
     for (film of films) {
@@ -156,13 +162,13 @@ function cardOverlay(film) {
     if (active_user.type == "venditore" ) {
         typeAccount = "venditore";
     }
-
+    //${ }--> consente di prendere il valore della variabile e concatenare testo
     card.innerHTML += `
     <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
-    <div class=" rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
+    <div class="rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
         <a href="./film_description.html?id=${film.id}" style="color: white; text-align: center;">
-            <h6 class="card-title" style="font-size: small;">
-                <br>${film.original_title}
+            <h6 class="card-title" style="font-size: lighter;">
+                ${film.original_title}
             </h6>
         </a>
         <button class="trashButton" style="align-items: center;" onclick="elimina_film_${typeAccount}(this)">
@@ -196,6 +202,8 @@ function UpdatePrice(id) {
 
 }
 
+
+//idFilm = input nascosto nel modal 
 function modificaPrezzoVendita(idFilm, newPrice) {
 
     if (newPrice == "" || Number(newPrice) < 0) {
@@ -211,12 +219,8 @@ function modificaPrezzoVendita(idFilm, newPrice) {
 
     active_user.film_vendita = AggiornaPrezzoInLista(active_user.film_vendita, idFilm, newPrice)
 
-    for (let i = 0; i < venditori.length; i++) {
-        if (venditori[i].email == active_user.email) {
-            venditori[i].film_vendita = AggiornaPrezzoInLista(venditori[i].film_vendita, idFilm, newPrice)
-            break;
-        }
-    }
+    objIndex = venditori.findIndex(obj => obj.email == active_user.email) ;
+    venditori[objIndex] = active_user;
 
 
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
@@ -224,8 +228,11 @@ function modificaPrezzoVendita(idFilm, newPrice) {
 
     alert("prezzo Vendita aggiornato con successo");
 
+    //ricarica
     window.location.reload();
 
+    // pattern matching . 
+    //obj è ogni ogg della lista , controlla matching . 
     function AggiornaPrezzoInLista(list, idFilm, newPrice) {
         objIndex = list.findIndex((obj => obj.id == idFilm));
         list[objIndex].prezzoVendita = newPrice;
@@ -252,13 +259,9 @@ function modificaPrezzoNoleggio(idFilm, newPrice) {
     //objIndex = myArray.findIndex((obj => obj.id == 1));
 
     active_user.film_vendita = AggiornaPrezzoInLista(active_user.film_vendita, idFilm, newPrice)
-
-    for (let i = 0; i < venditori.length; i++) {
-        if (venditori[i].email == active_user.email) {
-            venditori[i].film_vendita = AggiornaPrezzoInLista(venditori[i].film_vendita, idFilm, newPrice)
-            break;
-        }
-    }
+        
+    objIndex = venditori.findIndex(obj => obj.email == active_user.email) ;
+    venditori[objIndex] = active_user;
 
 
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
@@ -303,12 +306,12 @@ function elimina_film_venditore(btn) {
 
 function elimina_film_cliente(btn) {
 
-
+    //prende id della card che contiene il film reltivo al bottone
     id = btn.parentNode.parentNode.id;
 
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     clienti = JSON.parse(window.localStorage.getItem("clienti"));
-
+// assegno a film preferiti , la nuova lista fitrata . 
     active_user.film_preferiti = DeleteFilmFromList(id, active_user.film_preferiti);
 
 
@@ -327,7 +330,6 @@ function elimina_film_cliente(btn) {
 }
 
 
-
 function DeleteFilmFromList(filmId, list) {
 
     return list.filter(DeleteFilminArray, filmId);
@@ -335,11 +337,7 @@ function DeleteFilmFromList(filmId, list) {
     function DeleteFilminArray(film) {
         return film.id != this;
     }
-
 }
-
-
-
 
 
 function modifica_film_cliente(btn) {
@@ -616,180 +614,8 @@ function controllo(campo){
         return false;
     }
 }
-// TODO: cancellare createCliente
-function createCliente() {
-    active_user = JSON.parse(window.localStorage.getItem("active_user"));
-    var form = document.getElementById('form_anagrafica');
-    nome = document.createElement("input");
-    nome.setAttribute("type","text");
-    nome.setAttribute("value",active_user.nome);
-    //nome.setAttribute("onchange", "checkparameters_registrazione(this)")
-    form.appendChild(createFormElement(nome,"Nome", "nome"));
-    // campo cognome
-    cognome = document.createElement("input");
-    cognome.setAttribute("type","text");
-    cognome.setAttribute("value",active_user.cognome);
-    form.appendChild(createFormElement(cognome,"Cognome", "cognome"));
-    // campo data
-    data = document.createElement("input");
-    data.setAttribute("type","date");
-    data.setAttribute("value",active_user.data);
-    form.appendChild(createFormElement(data,"Data di nascita", "data"));
-    //campo telefono
-    telefono = document.createElement("input");
-    telefono.setAttribute("type","text");
-    telefono.setAttribute("value",active_user.telefono);
-    form.appendChild(createFormElement(telefono,"Telefono", "telefono"));
-    
-    // campo via
-    via = document.createElement("input");
-    via.setAttribute("type","text");
-    via.setAttribute("value",active_user.via);
-    form.appendChild(createFormElement(via,"Via","via"));
-    // campo numero civico
-    numCivico = document.createElement("input");
-    numCivico.setAttribute("type","text");
-    numCivico.setAttribute("value",active_user.numcivico);
-    form.appendChild(createFormElement(numCivico, "Numero Civico","numcivico"));
-    // campo città
-    citta = document.createElement("input");
-    citta.setAttribute("type","text");
-    citta.setAttribute("value", active_user.citta);
-    form.appendChild(createFormElement(citta, "Città","citta"));
-    // campo provincia
-    provincia = document.createElement("input");
-    provincia.setAttribute("type","text");
-    provincia.setAttribute("value", active_user.provincia);
-    form.appendChild(createFormElement(provincia, "Provincia","provincia"));
-    // campo nazione
-    nazione = document.createElement("input");
-    nazione.setAttribute("type","text");
-    nazione.setAttribute("value", active_user.nazione);
-    form.appendChild(createFormElement(nazione, "Nazione","nazione"));
-    
-    cambia_password_div = document.createElement("div");
-    cambia_password = document.createElement("a")
-    cambia_password_div.appendChild(cambia_password);
-    cambia_password.setAttribute("href","#");
-    cambia_password.setAttribute("onclick","cambiaPassword()");
-    cambia_password.innerHTML="Cambia Password";
-    cambia_password_div.style = "margin-bottom:1em";
-    form.appendChild(cambia_password_div);
 
-    password = document.createElement("input");
-    password.setAttribute("type","password");
-    password_div = createFormElement(password,"Password", "password");
-    password_div.setAttribute("id", "changePassword");
-    password_div.style="display:none; margin-bottom:1em;"
-    form.appendChild(password_div);
-
-    conf_password = document.createElement("input");
-    conf_password.setAttribute("type","password");
-    conf_password_div = createFormElement(conf_password,"Conferma password", "conferma_password");
-    conf_password_div.setAttribute("id", "changeConfPassword");
-    conf_password_div.style="display:none; margin-bottom:1em;"
-    form.appendChild(conf_password_div);
-
-
-    //button submit
-    var btn_submit_link = document.createElement("a");
-    //btn_submit_link.setAttribute("href", "./index.html");
-    form.appendChild(btn_submit_link);
-    btn_submit = document.createElement("button");
-   // btn_submit.className = "btn btn-primary";
-    btn_submit.setAttribute("type", "submit");
-    btn_submit.style.display='block';
-    btn_submit.setAttribute("id", "Aggiorna_Parametri");
-    btn_submit.disabled = true;
-    btn_submit.setAttribute("onclick", "AggiornaParametri()");
-    btn_submit.innerHTML = "Aggiorna";
-    btn_submit_link.appendChild(btn_submit);
-    
-    var btn_elimina = document.createElement("button");
-    btn_elimina.setAttribute("type","button");
-   // btn_elimina.className = "btn btn-danger";
-    btn_elimina.setAttribute("id","Elimina_Account");
-    btn_elimina.setAttribute("data-bs-toggle","modal");
-    btn_elimina.setAttribute("data-bs-target","#exampleModal");
-    btn_elimina.innerHTML = "Elimina Account";
-    form.appendChild(btn_elimina);
-
-    
-}
-// TODO: cancellare createVenditore
-function createVenditore() {
-    utente = JSON.parse(window.localStorage.getItem("active_user"));
-    form = document.getElementById("form_anagrafica");
-   
-    nome_negozio = document.createElement("input");
-    nome_negozio.setAttribute("type","text");
-    nome_negozio.setAttribute("value",utente.nomenegozio);
-    form.appendChild(createFormElement(nome_negozio,"Nome del negozio", "nomenegozio"));
-    
-    
-    numero_di_telefono = document.createElement("input");
-    numero_di_telefono.setAttribute("type","text");
-    numero_di_telefono.setAttribute("value",utente.telefono);
-    form.appendChild(createFormElement(numero_di_telefono,"Numero di Telefono", "telefono"));
-    
-    p_iva = document.createElement("input");
-    p_iva.setAttribute("type","text");
-    p_iva.setAttribute("value",utente.partitaiva)
-    form.appendChild(createFormElement(p_iva,"Partita Iva", "partitaiva"));
-    
-    cambia_password_div = document.createElement("div");
-    cambia_password = document.createElement("a")
-    cambia_password_div.appendChild(cambia_password);
-    cambia_password.setAttribute("href","#");
-    cambia_password.setAttribute("onclick","cambiaPassword()");
-    cambia_password.innerHTML="Cambia Password";
-    cambia_password_div.style = "margin-bottom:1em";
-    form.appendChild(cambia_password_div);
-
-    password = document.createElement("input");
-    password.setAttribute("type","password");
-    password_div = createFormElement(password,"Password", "password");
-    password_div.setAttribute("id", "changePassword");
-    password_div.style="display:none; margin-bottom:1em;"
-    form.appendChild(password_div);
-
-    conf_password = document.createElement("input");
-    conf_password.setAttribute("type","password");
-    conf_password_div = createFormElement(conf_password,"Conferma password", "conferma_password");
-    conf_password_div.setAttribute("id", "changeConfPassword");
-    conf_password_div.style="display:none; margin-bottom:1em;"
-    form.appendChild(conf_password_div);
-
-
-
-    //button submit
-    var btn_submit_link = document.createElement("a");
-    //btn_submit_link.setAttribute("href", "./index.html");
-    form.appendChild(btn_submit_link);
-    btn_submit = document.createElement("button");
-    btn_submit.setAttribute("type", "submit");
-    btn_submit.setAttribute("id", "Aggiorna_Parametri");
-    btn_submit.style.display='block';
-    btn_submit.disabled = true;
-    btn_submit.setAttribute("onclick", "AggiornaParametri()");
-    btn_submit.innerHTML = "Aggiorna";
-    btn_submit_link.appendChild(btn_submit);
-
-    var btn_elimina = document.createElement("button");
-    btn_elimina.setAttribute("type","button");
-   // btn_elimina.className = "btn btn-danger";
-    btn_elimina.setAttribute("id","Elimina_Account");
-    btn_elimina.style='width:150px!important;'
-    btn_elimina.setAttribute("data-bs-toggle","modal");
-    btn_elimina.setAttribute("data-bs-target","#exampleModal");
-    btn_elimina.innerHTML = "Elimina Account";
-    form.appendChild(btn_elimina);
-    
-
-
-    
-}
-
+//crea anagrafica venditoree
 function createVenditore2(venditore) {
     return `
     <div class="mb-3">
@@ -824,6 +650,7 @@ function createVenditore2(venditore) {
     `;
 }
 // TODO: fare select box con i imetodi e far apparire quello scelto dall'utente come default
+// crea anagrafica del cliente ;
 function createCliente2(cliente) {
     return `
     <div class="mb-3">
