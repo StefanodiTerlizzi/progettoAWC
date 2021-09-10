@@ -27,23 +27,33 @@ function CreatePage() {
         document.getElementById("form_anagrafica").innerHTML += createCliente2(JSON.parse(window.localStorage.getItem("active_user")) )
         getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti );
         getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati );
-        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-film.data) / 1000 ) / 3600) > 72) );
-        getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-film.data) / 1000 ) / 3600) <= 72) );
+        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButton" );
+        getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72), "noButton" );
 
     }
 
 }
 
 
+// !ps: typeCard di default è "complete" a meno che si specificaquando viene chiamata la funzione
+function getFilms(divToAppend, films, typeCard = "complete" ){
 
-// TODO: generalizzare getFilmPreferiti, getFilmVenduti
-function getFilms(divToAppend, films){
     for (film of films) {
         get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
-            card = cardOverlay(response);
+            switch (typeCard) {
+                case "complete":
+                    card = cardOverlay(response);
+                    break;
+                case "noButton":
+                    card = cardOverlayNoButton(response);
+                    break;
+                default:
+                    break;
+            }
             divToAppend.appendChild(card);
          });
     }
+
 }
 
 
@@ -106,6 +116,31 @@ function XcardOverlay(film) {
     div_ov.appendChild(btn_el);
 
     return card;    
+}
+
+function cardOverlayNoButton(film) {
+    var card = document.createElement("div");
+    card.className = "card bg-dark text-white rounded";
+    card.style = "width: 190px!important;margin: 0.5em;";
+    card.style.display = "inline-block";
+    card.setAttribute("id", film.id);
+    console.log(card);
+    card.style.borderRadius = "1.5em";
+
+    card.innerHTML += `
+        <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
+        <div class=" rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
+            <a href="./film_description.html?id=${film.id}" style="color: white; text-align: center;">
+                <h6 class="card-title" style="font-size: small;">
+                    <br>${film.original_title}
+                </h6>
+            </a>
+        </div>
+    `;
+
+    
+    return card;
+    //document.getElementById("idFilm").value = this.parentNode.parentNode.parentnode.value
 }
 
 function cardOverlay(film) {
@@ -907,4 +942,57 @@ function AggiornaParametri(){
     }
 
     
+}
+
+
+
+function getStatsNegozio() {
+    active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    txt = `
+    <p>prezzo medio di vendita: ${prezzo_medio_vendita(active_user.film_vendita)}</p>
+    <p>prezzo medio di noleggio: ${prezzo_medio_noleggio(active_user.film_vendita)}</p>
+    <p>totale vendite: ${numero_vendite(active_user.film_vendita)}</p>
+    <p>totale noleggi: ${numero_noleggi(active_user.film_vendita)}</p>
+    `;
+    return txt
+
+
+
+    function prezzo_medio_vendita(ListFilmVendita) {
+        var prezzo_medio_vendita = 0.0;
+        var numero_vendite = 0;
+        for (film of ListFilmVendita) {
+            prezzo_medio_vendita += film.prezzoVendita;
+            numero_vendite += 1;
+        }
+        return prezzo_medio_vendita / numero_vendite
+    }
+
+    function prezzo_medio_noleggio(ListFilmNoleggio) {
+        var prezzo_medio_noleggio = 0.0;
+        var numero_noleggi = 0;
+        for (film of ListFilmNoleggio) {
+            prezzo_medio_noleggio += film.prezzoNoleggio;
+            numero_noleggi += 1;
+        }
+        return prezzo_medio_noleggio / numero_noleggi
+    }
+
+    function numero_vendite(ListFilm) {
+        var numero_vendite = 0;
+        for (film of ListFilm) {
+            numero_vendite += film.vendite.length;
+        }
+        return numero_vendite
+    }
+
+    function numero_noleggi(ListFilm) {
+        var numero_noleggi = 0;
+        for (film of ListFilm) {
+            numero_noleggi += film.noleggi.length;
+        }
+        return numero_noleggi
+    }
+    
+
 }

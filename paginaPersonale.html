@@ -140,7 +140,31 @@
                             
 
                           </script>
-                </div> 
+                </div>
+                <!--statistiche-->
+                <div class="accordion accordion-flush text-dark" id="Statistiche">
+                  <script>
+                    // numero film in vendita
+                    // media prezzo vendita
+                    // numero prezzo noleggi 
+                  </script>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-Statistiche" aria-expanded="false" aria-controls="flush-Statistiche">
+                        Statistiche Negozio
+                      </button>
+                    </h2>
+                    <div id="flush-Statistiche" class="accordion-collapse collapse" aria-labelledby="flush-Statistiche" data-bs-parent="#accordionFlush">
+                      <div class="accordion-body">
+                        <script>
+                          document.write(getStatsNegozio())
+                        </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--ststistiche-->
+
                 <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
                   <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
                     <!-- javascript -->

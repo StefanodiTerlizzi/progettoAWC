@@ -7,12 +7,12 @@ var data = {
         "password": "xx1",
         "portafogli":   {   "saldo": 0  },
         "type": "venditore",
-        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1},
-                            {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "379686","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "588228","prezzoVendita": 1, "prezzoNoleggio": 0.5}
+        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "379686","prezzoVendita": 2, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
+                            {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
+                            {"id": "588228","prezzoVendita": 2, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []}
                         ]
     },
 
@@ -23,12 +23,12 @@ var data = {
         "password": "xx2",
         "portafogli":   {   "saldo": 0  },
         "type": "venditore",
-        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1},
-                            {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "379686","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5},
-                            {"id": "588228","prezzoVendita": 1, "prezzoNoleggio": 0.5}
+        "film_vendita": [   {"id": "399566","prezzoVendita": 10, "prezzoNoleggio": 0.5, "vendite": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "791373","prezzoVendita": 20, "prezzoNoleggio": 1, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "527774","prezzoVendita": 30, "prezzoNoleggio": 0.5, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+                            {"id": "379686","prezzoVendita": 40, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
+                            {"id": "385128","prezzoVendita": 50, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
+                            {"id": "588228","prezzoVendita": 60, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []}
                         ]
     },
     ],
@@ -54,13 +54,13 @@ var data = {
 
         "generi_preferiti": [],
 
-        "film_acquistati":  [   {"id": "11224","data": "20-09-2020"},
-                                {"id": "8587","data": "10-05-2020"}
+        "film_acquistati":  [   {"id": "11224","data": "2021-09-10T13:43:12.297Z"},
+                                {"id": "8587","data": "2021-09-10T13:43:12.297Z"}
                             ],
 
-        "film_noleggiati": [    {"id": "420818","data": 1631271727109}, 
-                                {"id": "566525","data": 1631271727109},
-                                {"id": "155","data": 1531271727109}
+        "film_noleggiati": [    {"id": "420818","data": "2021-09-10T13:43:12.297Z"}, 
+                                {"id": "566525","data": "2021-09-10T13:43:12.297Z"},
+                                {"id": "155","data": "2020-09-10T13:43:12.297Z"}
                             ]
     },
   ]
@@ -1161,6 +1161,9 @@ function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
 
     index = venditori.findIndex(venditore => venditore.email === emailVenditore);
     venditori[index].portafogli.saldo += price;
+    
+    indexFilm = venditori[index].film_vendita.findIndex(film => film.id === idFilm);
+    venditori[index].film_vendita[indexFilm].vendite.push(new Date())
 
 
     window.localStorage.setItem("active_user", JSON.stringify(active_user));
@@ -1200,3 +1203,6 @@ function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
 
 }
+
+
+// TODO: controllare new Date(), restituisce oraio italiano?
