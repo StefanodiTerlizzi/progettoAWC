@@ -887,7 +887,7 @@ function createCarouselRecensioni(recensioni) {
         if (first) {
             elementi += `
                 <div class="carousel-item active">
-                <p>valutazione: ${recensione.valutazione}</p>
+                <p>voto: ${recensione.voto}</p>
                 <p>titolo: ${recensione.titolo}</p>
                 <p>autore: ${recensione.autore}</p>
                 <p>contenuto: ${recensione.contenuto}</p>
@@ -897,7 +897,7 @@ function createCarouselRecensioni(recensioni) {
         } else {
             elementi += `
                 <div class="carousel-item">
-                <p>valutazione: ${recensione.valutazione}</p>
+                <p>toto: ${recensione.voto}</p>
                 <p>titolo: ${recensione.titolo}</p>
                 <p>autore: ${recensione.autore}</p>
                 <p>contenuto: ${recensione.contenuto}</p>
