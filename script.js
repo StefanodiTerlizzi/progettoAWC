@@ -7,13 +7,16 @@ var data = {
         "password": "xx1",
         "portafogli":   {   "saldo": 0  },
         "type": "venditore",
-        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
+        "film_vendita": [   {"id": "399566","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"], "noleggi": ["2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
                             {"id": "791373","prezzoVendita": 2, "prezzoNoleggio": 1, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
                             {"id": "527774","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
                             {"id": "379686","prezzoVendita": 2, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
                             {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
                             {"id": "588228","prezzoVendita": 2, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []}
-                        ]
+                        ],
+        "recensioni": [ {"valutazione": 5, "titolo": "ottimo", "contenuto": "film arrivato subito in alta qualità", "autore": "giacomorossi@gmail.com"},
+                        {"valutazione": 4, "titolo": "ottimo", "contenuto": "film arrivato subito in alta qualità", "autore": "giacomorossi@gmail.com"},
+                      ]
     },
 
     {   "nomenegozio": "Blockbuster",

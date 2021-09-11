@@ -19,7 +19,6 @@ function CreatePage() {
         //createVenditore();
         document.getElementById("form_anagrafica").innerHTML += createVenditore2(JSON.parse(window.localStorage.getItem("active_user")) )
         getFilms( document.getElementById("div_film_venduti"), active_user.film_vendita, "complete", true)
-
        
     } else if (active_user.type == "cliente") {
         //createCliente();
@@ -62,7 +61,7 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
             objIndex = active_user.film_vendita.findIndex(obj => obj.id == film.id)
             prices = {"vendita": active_user.film_vendita[objIndex].prezzoVendita, "noleggio": active_user.film_vendita[objIndex].prezzoNoleggio} 
         }
-        
+     
         get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response, otherParams){
             switch (typeCard) {
                 case "complete":
@@ -76,6 +75,7 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
             }
             divToAppend.appendChild(card);
          }, prices);
+         
     }
 
 }
@@ -188,11 +188,9 @@ function cardOverlay(film, price = null) {
         <h6 class="card-title" style="font-size: lighter;">
             <div>
             prezzo vendita: ${price.vendita}
-            <button class="modifybutton"><i class="fas fa-pen-alt"></i></button>
             </div>
             <div>
             prezzo Noleggio: ${price.noleggio}
-            <button class="modifybutton"><i class="fas fa-pen-alt"></i></button>
             </div>
         </h6>
         `;
@@ -818,6 +816,8 @@ function getStatsNegozio() {
     <p>prezzo medio di noleggio: ${prezzo_medio_noleggio(active_user.film_vendita)}</p>
     <p>totale vendite: ${numero_vendite(active_user.film_vendita)}</p>
     <p>totale noleggi: ${numero_noleggi(active_user.film_vendita)}</p>
+    <p>film più venduto: ${filmPiuVenduto(active_user.film_vendita)}</p>
+    <p>film più noleggiato: ${filmPiuNoleggiato(active_user.film_vendita)}</p>
     `;
     return txt
 
@@ -858,6 +858,69 @@ function getStatsNegozio() {
         }
         return numero_noleggi
     }
+
+    function filmPiuVenduto(ListFilm) {
+        ListFilm.sort((a, b) => b.vendite.length - a.vendite.length)
+        return ListFilm[0].id
+    }
+
+    function filmPiuNoleggiato(ListFilm) {
+        ListFilm.sort((a, b) => b.noleggi.length - a.noleggi.length)
+        return ListFilm[0].id
+    }
     
+
+}
+
+
+function createCarouselRecensioni(recensioni) {
+    
+    if (recensioni.length == 0) {
+        return "<p>no recensioni</p>";
+    }
+
+    elementi ='';
+    first = true;
+    
+    for (recensione of recensioni) {
+
+        if (first) {
+            elementi += `
+                <div class="carousel-item active">
+                <p>valutazione: ${recensione.valutazione}</p>
+                <p>titolo: ${recensione.titolo}</p>
+                <p>autore: ${recensione.autore}</p>
+                <p>contenuto: ${recensione.contenuto}</p>
+                </div>
+            `;
+            first = false;
+        } else {
+            elementi += `
+                <div class="carousel-item">
+                <p>valutazione: ${recensione.valutazione}</p>
+                <p>titolo: ${recensione.titolo}</p>
+                <p>autore: ${recensione.autore}</p>
+                <p>contenuto: ${recensione.contenuto}</p>
+                </div>
+            `;
+        }
+
+    }
+
+    return `
+    <div id="carouselRecensioni" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            ${elementi}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselRecensioni" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselRecensioni" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    `;
 
 }

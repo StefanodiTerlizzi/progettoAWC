@@ -33,7 +33,7 @@
                     <h3>prezzo di vendita</h3>
                     <input type="hidden" name="prezzoFilm" id="idFilm" >
                     <label>old price</label>
-                    <input type="text" id="oldPriceVendita" disabled="disabled">
+                    <input type="text" id="oldPriceVendita" readonly="readonly">
                     <label>new price</label>
                     <input type="number" id="newPriceVendita" min="0">
                     <button onclick="modificaPrezzoVendita(document.getElementById('idFilm').value, document.getElementById('newPriceVendita').value)">Aggiorna prezzo di vendita</button>
@@ -41,7 +41,7 @@
                   <div>
                     <h3>prezzo di noleggio</h3>
                     <label>old price</label>
-                    <input type="text" id="oldPriceNoleggio" disabled="disabled">
+                    <input type="text" id="oldPriceNoleggio" readonly="readonly">
                     <label>new price</label>
                     <input type="number" id="newPriceNoleggio" min="0">
                     <button onclick="modificaPrezzoNoleggio(document.getElementById('idFilm').value, document.getElementById('newPriceNoleggio').value)">Aggiorna prezzo di noleggio</button>
@@ -187,6 +187,11 @@
                   <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
                 </div>
 
+                <div id='Recensioni' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Recensioni</h5>
+                  <script>document.write(createCarouselRecensioni(   JSON.parse(window.localStorage.getItem("active_user")).recensioni ))</script>
+                </div>
+
 
                 
 
@@ -214,6 +219,7 @@
               
             } else if (type_active_user.type == "venditore") {
               document.getElementById("div_film_venduti").style.display = "";
+              document.getElementById("Recensioni").style.display = "";
             } else if (type_active_user.type == "cliente") {
               document.getElementById("div_film_preferiti").style.display = "";
               document.getElementById("completa_account").style.display="";
