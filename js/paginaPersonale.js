@@ -127,6 +127,7 @@ function cardOverlay(film, price = null) {
     }
 
     priceDiv = '';
+    modificaFilm = '';
 
     if (price != null) {
         priceDiv = `
@@ -138,6 +139,14 @@ function cardOverlay(film, price = null) {
             prezzo Noleggio: ${price.noleggio}
             </div>
         </h6>
+        `;
+        
+        modificaFilm = `
+        <a target="_blank" rel="noopener noreferrer">
+            <button class="modifybutton" style="align-items: center;" data-bs-toggle="modal" data-bs-target="#PriceModal" onclick="UpdatePrice(this.parentNode.parentElement.parentElement.id)">
+                <i class="fas fa-pen-alt"></i>
+            </button>
+        </a>
         `;
     }
 
@@ -152,15 +161,10 @@ function cardOverlay(film, price = null) {
             </h6>
         </a>
         ${priceDiv}
-
         <button class="trashButton" style="align-items: center;" onclick="elimina_film_${typeAccount}(this)">
             <i class="fas fa-trash-alt" aria-hidden="true"></i>
         </button>
-        <a target="_blank" rel="noopener noreferrer">
-            <button class="modifybutton" style="align-items: center;" data-bs-toggle="modal" data-bs-target="#PriceModal" onclick="UpdatePrice(this.parentNode.parentElement.parentElement.id)">
-                <i class="fas fa-pen-alt"></i>
-            </button>
-        </a>
+        ${modificaFilm}
     </div>
     `;
 
