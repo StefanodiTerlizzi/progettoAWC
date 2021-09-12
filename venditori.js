@@ -68,6 +68,16 @@ function compilaModal(emailVenditore) {
     if (active_user != null && active_user.type == "cliente") {
         // bottone lascia recensione, compra, noleggia
         rowFilmVendita = generaCardFilms(true)
+
+        // TODO: coding
+        
+        for (film of venditore.film_vendita) {
+
+            get("https://api.themoviedb.org/3/movie/"+film.id+"/similar?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
+
+            }, {rowFilmVendita, generaCardFilms()});
+            
+        }
     } else {
         // non bottone lascia recensione, no compra, no noleggia
         rowFilmVendita = generaCardFilms(false)
@@ -112,7 +122,7 @@ function compilaModal(emailVenditore) {
                 <div class="card-body">
                     <h5 class="card-title">${obj.title}</h5>
                     
-                    <a href="./film_description.html?id=${obj.id}" class="btn btn-primary">visualizza</a>
+                    <a href="./film_description.html?id=${obj.id}" class="btn btn-primary">compra</a>
                 </div>
             </div>
             `;
@@ -132,5 +142,21 @@ function compilaModal(emailVenditore) {
 
         return txt
     }
+
+
+    function get(url, callback, otherParams = null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true); 
+        xhr.responseType = 'json';
+    
+        xhr.onload = function() { // cosa fa quando ottengo la risposta
+        callback(xhr.response, otherParams);
+        }; // fine cosa fa quando ottengo la risposta
+    
+        xhr.send();
+    
+    }
+
+
     
 }
