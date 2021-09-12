@@ -36,25 +36,29 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header" style="border-bottom: 0px;">
-                    <h5 class="modal-title" id="PriceModalLabel">Trailer</h5>
+                    <h3 class="modal-title" id="PriceModalLabel">Aggiornamento Prezzi</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
                 </div>
                 <div class="modal-body">
-                  <div>
-                    <h3>prezzo di vendita</h3>
+                  <div class='prezzo'>
+                    <h5>Prezzo di vendita</h3>
                     <input type="hidden" name="prezzoFilm" id="idFilm" >
-                    <label>old price</label>
+                    <label>Old price : </label>
                     <input type="text" id="oldPriceVendita" readonly="readonly">
-                    <label>new price</label>
+                    <br>
+                    <label>New price : </label>
                     <input type="number" id="newPriceVendita" min="0">
+                    <br>
                     <button onclick="modificaPrezzoVendita(document.getElementById('idFilm').value, document.getElementById('newPriceVendita').value)">Aggiorna prezzo di vendita</button>
                   </div>
-                  <div>
-                    <h3>prezzo di noleggio</h3>
-                    <label>old price</label>
+                  <div class='prezzo'>
+                    <h5>Prezzo di noleggio</h3>
+                    <label>Old price : </label>
                     <input type="text" id="oldPriceNoleggio" readonly="readonly">
-                    <label>new price</label>
+                    <br>
+                    <label>New price : </label>
                     <input type="number" id="newPriceNoleggio" min="0">
+                    <br>
                     <button onclick="modificaPrezzoNoleggio(document.getElementById('idFilm').value, document.getElementById('newPriceNoleggio').value)">Aggiorna prezzo di noleggio</button>
                   </div>
                   
@@ -76,6 +80,7 @@
               <form id="form_anagrafica" action="" method="POST" style='width:350px;'>
 
               </form>
+              
 
             </div>
             <div class="col-md-8" id="funzionalità">
@@ -172,7 +177,7 @@
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-Statistiche" aria-expanded="false" aria-controls="flush-Statistiche">
-                      Statistiche Negozio
+                      Statistiche Negozio  
                     </button>
                   </h2>
                   <div id="flush-Statistiche" class="accordion-collapse collapse" aria-labelledby="flush-Statistiche" data-bs-parent="#accordionFlush">
@@ -206,19 +211,19 @@
               </div> 
               
 
-              <div id='rowStoricoAcquisti' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+              <div id='rowStoricoAcquisti' class="border-dark rounded border" style="display: none; background-color: black; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
               </div>
 
-              <div id='rowStoricoNoleggi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+              <div id='rowStoricoNoleggi' class="border-dark rounded border" style="display: none; background-color: black; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Storico Noleggi</h5>
               </div>
 
-              <div id='rowNoleggiAttivi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+              <div id='rowNoleggiAttivi' class="border-dark rounded border" style="display: none; background-color: black; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
               </div>
 
-              <div id='Recensioni' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+              <div id='Recensioni' class="border-dark rounded border" style="display: none; background-color: black; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Recensioni</h5>
                 <script>
                   active_user = getActiveUser();

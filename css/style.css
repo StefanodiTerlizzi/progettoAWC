@@ -113,17 +113,56 @@
     }
 }
  
-#scroller_upcoming img,#scroller_popolari1 img,#scroller_toprated img ,#scroller_popolari img  {
+
+.scroller_index img{
   height:200px;
   width:140px;
   border-color: white;
 }
-#scroller_upcoming div,#scroller_popolari1 div ,#scroller_toprated div ,#scroller_popolari div {
+.scroller_index div{
   width:8rem!important;
   padding:0px;
   font-size: small;
   text-align: center;
+
 }
+.prezzo h5{
+  font-weight: lighter;
+}
+.prezzo {
+  padding:1em ;
+  border-bottom:2px solid white;
+}
+.film_index h4 {
+  border-bottom:1px solid white;
+  padding:3px;
+}
+.prezzo button {
+  border-radius: 5em;
+  border: #524f4e;
+  display: inline-block;
+  box-shadow: 0 8px 15px rgba(0,0,0,.1);
+  text-align: center!important;
+  vertical-align: center!important;
+  width:250px; 
+  height:30px; 
+  background-color: #ffffff;
+  color: black;
+  transition: .2s;
+  margin-bottom:1em;
+  margin-top:1em;
+
+}
+
+
+.prezzo button:hover {
+  box-shadow: 0 8px 15px rgba(232, 228, 228, 0.9);
+  color:white;
+  background-color: rgb(0, 102, 255);
+  transform: translateY(-2px);
+}
+
+
 
 .trashButton {
   border-radius: 5em;

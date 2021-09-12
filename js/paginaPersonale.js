@@ -131,12 +131,12 @@ function cardOverlay(film, price = null) {
 
     if (price != null) {
         priceDiv = `
-        <h6 class="card-title" style="font-size: lighter;">
-            <div>
-            prezzo vendita: ${price.vendita}
+        <h6 class="card-title" style="font-weight: lighter;border-top:0.5em;">
+            <div style='font-weight:lighter'>
+            prezzo vendita: ${price.vendita} €
             </div>
-            <div>
-            prezzo Noleggio: ${price.noleggio}
+            <div style='font-weight:lighter'>
+            prezzo Noleggio: ${price.noleggio} €
             </div>
         </h6>
         `;
@@ -653,12 +653,12 @@ function getStatsNegozio() {
         return;
     }
     txt = `
-    <p>prezzo medio di vendita: ${prezzo_medio_vendita(active_user.film_vendita)}</p>
-    <p>prezzo medio di noleggio: ${prezzo_medio_noleggio(active_user.film_vendita)}</p>
-    <p>totale vendite: ${numero_vendite(active_user.film_vendita)}</p>
-    <p>totale noleggi: ${numero_noleggi(active_user.film_vendita)}</p>
-    <p>film più venduto: ${filmPiuVenduto(active_user.film_vendita)}</p>
-    <p>film più noleggiato: ${filmPiuNoleggiato(active_user.film_vendita)}</p>
+    <p>Prezzo medio di vendita: ${prezzo_medio_vendita(active_user.film_vendita)}</p>
+    <p>Prezzo medio di noleggio: ${prezzo_medio_noleggio(active_user.film_vendita)}</p>
+    <p>Totale vendite: ${numero_vendite(active_user.film_vendita)}</p>
+    <p>Fotale noleggi: ${numero_noleggi(active_user.film_vendita)}</p>
+    <p>Film più venduto: ${filmPiuVenduto(active_user.film_vendita)}</p>
+    <p>Film più noleggiato: ${filmPiuNoleggiato(active_user.film_vendita)}</p>
     `;
     return txt
 
@@ -701,6 +701,8 @@ function getStatsNegozio() {
     }
 
     function filmPiuVenduto(ListFilm) {
+
+        // gio : capire questa funzione 
         ListFilm.sort((a, b) => b.vendite.length - a.vendite.length)
         return ListFilm[0].id
     }
@@ -724,24 +726,36 @@ function createCarouselRecensioni(recensioni) {
     first = true;
     
     for (recensione of recensioni) {
+        console.log(recensione);
+        var rating ='';
+            console.log(recensione.voto);
+            for ( i=0 ; i<recensione.voto; i++){
+                rating += `<i class="fas fa-star"></i>`;
+            }
+            if (i<5){
+                for (i=0 ; i<5-recensione.voto; i++){
+                    rating+= `<i class="far fa-star"></i>`
+                }
+            }
 
         if (first) {
+           // console.log(rating);
             elementi += `
-                <div class="carousel-item active">
-                <p>voto: ${recensione.voto}</p>
-                <p>titolo: ${recensione.titolo}</p>
-                <p>autore: ${recensione.autore}</p>
-                <p>contenuto: ${recensione.contenuto}</p>
+                <div style='margin:0.5em;'class="carousel-item active">
+                <p>Voto: ${rating} </p>
+                <p>Titolo: ${recensione.titolo}</p>
+                <p>Autore: ${recensione.autore}</p>
+                <p>Contenuto: ${recensione.contenuto}</p>
                 </div>
             `;
             first = false;
         } else {
             elementi += `
-                <div class="carousel-item">
-                <p>toto: ${recensione.voto}</p>
-                <p>titolo: ${recensione.titolo}</p>
-                <p>autore: ${recensione.autore}</p>
-                <p>contenuto: ${recensione.contenuto}</p>
+                <div style='margin:0.5em;' class="carousel-item">
+                <p>Voto: ${rating}</p>
+                <p>Titolo: ${recensione.titolo}</p>
+                <p>Autore: ${recensione.autore}</p>
+                <p>Contenuto: ${recensione.contenuto}</p>
                 </div>
             `;
         }

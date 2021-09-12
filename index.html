@@ -19,48 +19,54 @@
     <script src="./js/NavbarAndFooter.js"></script>
 
     <!-- page -->
-    <script src="./js/index.js"></script>
+    <!--<script src="./js/index.js"></script>-->
     
     <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
 
     <title>home</title>
   </head>
-  <body>
+  <body onload='creazionePag(JSON.parse(window.localStorage.getItem("active_user")).generi_preferiti)'> 
     <!-- navigation -->
-    <script>document.write(navbar)</script>
+    <script>document.write(navbar)
+    
+    // a lato : nested nav in bootstrap
+    
+    </script>
 
+    
     
 
     <div class='row'>
-      <div class='col-md-3' style='background-color: white; height: 600px; color:black'> Altre Cose --> indice su cosa si puo trovare nella pagina </div>
+      <div class='col-md-3' style='background-color: white; height: 700px; color:black'> Altre Cose --> indice su cosa si puo trovare nella pagina </div>
       <div class='col-md-9'>
         <!-- film_popolari-->
-        <div style ='border-top:2px solid gray'class='row' id="film_popolari">
+        <div class='row film_index' id="film_popolari">
           <h4 style='margin: 1em;font-weight:lighter;'>Film Popolari</h4>
-          <div id="scroller_popolari" class="align-top overflow-auto" style="white-space: nowrap"></div>
+          <div id="scroller_popolari" class="align-top overflow-auto scroller_index" style="white-space: nowrap"></div>
         </div>
         
-        <div style ='border-top:2px solid gray'class='row' id="film_popolari">
+        <div class='row film_index'  id="film_scelti_per_te">
           <h4 style='margin: 1em;font-weight:lighter;'>Film Scelti per te </h4>
-          <div id="scroller_scelti_per_te" class="align-top overflow-auto" style="white-space: nowrap"></div>
+          <div id="scroller_scelti_per_te" class="align-top overflow-auto scroller_index" style="white-space: nowrap"></div>
         </div>
         
       </div>
       <!-- film_toprated -->
-      <div  class='row'>
+      <div  class='row film_index' id='film_toprated'>
         <h4 style='margin: 1em;font-weight:lighter;'>Film Top Rated </h4>
-        <div id="scroller_toprated" class="align-top overflow-auto" style="white-space: nowrap"></div>
+        <div id="scroller_toprated" class="align-top overflow-auto scroller_index" style="white-space: nowrap"></div>
       </div>
       <!-- film_arrivo -->
-      <div class='row'>
+      <div class='row film_index' id='fim_upcoming'>
         <h4 style='margin: 1em;font-weight:lighter;'>Film In Arrivo </h4>
-        <div id="scroller_upcoming" class="align-top overflow-auto" style="white-space: nowrap"></div>
+        <div id="scroller_upcoming" class="align-top overflow-auto scroller_index" style="white-space: nowrap"></div>
       </div>
     </div>
 
     <!-- script recupero film x scroller -->
     <script>
-      get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
+      function creazionePag(generi){
+        get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
           scroller = document.getElementById('scroller_popolari');
           for ( i = 0 ; i<response.results.length; i++){
               film = response.results[i];
@@ -86,24 +92,23 @@
             scroller2.appendChild(card); 
         }
       });
+    
+        // generi non li ha presi così ... riguarda 
+        get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_genres="+generi, function(response){          
+          scroller2=document.getElementById('scroller_scelti_per_te');     
+          console.log(response); 
+            for (i=0 ; i<response.results.length; i++) {
+              film = response.results[i];
+              card = createCard(film);
+              scroller2.appendChild(card); 
+            }
+        });
+        
+    }
 
+      
+      
 
-      get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate", function(response){
-         // scroller2 = document.getElementById("scroller_scelti_per_te");
-          active_user = JSON.parse(window.localStorage.getItem('active_user'));
-        for ( i = 0 ; i<response.results.length; i++){
-          array_gen = response.results[i].genre_ids;
-          console.log(response.results[i].id,array_gen);
-         
-          // confronto tra lista generi preferiti di active user e generi di ogni film per capire se tenerlo o buttarlo via .
-
-
-          
-           // film = response.results[i];
-            //card = createCard(film);
-            //scroller2.appendChild(card); 
-        }
-      });
 
     </script>
 

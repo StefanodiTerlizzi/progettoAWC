@@ -14,8 +14,8 @@ var data = {
                             {"id": "385128","prezzoVendita": 1, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
                             {"id": "588228","prezzoVendita": 2, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []}
                         ],
-        "recensioni": [ {"voto": 5, "titolo": "ottimo", "contenuto": "film arrivato subito in alta qualità", "autore": "giacomorossi@gmail.com", "data": "2021-08-10T13:43:12.297Z"},
-                        {"voto": 4, "titolo": "ottimo", "contenuto": "film arrivato subito in alta qualità", "autore": "giacomorossi@gmail.com", "data": "2021-09-10T13:43:12.297Z"},
+        "recensioni": [ {"voto": 5, "titolo": "Ottimo", "contenuto": "film arrivato subito in alta qualità", "autore": "giacomorossi@gmail.com", "data": "2021-08-10T13:43:12.297Z"},
+                        {"voto": 4, "titolo": "Buono", "contenuto": "film arrivato subito in buona qualità", "autore": "giacomorossi@gmail.com", "data": "2021-09-10T13:43:12.297Z"},
                       ]
     },
 
@@ -55,7 +55,7 @@ var data = {
                                 {"id":"10020"}
                             ],
 
-        "generi_preferiti": [],
+        "generi_preferiti": [28],
 
         "film_acquistati":  [   {"id": "11224","data": "2021-09-10T13:43:12.297Z"},
                                 {"id": "8587","data": "2021-09-10T13:43:12.297Z"}
@@ -66,6 +66,7 @@ var data = {
                                 {"id": "155","data": "2020-09-10T13:43:12.297Z"}
                             ]
     },
+      
   ]
 }
 
