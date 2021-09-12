@@ -1,3 +1,10 @@
+// TODO: aggiungi film manda ad un elenco di film dai quali si può aggiungere ogni silngolo film in caso non sia già presente
+/*
+TODO:
+noleggio: il film pagato dal cliente sar`a disponibile nel film visibili dal
+cliente solo per 72h dal giorno dell’acquisto; successivamente, rimarr`a
+in elenco ma sar`a indicato come non disponibile per la visione.
+*/
 function get(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true); 

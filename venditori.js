@@ -50,15 +50,9 @@ function compilaModal(emailVenditore) {
     if (active_user != null && active_user.type == "cliente") {
         // bottone lascia recensione, compra, noleggia
         generaCardFilms(venditore.film_vendita, {"emailCliente": active_user.email,"emailVenditore": venditore.email})
-        
-        // TODO: coding
-        
-        
     } else {
         // non bottone lascia recensione, no compra, no noleggia
-        //document.getElementById("rowFilmVendita").innerHTML = generaCardFilmsNoBottoni(venditore.film_vendita)
         generaCardFilms(venditore.film_vendita)
-
     }
 
     
@@ -74,7 +68,6 @@ function compilaModal(emailVenditore) {
 
     function generaCardFilms(FilmVendita, ParametroEmail = null) {
         rowFilmVendita = document.getElementById("rowFilmVendita");
-
 
         rowFilmVendita.innerHTML = '';
         

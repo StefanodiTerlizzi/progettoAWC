@@ -1097,6 +1097,13 @@ function createCompany(obj) {
 
 function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
 
+    /*
+    TODO:
+        In questo scenario, gli utenti registrati (min 2) possono
+        fare login al sito, selezionare un film di interesse, aggiungerlo al carrello
+        e concludere il pagamento dei film nel carrello.
+    */
+
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     clienti = JSON.parse(window.localStorage.getItem("clienti"));
     venditori = JSON.parse(window.localStorage.getItem("venditori"));
