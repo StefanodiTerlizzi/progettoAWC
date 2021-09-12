@@ -1168,3 +1168,8 @@ function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
 
 
 // TODO: controllare new Date(), restituisce oraio italiano?
+
+
+function test() {
+    console.log("test")
+}

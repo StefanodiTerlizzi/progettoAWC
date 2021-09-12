@@ -1,6 +1,8 @@
-venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
 
 function elencoVenditori() {
+
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
 
     txt ='';
     
@@ -56,11 +58,79 @@ if (cliente) {
 
 function compilaModal(emailVenditore) {
 
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+    active_user = JSON.parse(window.localStorage.getItem("venditori"));
+
+
     index = venditori.findIndex(vend => vend.email == emailVenditore)
     venditore = venditori[index]
 
+    if (active_user != null && active_user.type == "cliente") {
+        // bottone lascia recensione, compra, noleggia
+        rowFilmVendita = generaCardFilms(true)
+    } else {
+        // non bottone lascia recensione, no compra, no noleggia
+        rowFilmVendita = generaCardFilms(false)
+    }
+
+    
+
+
+
     document.getElementById("ModalVenditore").innerHTML = `
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            film in vendita
+            </div>
+            <div class="col">
+            2 of 2
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            1 of 3
+            </div>
+            <div class="col">
+            2 of 3
+            </div>
+            <div class="col">
+            3 of 3
+            </div>
+        </div>
+    </div>
     film in vendita: ${JSON.stringify(venditore.film_vendita)}
     `;
+
+
+
+    function generaCardFilms(cliente) {
+        if (cliente) {
+            return `
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
+                <img src="https://www.themoviedb.org/t/p/original${obj.poster_path}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${obj.title}</h5>
+                    
+                    <a href="./film_description.html?id=${obj.id}" class="btn btn-primary">visualizza</a>
+                </div>
+            </div>
+            `;
+
+        } else {
+            return `
+            <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
+                <img src="https://www.themoviedb.org/t/p/original${obj.poster_path}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${obj.title}</h5>
+                    
+                    <a href="./film_description.html?id=${obj.id}" class="btn btn-primary">visualizza</a>
+                </div>
+            </div>
+            `;
+        }
+
+        return txt
+    }
     
 }
