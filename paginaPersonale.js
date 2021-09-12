@@ -812,6 +812,9 @@ function AggiornaParametri(){
 
 function getStatsNegozio() {
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
+    if (active_user == null || active_user.type == "cliente") {
+        return;
+    }
     txt = `
     <p>prezzo medio di vendita: ${prezzo_medio_vendita(active_user.film_vendita)}</p>
     <p>prezzo medio di noleggio: ${prezzo_medio_noleggio(active_user.film_vendita)}</p>

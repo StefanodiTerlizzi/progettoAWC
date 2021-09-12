@@ -147,3 +147,19 @@ function generate_complete_search() {
     });
 
 }
+
+function getActiveUser() {
+    
+    if ( !(window.localStorage.hasOwnProperty("active_user")) ) {
+        return null;
+    }
+
+    active_user = window.localStorage.getItem("active_user")
+
+    if (active_user == null) {
+        return null;    
+    }
+
+    return JSON.parse(active_user);
+
+}

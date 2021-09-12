@@ -28,10 +28,7 @@ var data = {
         "type": "venditore",
         "film_vendita": [   {"id": "399566","prezzoVendita": 10, "prezzoNoleggio": 0.5, "vendite": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
                             {"id": "791373","prezzoVendita": 20, "prezzoNoleggio": 1, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
-                            {"id": "527774","prezzoVendita": 30, "prezzoNoleggio": 0.5, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]},
-                            {"id": "379686","prezzoVendita": 40, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
-                            {"id": "385128","prezzoVendita": 50, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []},
-                            {"id": "588228","prezzoVendita": 60, "prezzoNoleggio": 0.5, "vendite": [], "noleggi": []}
+                            {"id": "527774","prezzoVendita": 30, "prezzoNoleggio": 0.5, "vendite": ["2020-07-10T13:43:12.297Z", "2020-08-10T13:43:12.297Z", "2020-09-10T13:43:12.297Z"], "noleggi": ["2021-07-10T13:43:12.297Z", "2021-08-10T13:43:12.297Z", "2021-09-10T13:43:12.297Z"]}
                         ],
         "recensioni": [ {"voto": 1, "titolo": "pessimo", "contenuto": "brutto", "autore": "giacomorossi@gmail.com", "data": "2021-08-02T13:43:12.297Z"},
                         {"voto": 1, "titolo": "no", "contenuto": "non ok", "autore": "giacomorossi@gmail.com", "data": "2020-09-04T13:43:12.297Z"},
@@ -1166,10 +1163,26 @@ function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
 
 }
 
+function InviaRecensione(emailAutore, emailNegozio) {
 
-// TODO: controllare new Date(), restituisce oraio italiano?
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
 
+    voto = document.getElementById("rating").value
+    titolo = document.getElementById("titolo").value
+    contenuto = document.getElementById("Recensione-contenuto").value
 
-function test() {
-    console.log("test")
+    recensione = {"voto": Number(voto), "titolo": titolo, "contenuto": contenuto, "autore": emailAutore, "data": new Date()}
+
+    index = venditori.findIndex(venditore => venditore.email === emailNegozio);
+    venditori[index].recensioni.push(recensione)
+
+//    console.log("voto", voto)
+//    console.log("titolo", titolo)
+//    console.log("contenuto",contenuto)
+//    console.log("emailAutore",emailAutore)
+//    console.log("data", new Date())
+//    console.log("emailNegozio",emailNegozio)
+
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
 }

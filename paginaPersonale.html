@@ -52,219 +52,220 @@
         </div>
     </div>
     <!-- OVERLAY -->
-        
-      
-      <div id='containerpagPers' class="container" style='margin: 2em!important;'>
-          <div id='row1' class="row">
-              <div class="col-md-4" id="anagrafica"> 
-                <!-- anagrafica -->
-                <h5>Riepilogo Dati</h5>
-                <form id="form_anagrafica" action="" method="POST" style='width:350px;'>
 
-                </form>
+    <div id="errorLogin" class="alert alert-danger" role="alert" style="display: none">
+      per accedere alla pagina personale devi eseguire il login correttamente <a href="./signup.html" class="alert-link">clicca per riprovare</a>
+    </div>
+    
+    <div id='containerpagPers' class="container" style='margin: 2em!important;'>
+        <div id='row1' class="row">
+            <div class="col-md-4" id="anagrafica"> 
+              <!-- anagrafica -->
+              <h5>Riepilogo Dati</h5>
+              <form id="form_anagrafica" action="" method="POST" style='width:350px;'>
 
-              </div>
-              <div class="col-md-8" id="funzionalità">
-                <div id = "completa_account" class="border border-dark rounded" style="display: none; background-color: black; color:white;">
-                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Preferenze e Privacy</h5>
-                      <!-- javascript -->
-                      <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
-                          <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
-                            <form id='completa_account_form'>
-                             
-                            </form>
-                          </div>
-                          <!---->
-                          <script>
-                             act = JSON.parse(window.localStorage.getItem('active_user'));
-                                console.log(act);
-                            var array_generi=[];
-                            function scegli_genere_preferenze(){
-                              form = document.getElementById('completa_account_form');
-                              get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
-                               // console.log(response);
-                               
-                                for ( i=0; i<response.genres.length ; i++){
-                                 generi = response.genres[i];
-                                 array_generi.push(generi.id);   
-                                // array_generi[i]=  new Array();
-                                 input = document.createElement('input');
-                                
-                                 input.setAttribute('name',generi.name);
-                                 input.setAttribute('type',"checkbox");
-                                 input.className='btn-check';
-                                 input.setAttribute('id',generi.id);
-                                 label = document.createElement('label');
-                                 label.style='margin-right:0.2em!important; ';
+              </form>
 
-                                 label.className='btn btn-outline-secondary';
-                                 label.setAttribute('for',generi.id);
-                                 label.innerHTML=generi.name;
-                                 form.appendChild(input);
-                                 form.appendChild(label);
-                                }
-                                button = document.createElement('input');
-                                button.setAttribute('type','submit');
-                                button.className='btn btn-primary';
-                                button.innerHTML='Invia';
-                                button.style='margin-top:0.5em;float:left';
-                                button.setAttribute('onclick','gestisci_generi_preferiti()');
-                                form.appendChild(button);
-
+            </div>
+            <div class="col-md-8" id="funzionalità">
+              <div id="completa_account" class="border border-dark rounded" style="display: none; background-color: black; color:white;">
+                <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti">Preferenze e Privacy</h5>
+                    <!-- javascript -->
+                    <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
+                        <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
+                          <form id='completa_account_form'>
                             
-                               });
-                               
-                               
-                            }
-                            function gestisci_generi_preferiti(){
-
-                              var array_generi_scelti =[];
-                              console.log(array_generi);
-
-                                for (i=0 ; i<array_generi.length; i++ ){
-                                   // console.log(array_generi[i]);
-                                    if(document.getElementById(array_generi[i]).checked){
-                                      array_generi_scelti.push(array_generi[i]);
-                                    }
-                                }
-                             //   window.localStorage.getItem('clienti')
-                                console.log(array_generi_scelti);
-                                active_user=JSON.parse(window.localStorage.getItem('active_user'));
-                                clienti=JSON.parse(window.localStorage.getItem('clienti'));
-                                active_user.generi_preferiti=array_generi_scelti;
-                                
-                                objIndex = clienti.findIndex(obj => obj.email == active_user.email) ;
-                                clienti[objIndex] = active_user;
-
-                                window.localStorage.setItem('active_user',JSON.stringify(active_user));
-                                window.localStorage.setItem('clienti',JSON.stringify(clienti));
-                                window.reload();
-                              }
-
-
-                            
-
-                              
-                            
-
-                            
-                            
-
-                          </script>
-                </div>
-                <!--statistiche-->
-                <div class="accordion accordion-flush text-dark" id="Statistiche">
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-Statistiche" aria-expanded="false" aria-controls="flush-Statistiche">
-                        Statistiche Negozio
-                      </button>
-                    </h2>
-                    <div id="flush-Statistiche" class="accordion-collapse collapse" aria-labelledby="flush-Statistiche" data-bs-parent="#accordionFlush">
-                      <div class="accordion-body">
+                          </form>
+                        </div>
+                        <!---->
                         <script>
-                          document.write(getStatsNegozio())
+                            act = JSON.parse(window.localStorage.getItem('active_user'));
+                              console.log(act);
+                          var array_generi=[];
+                          function scegli_genere_preferenze(){
+                            form = document.getElementById('completa_account_form');
+                            get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
+                              // console.log(response);
+                              
+                              for ( i=0; i<response.genres.length ; i++){
+                                generi = response.genres[i];
+                                array_generi.push(generi.id);   
+                              // array_generi[i]=  new Array();
+                                input = document.createElement('input');
+                              
+                                input.setAttribute('name',generi.name);
+                                input.setAttribute('type',"checkbox");
+                                input.className='btn-check';
+                                input.setAttribute('id',generi.id);
+                                label = document.createElement('label');
+                                label.style='margin-right:0.2em!important; ';
+
+                                label.className='btn btn-outline-secondary';
+                                label.setAttribute('for',generi.id);
+                                label.innerHTML=generi.name;
+                                form.appendChild(input);
+                                form.appendChild(label);
+                              }
+                              button = document.createElement('input');
+                              button.setAttribute('type','submit');
+                              button.className='btn btn-primary';
+                              button.innerHTML='Invia';
+                              button.style='margin-top:0.5em;float:left';
+                              button.setAttribute('onclick','gestisci_generi_preferiti()');
+                              form.appendChild(button);
+
+                          
+                              });
+                              
+                              
+                          }
+                          function gestisci_generi_preferiti(){
+
+                            var array_generi_scelti =[];
+                            console.log(array_generi);
+
+                              for (i=0 ; i<array_generi.length; i++ ){
+                                  // console.log(array_generi[i]);
+                                  if(document.getElementById(array_generi[i]).checked){
+                                    array_generi_scelti.push(array_generi[i]);
+                                  }
+                              }
+                            //   window.localStorage.getItem('clienti')
+                              console.log(array_generi_scelti);
+                              active_user=JSON.parse(window.localStorage.getItem('active_user'));
+                              clienti=JSON.parse(window.localStorage.getItem('clienti'));
+                              active_user.generi_preferiti=array_generi_scelti;
+                              
+                              objIndex = clienti.findIndex(obj => obj.email == active_user.email) ;
+                              clienti[objIndex] = active_user;
+
+                              window.localStorage.setItem('active_user',JSON.stringify(active_user));
+                              window.localStorage.setItem('clienti',JSON.stringify(clienti));
+                              window.reload();
+                            }
+
+
+                          
+
+                            
+                          
+
+                          
+                          
+
                         </script>
-                      </div>
+              </div>
+              <!--statistiche-->
+              <div class="accordion accordion-flush text-dark" id="Statistiche" style="display: none;">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-Statistiche" aria-expanded="false" aria-controls="flush-Statistiche">
+                      Statistiche Negozio
+                    </button>
+                  </h2>
+                  <div id="flush-Statistiche" class="accordion-collapse collapse" aria-labelledby="flush-Statistiche" data-bs-parent="#accordionFlush">
+                    <div class="accordion-body">
+                      <script>
+                        active_user = getActiveUser();
+                        if (active_user != null) {
+                          if (active_user.type == "venditore") {
+                            document.write(getStatsNegozio())
+                          }
+                        }
+                      </script>
                     </div>
                   </div>
                 </div>
-                <!--ststistiche-->
-
-                <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
-                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
-                    <!-- javascript -->
-                    <button style='display:block;' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
-                </div>
-                
-               
-                <div id = "div_film_preferiti" class="border border-dark rounded" style="display: none; background-color: black; color:white">
-                  <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Film Preferiti</h5>
-                      <!-- javascript -->
-                      <button style='display:block;margin-left:0,5em' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><a href="index.html" style='text-decoration: none;color:black'><i class="fas fa-plus"></i> Aggiungi un film</a> </button>
-
-                </div> 
-                
-
-                <div id='rowStoricoAcquisti' class="row border-dark rounded" style="display: none; background-color: black; color:white">
-                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
-                </div>
-
-                <div id='rowStoricoNoleggi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
-                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Storico Noleggi</h5>
-                </div>
-
-                <div id='rowNoleggiAttivi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
-                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
-                </div>
-
-                <div id='Recensioni' class="row border-dark rounded" style="display: none; background-color: black; color:white">
-                  <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Recensioni</h5>
-                  <script>document.write(createCarouselRecensioni(   JSON.parse(window.localStorage.getItem("active_user")).recensioni ))</script>
-                </div>
-
-
-                
-
               </div>
-          </div>
-          
-          
+              <!--ststistiche-->
 
-          <script>
-            type_active_user = JSON.parse(window.localStorage.getItem("active_user"));
-            // da sistemare il meccanismo 
-            if ( type_active_user==null){
-             
-              row1 = document.getElementById('row1');
-              row1.style.display='none';
-              div=document.createElement('div');
-              div.style='font-size:x-large!important';
-              a = document.createElement('a');
-              a.href='./signup.html';
-              div.innerHTML = 'Login errato ,'
-              a.innerHTML='Clicca per riprovare';
-              div.appendChild(a);
-              document.body.appendChild(div);
-              div.style='margin:3em;font-size:x-large;width:400px;'
+              <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
+                <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
+                  <!-- javascript -->
+                  <button style='display:block;' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
+              </div>
               
-            } else if (type_active_user.type == "venditore") {
-              document.getElementById("div_film_venduti").style.display = "";
-              document.getElementById("Recensioni").style.display = "";
-            } else if (type_active_user.type == "cliente") {
-              document.getElementById("div_film_preferiti").style.display = "";
-              document.getElementById("completa_account").style.display="";
-              document.getElementById("rowStoricoAcquisti").style.display="";
-              document.getElementById("rowStoricoNoleggi").style.display="";
-              document.getElementById("rowNoleggiAttivi").style.display="";
-            }
-          </script>
-        
-        <!-- Modal -->
-        <div style='color: black!important;' class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Elimina Account</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                Sei sicuro di voler eliminare il tuo account definitivamente?<br>L'operazione è irreversibile
-                </div>
-                <div class="modal-footer">
-                  <!--
-                    C'è un modo per farlo meglio ? problema è che quando rimando la gestione a signup.html mi 
-                    si ricaricano gli utenti e risulta come se non lo avessi davvero eliminato ma solo fatto Logout
-                  -->
-                <form action="./signup.html">
-                <button id='Elimina_Account' type="submit" class="btn btn-danger" href='./signup.html' onclick="elimina_account()">Elimina Account</button>
-              </form>
-                </div>
-            </div>
+              
+              <div id = "div_film_preferiti" class="border border-dark rounded" style="display: none; background-color: black; color:white">
+                <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Film Preferiti</h5>
+                    <!-- javascript -->
+                    <button style='display:block;margin-left:0,5em' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><a href="index.html" style='text-decoration: none;color:black'><i class="fas fa-plus"></i> Aggiungi un film</a> </button>
+
+              </div> 
+              
+
+              <div id='rowStoricoAcquisti' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
+              </div>
+
+              <div id='rowStoricoNoleggi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Storico Noleggi</h5>
+              </div>
+
+              <div id='rowNoleggiAttivi' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
+              </div>
+
+              <div id='Recensioni' class="row border-dark rounded" style="display: none; background-color: black; color:white">
+                <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Recensioni</h5>
+                <script>
+                  active_user = getActiveUser();
+                  if (active_user != null) {
+                    if (active_user.type == "venditore") {
+                      document.write( createCarouselRecensioni(active_user.recensioni) );                        
+                    }
+                  }
+                  </script>
+              </div>
             </div>
         </div>
-    
+        
+        
+
+        <script>
+          active_user = getActiveUser();
+          listID = []; //Id da attivare
+          
+          if (active_user == null) {
+            document.getElementById('row1').display='none';
+            listID = ["errorLogin"]
+          } else if (active_user.type == "venditore") {
+            listID = ["Statistiche", "div_film_venduti", "Recensioni"]
+          } else if (active_user.type == "cliente") {
+            listID = ["completa_account", "div_film_preferiti", "rowStoricoAcquisti", "rowStoricoNoleggi", "rowNoleggiAttivi"]
+          }
+
+          for (id of listID) {
+            document.getElementById(id).style.display = "";
+          }
+          
+        </script>
+      
+      <!-- Modal -->
+      <div style='color: black!important;' class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Elimina Account</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+              Sei sicuro di voler eliminare il tuo account definitivamente?<br>L'operazione è irreversibile
+              </div>
+              <div class="modal-footer">
+                <!--
+                  C'è un modo per farlo meglio ? problema è che quando rimando la gestione a signup.html mi 
+                  si ricaricano gli utenti e risulta come se non lo avessi davvero eliminato ma solo fatto Logout
+                -->
+              <form action="./signup.html">
+              <button id='Elimina_Account' type="submit" class="btn btn-danger" href='./signup.html' onclick="elimina_account()">Elimina Account</button>
+            </form>
+              </div>
+          </div>
+          </div>
       </div>
+  
+    </div>
 
 
     <!-- footer -->
