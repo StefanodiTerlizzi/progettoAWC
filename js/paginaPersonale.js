@@ -87,68 +87,6 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
 
 }
 
-
-// TODO: cancellare XcardOverlay
-function XcardOverlay(film) {
-    var card = document.createElement("div");
-    card.className = "card bg-dark text-white rounded";
-    card.style = "width: 190px!important;margin: 0.5em;";
-    card.style.display = "inline-block";
-    card.setAttribute("id", film.id);
-    //console.log(card);
-    //card.style.borderRadius = "1.5em";
-
-    var img = document.createElement("img");
-    img.className = "card-img rounded";
-    img.style.borderRadius = "1.5em";
-    img.src = "https://www.themoviedb.org/t/p/original"+ film.poster_path;
-    img.style='height:268px!important;';
-    //img.setAttribute("href", "./film_description.html?id="+film.id);
-    card.appendChild(img);
-
-    var div_ov = document.createElement("div");
-    div_ov.className = " rounded";
-    div_ov.style.backgroundColor = "rgba(0,0,0,0.2)";
-  
-    card.appendChild(div_ov);
-
-    var a = document.createElement("a");
-    a.setAttribute("href", "./film_description.html?id="+ film.id);
-    a.style.color = "white";
-    a.style.textAlign='center';
-    //a.style.textDecoration = "none";
-    div_ov.appendChild(a);
-
-    var title = document.createElement("h6");
-    title.className = "card-title";
-    title.innerHTML = "<br>" +film.original_title;
-    title.style.fontSize='small';
-    a.appendChild(title);
-
-
-    var btn_el = document.createElement("button");
-   // btn_el.className = "btn btn-danger";
-    btn_el.setAttribute("id","trashbutton");
-    btn_el.style.alignItems='center';
-    btn_el.innerHTML = "<i class='fas fa-trash-alt'></i>";
-
-    active_user = JSON.parse(window.localStorage.getItem("active_user"))
-
-    if (active_user.type == "venditore" ) {
-        btn_el.setAttribute("onclick", "elimina_film_venditore(this)")
-        
-    } else {
-        btn_el.setAttribute("onclick", "elimina_film_cliente(this)")
-        
-    }
-
-
-    div_ov.style.textAlign='center';
-    div_ov.appendChild(btn_el);
-
-    return card;    
-}
-
 function cardOverlayNoButton(film) {
     var card = document.createElement("div");
     card.className = "card bg-dark text-white rounded";
@@ -382,19 +320,9 @@ function DeleteFilmFromList(filmId, list) {
     }
 }
 
-
-function modifica_film_cliente(btn) {
-
-}
-
-function modifica_film_venditore(id) {
-    img
-    titolo
-    prezzo
-}
-
-
-// passo un film , mi crea una card per quel film 
+// passo un film , mi crea una card per quel film
+// TODO: controllare se viene utilizzata, non mi sembra
+/*
 function createCard(film){
         card = document.createElement("div");
         card.className = "card";
@@ -434,6 +362,8 @@ function createCard(film){
 
 
 }
+*/
+
 var pushPar = {};
 
 function elimina_account() {

@@ -1,5 +1,3 @@
-
-
 function elencoVenditori() {
 
     venditori = JSON.parse(window.localStorage.getItem("venditori"));
@@ -145,7 +143,7 @@ function compilaModal(emailVenditore) {
                     <textarea class="form-control" id="Recensione-contenuto" rows="3"></textarea>
                 </div>
 <!-- button -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="InviaRecensione('${ParametroEmail.emailCliente}', '${ParametroEmail.emailVenditore}')">invia recensione</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="InviaRecensioneVenditore('${ParametroEmail.emailCliente}', '${ParametroEmail.emailVenditore}')">invia recensione</button>
             </div>
             `;
         }
@@ -171,4 +169,28 @@ function compilaModal(emailVenditore) {
 
 
     
+}
+
+function InviaRecensioneVenditore(emailAutore, emailNegozio) {
+
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    voto = document.getElementById("rating").value
+    titolo = document.getElementById("titolo").value
+    contenuto = document.getElementById("Recensione-contenuto").value
+
+    recensione = {"voto": Number(voto), "titolo": titolo, "contenuto": contenuto, "autore": emailAutore, "data": new Date()}
+
+    index = venditori.findIndex(venditore => venditore.email === emailNegozio);
+    venditori[index].recensioni.push(recensione)
+
+//    console.log("voto", voto)
+//    console.log("titolo", titolo)
+//    console.log("contenuto",contenuto)
+//    console.log("emailAutore",emailAutore)
+//    console.log("data", new Date())
+//    console.log("emailNegozio",emailNegozio)
+
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
 }

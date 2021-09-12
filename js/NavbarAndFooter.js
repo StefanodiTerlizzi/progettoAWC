@@ -14,6 +14,15 @@ init()
                 <a class="nav-link active" aria-current="page" href="./paginaPersonale.html">User <i class="fas fa-users-cog"></i></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./venditori.html">Venditori</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./registrazione.html">Registrazione</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="./signup.html">Accedi</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">complete search</a>
             </li>
             <li class="nav-item dropdown">
@@ -64,7 +73,7 @@ navbar += `
         <div class="modal-content bg-dark text-white">
             <div class="modal-header" style="border-bottom: 0px;">
                 <h5 class="modal-title" id="SearchModalLabel">complete search</h5>
-                <button onclick="stopvideo()" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div class="modal-body">
                 <!-- search genere -->
@@ -148,18 +157,11 @@ function generate_complete_search() {
 
 }
 
-function getActiveUser() {
-    
-    if ( !(window.localStorage.hasOwnProperty("active_user")) ) {
-        return null;
+function init() {
+    if (window.localStorage.hasOwnProperty("venditori") && window.localStorage.hasOwnProperty("clienti")) {
+        return
+    } else {
+        window.localStorage.setItem("venditori", JSON.stringify(data.venditori));
+        window.localStorage.setItem("clienti", JSON.stringify(data.clienti));
     }
-
-    active_user = window.localStorage.getItem("active_user")
-
-    if (active_user == null) {
-        return null;    
-    }
-
-    return JSON.parse(active_user);
-
 }

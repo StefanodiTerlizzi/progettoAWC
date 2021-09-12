@@ -4,14 +4,25 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./script.js"></script>
-    <link href="style.css" rel="stylesheet" type="text/css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
+
+    <!--custom css-->
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+
+
+    <!-- general functions -->
+    <script src="./js/script.js" charset="utf-8"></script>
 
     <!-- NavBar + Footer -->
-    <script src="./NavbarAndFooter.js"></script>
+    <script src="./js/NavbarAndFooter.js"></script>
+
+    <!-- page -->
+    <script src="./js/registrazione.js"></script>
+    
+    <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
+
+    
 
 
     <title>Registrazione</title>
@@ -33,35 +44,7 @@
       -->
 
       <!--<div class="container" style="text-align:center;">-->
-        <div id='scroller_reg' class="align-top overflow-auto" style='height:200px;white-space: nowrap'>
-          
-          </div>
-          <script>
-            function sfondo_reg(){
-    scroller=document.getElementById('scroller_reg');
-    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
-        var immagini = [];
-        len = response.results.length;
-        for ( i = 0 ; i<response.results.length; i++){
-            immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
-        }
-        var listadiv = [];
-       for (i=0 ; i<immagini.length; i++){
-           div= document.createElement('div');
-           div.style='display:inline-block;'
-           img= document.createElement('img');
-           img.src=immagini[i];
-           div.appendChild(img);
-           listadiv.push(div);
-       }
-       console.log(listadiv[0].childNodes[0]);
-       for ( i=0 ; i<listadiv.length; i++){
-           scroller.appendChild(listadiv[i]);
-       }
-
-    });
-}
-          </script>
+        <div id='scroller_reg' class="align-top overflow-auto" style='height:200px;white-space: nowrap'></div>
         
         <div style='text-align:center;' class='row'>
         <h3 class='mx-auto align-middle' style='margin-top:3em;color: white;'>Registrazione</h3><br>
