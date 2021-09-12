@@ -148,7 +148,7 @@ function cardOverlayNoButton(film) {
     card.style = "width: 190px!important;margin: 0.5em;";
     card.style.display = "inline-block";
     card.setAttribute("id", film.id);
-    console.log(card);
+    //console.log(card);
     card.style.borderRadius = "1.5em";
 
     card.innerHTML += `
@@ -498,7 +498,7 @@ function check(campo) {
             if ( campo.value == document.getElementById("Password").value ) {
                 pushPar["password"] = campo.value;
             } else {
-                console.log("non uguali");
+               // console.log("non uguali");
                 conferma_password =  document.getElementById("changeConfPassword").childNodes[1];
                 conferma_password.className="form-control is-invalid";
                 var err = document.createElement("div"); // error message 
@@ -511,7 +511,7 @@ function check(campo) {
             pushPar[campo.name] = campo.value;
         }
 
-        console.log(pushPar);
+       // console.log(pushPar);
 
 
     }
@@ -686,7 +686,7 @@ function createVenditore2(venditore) {
     `;
 }
 // TODO: fare select box con i imetodi e far apparire quello scelto dall'utente come default
-// crea anagrafica del cliente ;
+// crea anagrafica del cliente passandogli i dati di un cliente registrato;
 function createCliente2(cliente) {
     return `
     <div class="mb-3">
@@ -726,7 +726,7 @@ function createCliente2(cliente) {
         <input type="text" value="${cliente.nazione}" id="Nazione" name="nazione" onchange="checkparameters_registrazione()" class="form-control">
     </div>
     <div class="mb-3">
-        <label class="form-label"><b>Saldo:</b></label>
+        <label class="form-label"><b>Metodo di pagamento:</b></label>
         <input class="form-control" type="text" value="${cliente.portafogli.metodo}">
     </div>
     <div class="mb-3">
@@ -764,7 +764,7 @@ function cambiaPassword(){
 function AggiornaParametri(){
     // si attiva quando schiaccio bottone aggiorna 
     var utenteAttivo = JSON.parse(window.localStorage.getItem("active_user"));
-    console.log(utenteAttivo);
+   // console.log(utenteAttivo);
     var lista;
     if (utenteAttivo.type=="cliente") {
         lista = JSON.parse(window.localStorage.getItem("clienti"));
@@ -784,7 +784,8 @@ function AggiornaParametri(){
             } 
         }
     }  else {
-        console.log("venditore");
+       // console.log("venditore");
+
         lista = JSON.parse(window.localStorage.getItem("venditori"));
         for (i=0; i<lista.length; i++) {
             

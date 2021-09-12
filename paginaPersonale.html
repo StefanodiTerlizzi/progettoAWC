@@ -70,7 +70,7 @@
                       <!-- javascript -->
                       <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
                           <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
-                            <form  method='GET' id='completa_account_form'>
+                            <form id='completa_account_form'>
                              
                             </form>
                           </div>
@@ -86,18 +86,19 @@
                                
                                 for ( i=0; i<response.genres.length ; i++){
                                  generi = response.genres[i];
-                                 array_generi.push(generi.name);        
+                                 array_generi.push(generi.id);   
+                                // array_generi[i]=  new Array();
                                  input = document.createElement('input');
                                 
                                  input.setAttribute('name',generi.name);
                                  input.setAttribute('type',"checkbox");
                                  input.className='btn-check';
-                                 input.setAttribute('id',generi.name);
+                                 input.setAttribute('id',generi.id);
                                  label = document.createElement('label');
                                  label.style='margin-right:0.2em!important; ';
 
                                  label.className='btn btn-outline-secondary';
-                                 label.setAttribute('for',generi.name);
+                                 label.setAttribute('for',generi.id);
                                  label.innerHTML=generi.name;
                                  form.appendChild(input);
                                  form.appendChild(label);
@@ -113,25 +114,35 @@
                             
                                });
                                
+                               
                             }
-
-
                             function gestisci_generi_preferiti(){
+
                               var array_generi_scelti =[];
                               console.log(array_generi);
-                            
+
                                 for (i=0 ; i<array_generi.length; i++ ){
                                    // console.log(array_generi[i]);
-                                    if(get_from_url(array_generi[i]+'=')=='on'){
+                                    if(document.getElementById(array_generi[i]).checked){
                                       array_generi_scelti.push(array_generi[i]);
                                     }
-                               
                                 }
-                               
-                                window.localStorage.getItem('clienti')
+                             //   window.localStorage.getItem('clienti')
                                 console.log(array_generi_scelti);
-                          
+                                active_user=JSON.parse(window.localStorage.getItem('active_user'));
+                                clienti=JSON.parse(window.localStorage.getItem('clienti'));
+                                active_user.generi_preferiti=array_generi_scelti;
+                                
+                                objIndex = clienti.findIndex(obj => obj.email == active_user.email) ;
+                                clienti[objIndex] = active_user;
+
+                                window.localStorage.setItem('active_user',JSON.stringify(active_user));
+                                window.localStorage.setItem('clienti',JSON.stringify(clienti));
+                                window.reload();
                               }
+
+
+                            
 
                               
                             

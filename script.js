@@ -639,10 +639,6 @@ function genera_descrizione() {
                 '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già nei preferiti</button></div></div>'
                 }
 
-
-
-                
-
             }
 
         }
@@ -807,46 +803,6 @@ function aggiungiPreferiti(){
 function stopvideo() {
     document.getElementById("TrailerFilm").src = document.getElementById("TrailerFilm").src;
 }
-/*
-function getPaginaFilm(){ 
-     get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-        scroller = document.getElementById('scroller_popolari');
-        for ( i = 0 ; i<response.results.length; i++){
-            film = response.results[i];
-            card = createCard(film);
-            scroller.appendChild(card);
-        }
-     });
-
-     get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=2", function(response){
-        scroller = document.getElementById('scroller_popolari1');
-        for ( i = 0 ; i<response.results.length; i++){
-            film = response.results[i];
-            card = createCard(film);
-            scroller.appendChild(card);
-        }
-     });
-
-     get("https://api.themoviedb.org/3/movie/top_rated?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-          scroller1 = document.getElementById("scroller_toprated");
-         for ( i = 0 ; i<response.results.length; i++){
-            film = response.results[i];
-            card = createCard(film);
-            scroller1.appendChild(card); 
-         }
-     });
-
-     get("https://api.themoviedb.org/3/movie/upcoming?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-        scroller2 = document.getElementById("scroller_upcoming");
-       for ( i = 0 ; i<response.results.length; i++){
-          film = response.results[i];
-          card = createCard(film);
-          scroller2.appendChild(card); 
-       }
-   });
-
-}
-*/
 // passo un film , mi crea una card per quel film 
 function createCard(film){
 

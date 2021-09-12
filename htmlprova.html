@@ -6,12 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body onload="Prova()">
     <form action="" method='GET'>
         <input type="text" name='prova'>
         <input type="submit" >
     </form>
     <script>
+        function get(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true); 
+    xhr.responseType = 'json';
+  
+    xhr.onload = function() { // cosa fa quando ottengo la risposta
+      callback(xhr.response);
+    }; // fine cosa fa quando ottengo la risposta
+  
+    xhr.send();
+  
+}
+//
+
+function Prova(){
+    var array_film=[];
+   
+    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate",function(response){
+        for (i=0 ; i<response.results.length; i++){
+            array_gen = response.results[i].genre_ids;
+           // console.log(response.results[i].genre_ids);
+            for ( j=0 ; j<array_gen.length; j++){
+               // console.log(array_gen[j]);
+                if ( array_gen[j]=='28' || array_gen[j]=='878' || array_gen[j]=='12'){
+                    array_film.push(response.results[i].id);
+                }
+            }
+
+        }
+    });
+    console.log('film',array_film);
+}
 
     </script>
     
