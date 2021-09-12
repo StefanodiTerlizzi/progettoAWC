@@ -90,9 +90,10 @@
                         </div>
                         <!---->
                         <script>
-                            act = JSON.parse(window.localStorage.getItem('active_user'));
-                              console.log(act);
+                          act = JSON.parse(window.localStorage.getItem('active_user'));
+                          console.log(act);
                           var array_generi=[];
+                          // TODO: generi preferiti devono essere già selezionati quando atterro utente
                           function scegli_genere_preferenze(){
                             form = document.getElementById('completa_account_form');
                             get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
