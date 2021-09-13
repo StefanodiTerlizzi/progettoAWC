@@ -427,6 +427,8 @@ function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
     window.localStorage.setItem("clienti", JSON.stringify(clienti));
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
 
+    window.location.reload()
+
 }
 
 function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
@@ -460,6 +462,8 @@ function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
     window.localStorage.setItem("active_user", JSON.stringify(active_user));
     window.localStorage.setItem("clienti", JSON.stringify(clienti));
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
+    window.location.reload()
 
 }
 
