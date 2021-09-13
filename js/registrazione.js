@@ -1,3 +1,4 @@
+
 function create_form() {
     var type = document.getElementById('typeRegistrazione').value;
     var form = document.getElementById('formRegistrazione');
@@ -149,89 +150,89 @@ function CreateForm2(type) {
     form.innerHTML = `
     <div class="mb-3">
         <label class="form-label"><b>Nome:</b></label>
-        <input type="text" id="Nome" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Nome" name="nome" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Cognome:</b></label>
-        <input type="text" id="Cognome" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Cognome" name="cognome" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Data di nascita:</b></label>
-        <input type="date" id="DataNascita" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="date" id="DataNascita" name="data" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Telefono:</b></label>
-        <input type="text" id="Telefono" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Telefono" name="telefono" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Via:</b></label>
-        <input type="text" id="Via" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Via" name="via" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Numero Civico:</b></label>
-        <input type="text" id="NumeroCivico" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="NumeroCivico" name="numcivico" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Città:</b></label>
-        <input type="text" id="Città" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Citta" name="citta" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Provincia:</b></label>
-        <input type="text" id="Provincia" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Provincia" name="provincia" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Nazione:</b></label>
-        <input type="text" id="Nazione" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Nazione" name="nazione" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>metodoPagamento:</b></label>
-        <select id="metodoPagamento" onchange="checkparameters_registrazione()" class="form-control">
-            <option selected value="null">Scegliere l'opzione ↓</option>
+        <select id="metodoPagamento" name="metodoPagamento" onchange="checkparameters_registrazione2('${type}')" class="form-control">
+            <option selected value="">Scegliere l'opzione ↓</option>
             <option value="CartaDiCredito">carta di credito</option>
             <option value="CartaPrepagata">carta prepagata</option>
         </select></div>
     <div class="mb-3">
         <label class="form-label"><b>email:</b></label>
-        <input type="email" id="email" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="email" id="email" name="email" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Password:</b></label>
-        <input type="password" id="Password" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="password" id="Password" name="password" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Conferma password:</b></label>
-        <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="password" id="ConfermaPassword" name="conferma_password" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
-    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2()">Invia</button>
+    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2('${type}')">Invia</button>
     `;
   } else if (type == "Venditore") {
     form.style.display ="";
     form.innerHTML = `
     <div class="mb-3">
         <label class="form-label"><b>Nome del Negozio:</b></label>
-        <input type="text" id="NomeNegozio" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="NomeNegozio" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Telefono:</b></label>
-        <input type="text" id="Telefono" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="Telefono" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Partita Iva:</b></label>
-        <input type="text" id="PartitaIva" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" id="PartitaIva" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>email:</b></label>
-        <input type="email" id="email" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="email" id="email" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Password:</b></label>
-        <input type="password" id="Password" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="password" id="Password" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Conferma password:</b></label>
-        <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
-    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2()">Invia</button>
+    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2('${type}')">Invia</button>
     `;
   } else {
     form.style.display = "none";
@@ -240,6 +241,7 @@ function CreateForm2(type) {
 }
 
 //TODO: rifare, passare campi e registrare cliente / venditore
+// TODO: sostituita registrazione() con registrazione2()
 function registrazione() {  
   var select = document.getElementById("typeRegistrazione").value;
   if ( select == "Venditore") {
@@ -286,7 +288,69 @@ function sfondo_reg(){
   });
 }
 
-function Registrazione2() {
-  window.location.assign('././paginaPersonale.html')
+function Registrazione2(type) {
+
+    if (type == "Cliente") {
+        RegistraCliente()
+    } else if (type == "Venditore") {
+        RegistraVenditore()
+    }
+
+    function RegistraCliente() {
+
+        clienti = window.localStorage.getItem("clienti");
+        clienti = JSON.parse(clienti);
+        
+        cliente = {
+            "nome": document.getElementById('Nome').value,
+            "cognome": document.getElementById('Cognome').value,
+            "data": document.getElementById('DataNascita').value,
+            "telefono": document.getElementById('Telefono').value,
+            "via": document.getElementById('Via').value,
+            "numcivico": document.getElementById('NumeroCivico').value,
+            "citta": document.getElementById('Citta').value,
+            "provincia": document.getElementById('Provincia').value,
+            "nazione": document.getElementById('Nazione').value,
+            "email": document.getElementById('email').value,
+            "password": document.getElementById('Password').value,
+            "portafogli":  { "metodo": document.getElementById('metodoPagamento').value, "saldo": 0 },
+            "type": "cliente",
+            "film_preferiti":   [],
+            "generi_preferiti": [],
+            "film_acquistati":  [],
+            "film_noleggiati": []
+        }
+        
+
+        clienti.push(cliente);
+
+        window.localStorage.setItem("clienti", JSON.stringify(clienti));
+        window.localStorage.setItem("active_user",JSON.stringify(cliente));
+
+    }
+
+    function RegistraVenditore() {
+
+        venditori = window.localStorage.getItem("venditori");
+        venditori = JSON.parse(venditori);
+
+        venditore = {
+            "nomenegozio": document.getElementById('NomeNegozio').value,
+            "telefono": document.getElementById('Telefono').value,
+            "partitaiva": document.getElementById('PartitaIva').value,
+            "email": document.getElementById('email').value,
+            "password": document.getElementById('Password').value,
+            "portafogli":   { "saldo": 0 },
+            "type": "venditore",
+            "film_vendita": [],
+            "recensioni": []
+        }
+
+        venditori.push(venditore);
+
+        window.localStorage.setItem("venditori", JSON.stringify(venditori));
+        window.localStorage.setItem("active_user",JSON.stringify(venditore));
+
+    }
+    window.location.assign('./paginaPersonale.html')
 }
-// TODO: redirect dopo registrazione, window.location.assign('./registrazione.html');

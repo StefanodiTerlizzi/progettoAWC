@@ -32,6 +32,7 @@ function CreatePage() {
         document.getElementById("form_anagrafica").innerHTML += createCliente2(JSON.parse(window.localStorage.getItem("active_user")) )
         getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti);
         getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati ,'noButton');
+        
         getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButton" );
                     // funzione anonima : definisce senza bisongo di crare una funzione , il comportamento della filter . 
                   //  differenza in millisecondi trasformata in secondi e poi in ore . se è maggiore di 72 ore il noleggio , non è più disponibile --> storico . 
@@ -489,6 +490,7 @@ function conferma_la_password(pass, campo){
 }
 
 //crea anagrafica venditoree
+// TODO: sistemare aggionra onclick
 function createVenditore2(venditore) {
     return `
     <div class="mb-3">
@@ -524,6 +526,7 @@ function createVenditore2(venditore) {
 }
 // TODO: fare select box con i imetodi e far apparire quello scelto dall'utente come default
 // crea anagrafica del cliente passandogli i dati di un cliente registrato;
+// TODO: sistemare aggionra onclick
 function createCliente2(cliente) {
     return `
     <div class="mb-3">
@@ -648,6 +651,9 @@ function AggiornaParametri(){
 
 
 function getStatsNegozio() {
+    
+    // TODO: check che non siano liste vuote
+
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     if (active_user == null || active_user.type == "cliente") {
         return;

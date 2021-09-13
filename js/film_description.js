@@ -74,6 +74,64 @@ function genera_descrizione() {
         var btn_trailer = document.createElement("button");
         btn_trailer.setAttribute("type", "button");
 
+        active_user = getActiveUser();
+
+        //coding
+        if (active_user != null) {
+            if (active_user.type == "venditore") {
+
+                found = active_user.film_vendita.find(film => film.id == id)
+
+                if (found != undefined) {
+                    alert('vendita: si');
+                } else {
+                    alert('vendita: no');
+                }
+                
+            } else {
+                
+                found = active_user.film_preferiti.find(film => film.id == id)
+
+                if (found != undefined) {
+                    alert('preferiti: si');
+                } else {
+                    alert('preferiti: no');
+                }
+
+                found = active_user.film_acquistati.find(film => film.id == id)
+
+                if (found != undefined) {
+                    alert('acquistati: si');
+                } else {
+                    alert('acquistati: no');
+                }
+
+                found = active_user.film_noleggiati.find(noleggioAttivo, id)
+
+
+                function noleggioAttivo(film) {
+                    if (film.id == this) {
+                        if (   (((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72   ) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+
+
+                if (found != undefined) {
+                    alert('noleggiati: si');
+                } else {
+                    alert('noleggiati: no');
+                }
+
+            }
+        }
+
+
+
+
 
 
         if (window.localStorage.hasOwnProperty("active_user")) {
@@ -81,21 +139,17 @@ function genera_descrizione() {
 
             if (active_user.type == "venditore") {
 
-                col8.innerHTML +=   '<div class="row" id="rigaPulsanti">'+
-                '<div class="col-md-4" style="margin-top: 2em;">'+
-                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-shopping-cart"></i> Acquista</button>'+
-                '</div>'+
-                '<div class="col-md-4" style="margin-top: 2em;">'+
-                    '<button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>'+
-                '</div>'
-
-
                 if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
-                    col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
-                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="PopUpPrezzi()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>'
+                    col8.innerHTML += `
+                    <div class="col-md-4" style="margin-top: 2em;">
+                    <button id="add_pref" type="button" class="btn btn-outline-light" onclick="PopUpPrezzi()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>
+                    `;
                 } else {
-                    col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
-                '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già in vendita </button></div></div>'
+                    col8.innerHTML += `
+                    <div class="col-md-4" style="margin-top: 2em;">
+                    <button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già in vendita </button></div></div>
+                    `;
+
                 }
 
                 
@@ -116,8 +170,10 @@ function genera_descrizione() {
 
 
                 if (active_user.film_preferiti.find(searchFilminArray, id) == undefined ) {
-                    col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
-                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti()"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button></div></div>'
+                    col8.innerHTML += `
+                    <div class="col-md" style="margin-top: 2em;">
+                    <button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti(get_from_url('id='))"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button></div></div>
+                    `;
                 } else {
                     col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
                 '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già nei preferiti</button></div></div>'
@@ -238,7 +294,12 @@ function aggiungiVendita2(id, prezzoVendita, prezzoNoleggio) {
         alert("inserisci un prezzo di noleggio valido");
         return;
     }
-
+/*
+    if (active_user.film_vendita.find(element => element.id == idFilm) != undefined) {
+        alert("film già acquistato")
+        return;
+    }
+*/
     prezzoVendita = Number(prezzoVendita)
     prezzoNoleggio = Number(prezzoNoleggio)
 
@@ -267,43 +328,28 @@ function searchFilminArray(film) {
     return film == this;
 }
 
-function aggiungiPreferiti(){
-    id = get_from_url("id=");
-    active_user = JSON.parse(window.localStorage.getItem("active_user"));
-    active_user.film_preferiti.push(id);
-    //console.log(active_user.film_preferiti);
-    // guarda array , se è gia nei preferiti , non lo aggiungi , il bottone lo deve segnalare .  
-    //console.log(active_user_preferiti.film_preferiti);
-    clienti = JSON.parse(window.localStorage.getItem("clienti"));
-    //console.log(clienti);
-    var presente = false ; 
-    for ( i=0 ; i<clienti.length; i++){
-        if (clienti[i].email==active_user.email){
-            //console.log("trovato");
-            //console.log(clienti[i].film_preferiti);
-            film_cliente = clienti[i].film_preferiti;
-            for (j = 0; j<film_cliente.length; j++){
-                if ( film_cliente[j]==id){
-                   presente = true;
-                }
-               // console.log(film_cliente);
-            }
-           if (!presente){
-               console.log("non trovato");
-               clienti[i].film_preferiti.push(id);
-                btn=document.getElementById('add_pref');
-                btn.innerHTML='<i class="far fa-thumbs-up"></i> Aggiunto ai Preferiti';
-                btn.className='btn btn-outline-light';
-                btn.style='background-color:white;color:black;';
-              // console.log(clienti[i]);
-               localStorage.setItem('active_user',JSON.stringify(clienti[i]));
-           }  else {
-               console.log("già inserito");
-           }
-        }
-        localStorage.setItem('clienti',JSON.stringify(clienti));
+function aggiungiPreferiti(id) {
+
+    active_user = getActiveUser();
+
+    found = active_user.film_preferiti.find(film => film.id == id)
+
+    if (found != undefined) {
+        return alert('film già presente');
     }
-    // devo cambiare parametri film nell'active users e anche aggiornare clienti 
+
+    active_user.film_preferiti.push( {"id": id} );
+    
+    clienti = JSON.parse(window.localStorage.getItem("clienti"));
+
+    indexCliente = clienti.findIndex(cliente => cliente.email == active_user.email)
+    clienti[indexCliente] = active_user;
+
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    window.localStorage.setItem("clienti", JSON.stringify(clienti));
+
+    alert('film aggiunto');
+
 }
 
 function stopvideo() {

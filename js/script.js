@@ -63,7 +63,7 @@ var data = {
 
         "film_noleggiati": [    {"id": "420818","data": "2021-09-10T13:43:12.297Z"}, 
                                 {"id": "566525","data": "2021-09-10T13:43:12.297Z"},
-                                {"id": "155","data": "2020-09-10T13:43:12.297Z"}
+                                {"id": "155","data": "2021-09-13T15:45:42.721Z"}
                             ]
     },
       
@@ -110,6 +110,7 @@ var key = "?api_key=2bb75004dddb3cae50be3c30cc0f551d";
 
 
 // TODO: rifare registrazione, non va bene
+/*
 function checkparameters_registrazione() {
   var select = document.getElementById("typeRegistrazione").value;
   //console.log(select);
@@ -118,7 +119,7 @@ function checkparameters_registrazione() {
   if ( select == "Venditore"){
     i = 0;
     var password_to_check = "";
-    while (form.children[i].nodeName =="DIV") {
+    while (form.children[i].nodeName == "DIV") {
        
         campo = form.children[i];
         valoreCampoVenditori = campo.children[1].value;
@@ -181,7 +182,8 @@ function checkparameters_registrazione() {
   }
   
 }
-
+*/
+/*
 function conferma_la_password(pass, campo){
     valoreCampo = campo.value; // valore
     nomeCampo = campo.name; 
@@ -210,8 +212,9 @@ function conferma_la_password(pass, campo){
         return true;
     }
 }
+*/
 
-
+/*
 function controllo(campo){
     //campo = oggetto
     valore = campo.value; // valore
@@ -293,8 +296,7 @@ function controllo(campo){
         campo.parentNode.insertBefore(err, campo.nextSibling);
         return true;
     } else if ( valore == "" ) {
-      
-        
+        campo.className = "form-control";
     }  else {
         campo.className = "form-control is-invalid";
         //<span class="badge bg-danger">Danger</span>
@@ -305,6 +307,7 @@ function controllo(campo){
         return false;
     }
 }
+*/
 
 // x API 
 function get(url, callback) {
@@ -316,11 +319,9 @@ function get(url, callback) {
       callback(xhr.response);
     }; // fine cosa fa quando ottengo la risposta
   
-    xhr.send();
-  
+    xhr.send(); 
 }
 
-//gerazione pagina descrizione
 function get_from_url(key){ // key è il prametro che volgio ottenere , nel nostro caso è id per avere id del film
     var indice = window.location.href.indexOf(key);
     if (indice == -1) {
@@ -479,3 +480,149 @@ function getActiveUser() {
     return JSON.parse(active_user);
 
 }
+
+function checkparameters_registrazione2(type) {
+    var ListToCheck;
+
+    if (type == "Cliente") {
+        ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
+    } else if (type == "Venditore") {
+        ListToCheck = [document.getElementById('NomeNegozio'), document.getElementById('Telefono'), document.getElementById('PartitaIva'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
+    }
+
+    tuttok = true;
+
+    for (item of ListToCheck) {
+        // rimuove il messaggio di errore
+        if (item.nextSibling != null) {
+            item.nextSibling.remove();
+        }
+
+        if (item.value == "" ) {
+            item.className = "form-control"
+            tuttok = false;
+            continue;
+        }
+
+        var {msgError, ok} = controllo2(item.id, item.value);
+
+        var err = document.createElement("div"); // error message
+        
+        if (ok) {
+            item.className = "form-control is-valid";
+            err.className = "valid-feedback";
+        } else {
+            item.className = "form-control is-invalid";
+            err.className = "invalid-feedback";
+            tuttok = false;
+        }
+
+        err.innerHTML = msgError;
+        item.parentNode.insertBefore(err, item.nextSibling);   
+    
+    }
+
+    if ( tuttok ){
+        document.getElementById("submit_registrazione").disabled = false;
+    } else {
+       document.getElementById("submit_registrazione").disabled = true; 
+    }
+
+}
+
+function controllo2(nome, value){
+
+    //console.log(`controllo2: ${nome} ,  ${value}`);
+
+    if (nome == "Nome" || nome == "Cognome" || nome == "DataNascita" || nome == "Telefono" || nome == "Via" || nome == "NumeroCivico" || nome == "Citta" || nome == "Provincia" || nome == "Nazione" || nome == "email" || nome == "Password" || nome == "NomeNegozio" || nome == "PartitaIva") {
+        
+        var {err, regex} = setRegex(nome);
+
+        if (checkWithRegex(regex, value)) {
+            return {msgError: "Looks good!", ok: true}
+        } else {
+            return {msgError: err, ok: false}
+        }
+
+    } else if (nome == "metodoPagamento") {
+
+        if (checkmetodoPagamento(value)) {
+            return {msgError: "Looks good!", ok: true}
+        } else {
+            return {msgError: "slezionare un metodo di pagamento", ok: false}
+        }
+
+    } else if (nome == "ConfermaPassword") {
+
+        if (checkConfermaPassword(value, document.getElementById('Password').value)) {
+            return {msgError: "Looks good!", ok: true}
+        } else {
+            return {msgError: "Le Password non coincidono", ok: false}
+        }
+
+    }
+
+    
+
+    function checkWithRegex(regex, value) {
+        if (value.match(regex)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function checkmetodoPagamento(value) {
+        if (value == "CartaDiCredito" || value == "CartaPrepagata") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function checkConfermaPassword(value, otherPassword) {
+        if (value == otherPassword) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+    function setRegex(nome) {
+        switch ( nome ) {
+            case "Nome":
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            case "NomeNegozio":
+                return {err: "Il parametro non deve essere vuoto", regex: /[a-zA-Z1-9]+/};
+            case "Cognome" :
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            case "Via":
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            case "Provincia":
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            case "Telefono":
+                return {err: "Il parametro deve essere specificato come nell'esempio : 346xxxxxxx (10 numeri)", regex: /^[0-9]{10}$/};
+            case "DataNascita":
+                return {err: "selezionare una data valida", regex: /^([0-9]{4}\-[0-9]{2}\-[0-9]{2})$/};
+            case "NumeroCivico":
+                return {err: "Il parametro deve contenere solo caratteri numerici", regex: /^[0-9]+$/};
+            case "Citta" :
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            case "Nazione" : 
+                return {err: "Il parametro deve contenere solo caratteri alfabetici", regex: /^([a-zA-Z\xE0\xE8\xE9\xF9\xF2\xEC\x27]\s?)+$/};
+            //nomenegozio -> va bene qualsiasi cosa
+            case "PartitaIva":
+                return {err: "Il parametro deve essere specificato come nell'esempio seguente : 27563419860 (11 numeri)", regex: /^[0-9]{11}$/};
+            case "email":
+                return {err: "Il parametro deve essere specificato come nell'esempio seguente : mariorossi23@gmail.com ", regex: /^[\w\-\.]*[\w\.]\@[\w\.]*[\w\-\.]+[\w\-]+[\w]\.+[\w]+[\w $]/}; 
+            case "Password" :
+                return {err: "La password deve contenere almeno 8 caratteri di cui almeno uno maiuscolo , uno minuscolo , uno numerico e un carattere speciale", regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/}; 
+            default:
+                return null;
+        }
+    }
+
+}
+
