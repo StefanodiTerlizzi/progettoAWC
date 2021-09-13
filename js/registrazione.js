@@ -56,6 +56,15 @@ function create_form() {
         nazione = document.createElement("input");
         nazione.setAttribute("type","text");
         array.push(createFormElement(nazione, "Nazione","nazione"));
+        // campo metodo di pagamento
+        metodoPagamento = document.createElement("select");
+        metodoPagamento.innerHTML = `
+          <option selected value="null">Scegliere l'opzione &#8595;</option>
+          <option value="CartaDiCredito">carta di credito</option>
+          <option value="CartaPrepagata">carta prepagata</option>
+        `;
+        array.push(createFormElement(metodoPagamento, "metodoPagamento","portafogli.metodo"));
+
     } else {
         //console.log(type);
         //nome_negozio
@@ -133,6 +142,104 @@ function createFormElement(elemento, id, nameforjson) {
     return div1;
 }
 
+function CreateForm2(type) {
+  var form = document.getElementById('formRegistrazione')
+  if (type == "Cliente") {
+    form.style.display ="";
+    form.innerHTML = `
+    <div class="mb-3">
+        <label class="form-label"><b>Nome:</b></label>
+        <input type="text" id="Nome" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Cognome:</b></label>
+        <input type="text" id="Cognome" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Data di nascita:</b></label>
+        <input type="date" id="DataNascita" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Telefono:</b></label>
+        <input type="text" id="Telefono" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Via:</b></label>
+        <input type="text" id="Via" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Numero Civico:</b></label>
+        <input type="text" id="NumeroCivico" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Città:</b></label>
+        <input type="text" id="Città" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Provincia:</b></label>
+        <input type="text" id="Provincia" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Nazione:</b></label>
+        <input type="text" id="Nazione" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>metodoPagamento:</b></label>
+        <select id="metodoPagamento" onchange="checkparameters_registrazione()" class="form-control">
+            <option selected value="null">Scegliere l'opzione ↓</option>
+            <option value="CartaDiCredito">carta di credito</option>
+            <option value="CartaPrepagata">carta prepagata</option>
+        </select></div>
+    <div class="mb-3">
+        <label class="form-label"><b>email:</b></label>
+        <input type="email" id="email" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Password:</b></label>
+        <input type="password" id="Password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Conferma password:</b></label>
+        <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2()">Invia</button>
+    `;
+  } else if (type == "Venditore") {
+    form.style.display ="";
+    form.innerHTML = `
+    <div class="mb-3">
+        <label class="form-label"><b>Nome del Negozio:</b></label>
+        <input type="text" id="NomeNegozio" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Telefono:</b></label>
+        <input type="text" id="Telefono" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Partita Iva:</b></label>
+        <input type="text" id="PartitaIva" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>email:</b></label>
+        <input type="email" id="email" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Password:</b></label>
+        <input type="password" id="Password" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"><b>Conferma password:</b></label>
+        <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione()" class="form-control">
+    </div>
+    <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2()">Invia</button>
+    `;
+  } else {
+    form.style.display = "none";
+    form.innerHTML = '';
+  }
+}
+
+//TODO: rifare, passare campi e registrare cliente / venditore
 function registrazione() {  
   var select = document.getElementById("typeRegistrazione").value;
   if ( select == "Venditore") {
@@ -178,3 +285,8 @@ function sfondo_reg(){
 
   });
 }
+
+function Registrazione2() {
+  window.location.assign('././paginaPersonale.html')
+}
+// TODO: redirect dopo registrazione, window.location.assign('./registrazione.html');

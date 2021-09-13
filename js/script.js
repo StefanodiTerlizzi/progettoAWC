@@ -71,12 +71,45 @@ var data = {
 }
 
 var structData = {
-    "venditore" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita" : []},
-    "cliente" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
+    "venditoreold" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita" : []},
+    "clienteold" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
+    "venditore" :   {
+                        "nomenegozio": "",
+                        "telefono": "",
+                        "partitaiva": "",
+                        "email": "",
+                        "password": "",
+                        "portafogli":   { "saldo": 0 },
+                        "type": "venditore",
+                        "film_vendita": [],
+                        "recensioni": []
+                    },
+
+    "cliente" :     {
+                        "nome": "",
+                        "cognome":"",
+                        "data":"",
+                        "telefono":"",
+                        "via":"",
+                        "numcivico":"",
+                        "citta":"",
+                        "provincia":"",
+                        "nazione":"",
+                        "email":"",
+                        "password":"",
+                        "portafogli":  { "metodo": "", "saldo": 0 },
+                        "type": "cliente",
+                        "film_preferiti":   [],
+                        "generi_preferiti": [],
+                        "film_acquistati":  [],
+                        "film_noleggiati": []
+                    },
 }
 
 var key = "?api_key=2bb75004dddb3cae50be3c30cc0f551d";
 
+
+// TODO: rifare registrazione, non va bene
 function checkparameters_registrazione() {
   var select = document.getElementById("typeRegistrazione").value;
   //console.log(select);

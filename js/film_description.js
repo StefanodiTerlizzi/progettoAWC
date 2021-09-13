@@ -92,7 +92,7 @@ function genera_descrizione() {
 
                 if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
                     col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
-                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiVendita()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>'
+                '<button id="add_pref" type="button" class="btn btn-outline-light" onclick="PopUpPrezzi()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>'
                 } else {
                     col8.innerHTML += '<div class="col-md-4" style="margin-top: 2em;">'+
                 '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già in vendita </button></div></div>'
@@ -209,35 +209,57 @@ function genera_descrizione() {
 
 }
 
-function aggiungiVendita(){
-    
+function PopUpPrezzi(){
+
     id = get_from_url("id=");
 
-    active_user = JSON.parse(window.localStorage.getItem("active_user"));
-    
-    if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
-        active_user.film_vendita.push(id);
-        window.localStorage.setItem("active_user", JSON.stringify(active_user));
-    } else {
+    active_user = getActiveUser();
+
+    found = active_user.film_vendita.find(film => film.id == id)
+
+    if (found != undefined) {
         return alert('film già presente');
     }
 
-    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+    document.getElementById("inserisciPrezzo").style.display = "inline-flex";
 
-    for ( i=0 ; i<venditori.length; i++) {
-        
-        if (venditori[i].email==active_user.email) {
+}
 
-            if (venditori[i].film_vendita.find(searchFilminArray, id) == undefined ) {
-                venditori[i].film_vendita.push(id);
-                window.localStorage.setItem("venditori", JSON.stringify(venditori));
-                break;
-            }
+function aggiungiVendita2(id, prezzoVendita, prezzoNoleggio) {
+    
+    active_user = getActiveUser();
 
-        }
-
+    if (prezzoVendita == "" || Number(prezzoVendita) < 0) {
+        alert("Inserisci un prezzo di vendita valido");
+        return;
     }
 
+    if (prezzoNoleggio == "" || Number(prezzoNoleggio) < 0) {
+        alert("inserisci un prezzo di noleggio valido");
+        return;
+    }
+
+    prezzoVendita = Number(prezzoVendita)
+    prezzoNoleggio = Number(prezzoNoleggio)
+
+    active_user.film_vendita.push(
+                                    {   "id": id,
+                                        "prezzoVendita": prezzoVendita,
+                                        "prezzoNoleggio": prezzoNoleggio,
+                                        "vendite": [],
+                                        "noleggi": []
+                                    }
+                                );
+
+    venditori = JSON.parse(window.localStorage.getItem("venditori"));
+
+    indexVend = venditori.findIndex(venditore => venditore.email == active_user.email)
+    venditori[indexVend] = active_user;
+
+    window.localStorage.setItem("active_user", JSON.stringify(active_user));
+    window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
+    alert('film aggiunto');
 }
 
 //restituisce indice successivo a quello trovato, undefined altrimenti

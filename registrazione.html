@@ -39,28 +39,26 @@
 
 
 
-      <!--
-          content = registrazione 
-      -->
+    <!--
+        content = registrazione 
+    -->
 
-      <!--<div class="container" style="text-align:center;">-->
-        <div id='scroller_reg' class="align-top overflow-auto" style='height:200px;white-space: nowrap'></div>
-        
-        <div style='text-align:center;' class='row'>
-        <h3 class='mx-auto align-middle' style='margin-top:3em;color: white;'>Registrazione</h3><br>
-                <select class='form-select mx-auto' style='width:400px;margin-bottom:3em;border-radius:3em;;' id ="typeRegistrazione" onchange="create_form()">
-                    <option selected value="null">Scegliere l'opzione</option>
-                    <option value="Venditore">Venditore</option>
-                    <option value="Cliente">Cliente</option>
-                </select>
-        </div>
+    <!--<div class="container" style="text-align:center;">-->
+    <div id='scroller_reg' class="align-top overflow-auto" style='height:200px;white-space: nowrap'></div>
+    
+    <div style='text-align:center;' class='row'>
+    <h3 class='mx-auto align-middle' style='margin-top:3em;color: white;'>Registrazione</h3><br>
+            <select class='form-select mx-auto' style='width:400px;margin-bottom:3em;border-radius:3em;;' id ="typeRegistrazione" onchange="CreateForm2(this.value)">
+                <option selected value="null">Scegliere l'opzione</option>
+                <option value="Venditore">Venditore</option>
+                <option value="Cliente">Cliente</option>
+            </select>
+    </div>
 
-      <form action="./paginaPersonale.html">
-        <div class='mx-auto row' id="formRegistrazione">
+    <div class="mx-auto row" id="formRegistrazione" style="display: none; background-color: rgba(213, 203, 203, 0.8); padding: 3em; width: 600px; margin-bottom: 3em; border-radius: 1.5em; color: black;">
 
-        </div>
-      </form>
-       
+    </div>
+      
       
         
        
