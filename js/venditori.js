@@ -159,8 +159,10 @@ function compilaModal(emailVenditore) {
         xhr.responseType = 'json';
     
         xhr.onload = function() { // cosa fa quando ottengo la risposta
-        callback(xhr.response, otherParams);
-        
+            if (xhr.status<200 || xhr.status>299) {
+                return window.location.assign('./404.html');
+            }
+            callback(xhr.response, otherParams);
         }; // fine cosa fa quando ottengo la risposta
     
         xhr.send();

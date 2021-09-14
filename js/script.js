@@ -342,6 +342,9 @@ function get(url, callback) {
     xhr.responseType = 'json';
   
     xhr.onload = function() { // cosa fa quando ottengo la risposta
+      if (xhr.status<200 || xhr.status>299) {
+          return window.location.assign('./404.html');
+      }  
       callback(xhr.response);
     }; // fine cosa fa quando ottengo la risposta
   
@@ -672,7 +675,6 @@ function setActiveNavbar() {
     allLink = navbarSupportedContent.getElementsByClassName('nav-link');
 
     for (Link of allLink) {
-        console.log(Link.href, window.location.href)
         if ( (window.location.href).search(Link.href) != -1 ) {
             Link.className = 'nav-link active';
         } else {
