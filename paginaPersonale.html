@@ -26,7 +26,7 @@
 
     <title>Pagina Personale</title>
   </head>
-  <body onload="CreatePage(),scegli_genere_preferenze(), setActiveNavbar()" >
+  <body onload="CreatePage(), setActiveNavbar()" >
 
     <!-- navigation -->
     <script>document.write(navbar)</script>
@@ -201,7 +201,9 @@
               <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
                   <!-- javascript -->
-                  <button style='display:block;' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
+                  <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">
+                    <button type="button" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
+                  </a>
               </div>
               
               

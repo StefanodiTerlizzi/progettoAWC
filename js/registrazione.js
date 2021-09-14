@@ -186,8 +186,8 @@ function CreateForm2(type) {
     </div>
     <div class="mb-3">
         <label class="form-label"><b>metodoPagamento:</b></label>
-        <select id="metodoPagamento" name="metodoPagamento" onchange="checkparameters_registrazione2('${type}')" class="form-control">
-            <option selected value="">Scegliere l'opzione ↓</option>
+        <select id="metodoPagamento" name="metodoPagamento" onchange="checkparameters_registrazione2('${type}')" class="form-control form-select">
+            <option selected value="">Scegliere l'opzione</option>
             <option value="CartaDiCredito">carta di credito</option>
             <option value="CartaPrepagata">carta prepagata</option>
         </select></div>
@@ -240,7 +240,6 @@ function CreateForm2(type) {
   }
 }
 
-//TODO: rifare, passare campi e registrare cliente / venditore
 // TODO: sostituita registrazione() con registrazione2()
 function registrazione() {  
   var select = document.getElementById("typeRegistrazione").value;

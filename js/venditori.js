@@ -81,7 +81,7 @@ function compilaModal(emailVenditore) {
                 if (ParametroEmail != null) {
                     bottoni = `
                     <button class="btn btn-primary m-2" onclick="AcquistaFilm('${ParametroEmail.emailCliente}', '${ParametroEmail.emailVenditore}', '${response.id}', ${otherParams.prezzoVendita})"><i class="fas fa-shopping-cart"></i> compra</button>
-                    <button class="btn btn-success m-2" onclick="AcquistaFilm('${ParametroEmail.emailCliente}', '${ParametroEmail.emailVenditore}', '${response.id}', ${otherParams.prezzoNoleggio})"><i class="fas fa-caret-square-right"></i> noleggia</button>
+                    <button class="btn btn-success m-2" onclick="NoleggiaFilm('${ParametroEmail.emailCliente}', '${ParametroEmail.emailVenditore}', '${response.id}', ${otherParams.prezzoNoleggio})"><i class="fas fa-caret-square-right"></i> noleggia</button>
                     `;
                 }
                 

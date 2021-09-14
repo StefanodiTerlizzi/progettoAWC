@@ -134,8 +134,6 @@ var structData = {
 
 var key = "?api_key=2bb75004dddb3cae50be3c30cc0f551d";
 
-
-// TODO: rifare registrazione, non va bene
 /*
 function checkparameters_registrazione() {
   var select = document.getElementById("typeRegistrazione").value;
@@ -464,13 +462,18 @@ function NoleggiaFilm(emailCliente, emailVenditore, idFilm, price) {
         return;
     }
 
-    if (active_user.film_acquistati.find(element => element.id == idFilm) != undefined) {
+    attivi = active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72)
+
+    if (attivi.find(element => element.id == idFilm) != undefined) {
+        alert("film con noleggio ancora attivo")
+        return;
+    } else if (active_user.film_acquistati.find(element => element.id == idFilm) != undefined) {
         alert("film già acquistato")
         return;
     }
 
     active_user.portafogli.saldo -= price;
-    active_user.film_acquistati.push({"id": idFilm, "data": (new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear())})
+    active_user.film_noleggiati.push({"id": idFilm, "data": new Date()})
 
     index = clienti.findIndex(cliente => cliente.email === emailCliente);
     clienti[index] = active_user;

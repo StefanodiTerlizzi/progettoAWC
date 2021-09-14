@@ -1,10 +1,3 @@
-// TODO: aggiungi film manda ad un elenco di film dai quali si può aggiungere ogni silngolo film in caso non sia già presente
-/*
-TODO:
-noleggio: il film pagato dal cliente sar`a disponibile nel film visibili dal
-cliente solo per 72h dal giorno dell’acquisto; successivamente, rimarr`a
-in elenco ma sar`a indicato come non disponibile per la visione.
-*/
 function get(url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true); 
@@ -41,6 +34,7 @@ function CreatePage() {
                   //  differenza in millisecondi trasformata in secondi e poi in ore . se è maggiore di 72 ore il noleggio , non è più disponibile --> storico . 
         getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72), "noButton" );
 
+        getGeneri()
     }
 
 }
@@ -502,8 +496,7 @@ function conferma_la_password(pass, campo){
     }
 }
 
-//crea anagrafica venditoree
-// TODO: sistemare aggionra onclick
+//crea anagrafica venditore
 function createVenditore2(venditore) {
     return `
     <div class="mb-3">
@@ -526,12 +519,13 @@ function createVenditore2(venditore) {
         <label class="form-label"><b>Saldo:</b></label>
         <input class="form-control" type="text" value="${venditore.portafogli.saldo}" readonly>
     </div>
+
     <div style="margin-bottom: 1em;">
-        <a href="#" onclick="cambiaPassword()">Cambia Password</a>
+        <button type="button" onclick="cambiaPassword('Venditore')" class="btn btn-outline-light">Cambia Password</button>
     </div>
 
     <div style="margin-bottom: 1em;">
-        <a href="#" onclick=" password = document.getElementById('PWD'); password.style.display='' ;">Nascondi Password</a>
+        <button type="button" onclick="nascondiPassword('Venditore')" class="btn btn-outline-light">Nascondi Password</button>
     </div>
         
     <div id="PWD" style="display: none;">
@@ -550,9 +544,8 @@ function createVenditore2(venditore) {
     <button type="button" id="Elimina_Account" style="width: 150px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
     `;
 }
-// TODO: fare select box con i metodi e far apparire quello scelto dall'utente come default
+
 // crea anagrafica del cliente passandogli i dati di un cliente registrato;
-// TODO: sistemare aggionra onclick
 function createCliente2(cliente) {
     
     SelectMetodoPagamento = '';
@@ -576,43 +569,43 @@ function createCliente2(cliente) {
     </div>
     <div class="mb-3">
         <label class="form-label" for="Nome"><b>Nome:</b></label>
-        <input type="text" value="${cliente.nome}" id="Nome" name="nome" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.nome}" id="Nome" name="nome" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Cognome"><b>Cognome:</b></label>
-        <input type="text" value="${cliente.cognome}" id="Cognome" name="cognome" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.cognome}" id="Cognome" name="cognome" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Data di nascita"><b>Data di nascita:</b></label>
-        <input type="date" value="${cliente.data}" id="DataNascita" name="data" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="date" value="${cliente.data}" id="DataNascita" name="data" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Telefono"><b>Telefono:</b></label>
-        <input type="text" value="${cliente.telefono}" id="Telefono" name="telefono" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.telefono}" id="Telefono" name="telefono" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Via"><b>Via:</b></label>
-        <input type="text" value="${cliente.via}" id="Via" name="via" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.via}" id="Via" name="via" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Numero Civico"><b>Numero Civico:</b></label>
-        <input type="text" value="${cliente.numcivico}" id="NumeroCivico" name="numcivico" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.numcivico}" id="NumeroCivico" name="numcivico" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Città"><b>Città:</b></label>
-        <input type="text" value="${cliente.citta}" id="Citta" name="citta" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.citta}" id="Citta" name="citta" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Provincia"><b>Provincia:</b></label>
-        <input type="text" value="${cliente.provincia}" id="Provincia" name="provincia" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.provincia}" id="Provincia" name="provincia" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Nazione"><b>Nazione:</b></label>
-        <input type="text" value="${cliente.nazione}" id="Nazione" name="nazione" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.nazione}" id="Nazione" name="nazione" onchange="checkparameters_registrazione2('ClienteAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Metodo di pagamento:</b></label>
-        <select id="metodoPagamento" name="metodoPagamento" class="form-control" onchange="checkparameters_registrazione2('ClienteAggiorna')">
+        <select id="metodoPagamento" name="metodoPagamento" class="form-select" onchange="checkparameters_registrazione2('ClienteAggiorna')">
             ${SelectMetodoPagamento}
         </select></div>
     </div>
@@ -620,17 +613,23 @@ function createCliente2(cliente) {
         <label class="form-label"><b>Saldo:</b></label>
         <input class="form-control" type="text" id="saldo" value="${cliente.portafogli.saldo}" readonly>
     </div>
+
     <div style="margin-bottom: 1em;">
-        <a href="#" onclick="cambiaPassword()">Cambia Password</a>
+        <button type="button" onclick="cambiaPassword('Cliente')" class="btn btn-outline-light">Cambia Password</button>
     </div>
+
+    <div style="margin-bottom: 1em;">
+        <button type="button" onclick="nascondiPassword('Cliente')" class="btn btn-outline-light">Nascondi Password</button>
+    </div>
+    
     <div id="PWD" style="display: none;">
         <div class="mb-3" id="changePassword" style="margin-bottom: 1em;">
             <label class="form-label" for="Password"><b>Password:</b></label>
-            <input type="password" id="Password" name="password" class="form-control">
+            <input type="password" id="Password" name="password" class="form-control" onchange="checkparameters_registrazione2('ClienteAggiorna')">
         </div>
         <div class="mb-3" style="margin-bottom: 1em;">
             <label class="form-label" for="Conferma password"><b>Conferma password:</b></label>
-            <input type="password" id="ConfermaPassword" name="conferma_password" class="form-control">
+            <input type="password" id="ConfermaPassword" name="conferma_password" class="form-control" onchange="checkparameters_registrazione2('ClienteAggiorna')">
         </div>
     </div>
     <a>
@@ -640,9 +639,16 @@ function createCliente2(cliente) {
     `;
 }
 
-function cambiaPassword(){
+function cambiaPassword(type){
     password = document.getElementById("PWD");
     password.style.display="";
+    checkparameters_registrazione2(type+'Aggiorna')
+}
+
+function nascondiPassword(type) {
+    password = document.getElementById("PWD");
+    password.style.display="none";
+    checkparameters_registrazione2(type+'Aggiorna')
 }
 
 
@@ -774,8 +780,6 @@ function AggiornaAnagrafica() {
 
 function getStatsNegozio() {
     
-    // TODO: check che non siano liste vuote
-
     active_user = JSON.parse(window.localStorage.getItem("active_user"));
     if (active_user == null || active_user.type == "cliente") {
         return;
@@ -793,6 +797,9 @@ function getStatsNegozio() {
 
 
     function prezzo_medio_vendita(ListFilmVendita) {
+        if (ListFilmVendita.length == 0) {
+            return '';
+        }
         var prezzo_medio_vendita = 0.0;
         var numero_vendite = 0;
         for (film of ListFilmVendita) {
@@ -803,6 +810,9 @@ function getStatsNegozio() {
     }
 
     function prezzo_medio_noleggio(ListFilmNoleggio) {
+        if (ListFilmNoleggio.length == 0) {
+            return '';
+        }
         var prezzo_medio_noleggio = 0.0;
         var numero_noleggi = 0;
         for (film of ListFilmNoleggio) {
@@ -813,6 +823,9 @@ function getStatsNegozio() {
     }
 
     function numero_vendite(ListFilm) {
+        if (ListFilm.length == 0) {
+            return '';
+        }
         var numero_vendite = 0;
         for (film of ListFilm) {
             numero_vendite += film.vendite.length;
@@ -821,6 +834,9 @@ function getStatsNegozio() {
     }
 
     function numero_noleggi(ListFilm) {
+        if (ListFilm.length == 0) {
+            return '';
+        }
         var numero_noleggi = 0;
         for (film of ListFilm) {
             numero_noleggi += film.noleggi.length;
@@ -829,13 +845,18 @@ function getStatsNegozio() {
     }
 
     function filmPiuVenduto(ListFilm) {
-
+        if (ListFilm.length == 0) {
+            return '';
+        }
         // gio : capire questa funzione 
         ListFilm.sort((a, b) => b.vendite.length - a.vendite.length)
         return ListFilm[0].id
     }
 
     function filmPiuNoleggiato(ListFilm) {
+        if (ListFilm.length == 0) {
+            return '';
+        }
         ListFilm.sort((a, b) => b.noleggi.length - a.noleggi.length)
         return ListFilm[0].id
     }
@@ -905,5 +926,40 @@ function createCarouselRecensioni(recensioni) {
         </button>
     </div>
     `;
+
+}
+
+function getGeneri() {
+    console.log("getGeneri()")
+
+    active_user = getActiveUser();
+    divToAppend = document.getElementById('completa_account_form');
+
+    get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
+        // console.log(response);
+
+        for (genere of response.genres) {
+            if ( active_user.generi_preferiti.includes(genere.id) ) {
+                //check attivo
+                divToAppend.innerHTML += `
+                <input name="Action" type="checkbox" class="btn-check" id="${genere.id}">
+                <label class="btn btn-secondary mr-1" for="${genere.id}">${genere.name}</label>
+                `;
+            } else {
+                //check disattivo
+                divToAppend.innerHTML += `
+                <input name="Action" type="checkbox" class="btn-check" id="${genere.id}">
+                <label class="btn btn-outline-secondary mr-1" for="${genere.id}">${genere.name}</label>
+                `;
+            }
+        }
+
+        divToAppend.innerHTML += `
+        <input type="submit" class="btn btn-primary" onclick="gestisci_generi_preferiti()" style="margin-top: 0.5em; float: left;" />
+        `;
+
+    });
+
+    
 
 }

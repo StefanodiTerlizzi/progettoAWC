@@ -46,7 +46,7 @@
     </div>
 
     <script>
-        if (((query = get_from_url("QueryToSearch=")) != false) && ((TypeOfSearch = get_from_url("TypeOfSearch=")) != false) ) {
+        if ( (query = get_from_url("multiSearch=")) != false ) {
             //console.log("query", query);
             //console.log("TypeofSearch", TypeOfSearch);
             multiSearchResult(query);
