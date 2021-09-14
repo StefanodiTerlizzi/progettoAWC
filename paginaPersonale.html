@@ -98,7 +98,7 @@
                         <!---->
                         <script>
                           act = JSON.parse(window.localStorage.getItem('active_user'));
-                          console.log(act);
+                          //console.log(act);
                           var array_generi=[];
                           // TODO: generi preferiti devono essere già selezionati quando atterro utente
                           function scegli_genere_preferenze(){
@@ -141,7 +141,7 @@
                           function gestisci_generi_preferiti(){
 
                             var array_generi_scelti =[];
-                            console.log(array_generi);
+                            //console.log(array_generi);
 
                               for (i=0 ; i<array_generi.length; i++ ){
                                   // console.log(array_generi[i]);
@@ -150,7 +150,7 @@
                                   }
                               }
                             //   window.localStorage.getItem('clienti')
-                              console.log(array_generi_scelti);
+                              //console.log(array_generi_scelti);
                               active_user=JSON.parse(window.localStorage.getItem('active_user'));
                               clienti=JSON.parse(window.localStorage.getItem('clienti'));
                               active_user.generi_preferiti=array_generi_scelti;
