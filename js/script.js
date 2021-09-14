@@ -665,13 +665,14 @@ function controllo2(nome, value){
 
 }
 
-
+// Accedi non si illumina
 function setActiveNavbar() {
 
     navbarSupportedContent = document.getElementById('navbarSupportedContent');
     allLink = navbarSupportedContent.getElementsByClassName('nav-link');
 
     for (Link of allLink) {
+        console.log(Link.href, window.location.href)
         if ( (window.location.href).search(Link.href) != -1 ) {
             Link.className = 'nav-link active';
         } else {

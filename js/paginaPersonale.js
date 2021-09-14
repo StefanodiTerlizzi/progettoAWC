@@ -523,6 +523,11 @@ function createVenditore2(venditore) {
     <div style="margin-bottom: 1em;">
         <a href="#" onclick="cambiaPassword()">Cambia Password</a>
     </div>
+
+    <div style="margin-bottom: 1em;">
+        <a href="#" onclick=" password = document.getElementById('PWD'); password.style.display='' ;">Nascondi Password</a>
+    </div>
+        
     <div id="PWD" style="display: none;">
         <div class="mb-3" id="changePassword" style="margin-bottom: 1em;">
             <label class="form-label" for="Password"><b>Password:</b></label>
@@ -632,15 +637,10 @@ function createCliente2(cliente) {
 function cambiaPassword(){
     password = document.getElementById("PWD");
     password.style.display="";
-
-    /*conf_password = document.getElementById("changeConfPassword");
-    conf_password.style.display="block";
-    */
-  
 }
 
 
-//TODO: non funziona, da rifare 
+//TODO: AggiornaParametri() sostituita con AggiornaAnagrafica(), da cancellare AggiornaParametri()
 function AggiornaParametri(){
     // si attiva quando schiaccio bottone aggiorna 
     var utenteAttivo = JSON.parse(window.localStorage.getItem("active_user"));
