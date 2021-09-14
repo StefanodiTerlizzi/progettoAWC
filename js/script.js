@@ -38,7 +38,7 @@ var data = {
   "clienti" : [
     {   "nome": "Giacomo",
         "cognome":"Rossi",
-        "data":"1996-10-04",
+        "data":"1990-11-04",
         "telefono":"3465889485",
         "via":"viale dei santi",
         "numcivico":"3",
@@ -47,7 +47,7 @@ var data = {
         "nazione":"italia",
         "email":"giacomorossi@gmail.com",
         "password":"1",
-        "portafogli":  {   "metodo": "carta di credito",
+        "portafogli":  {   "metodo": "CartaDiCredito",
                             "saldo": 100
                         },
         "type": "cliente",
@@ -66,10 +66,36 @@ var data = {
                                 {"id": "155","data": "2021-09-13T15:45:42.721Z"}
                             ]
     },
+    {   "nome": "Luca",
+        "cognome":"Colombo",
+        "data":"1995-07-03",
+        "telefono":"3465889485",
+        "via":"viale Eupropa",
+        "numcivico":"3",
+        "citta":"milano",
+        "provincia":"milano",
+        "nazione":"italia",
+        "email":"lucacolombo@gmail.com",
+        "password":"2",
+        "portafogli":  {   "metodo": "CartaPrepagata",
+                            "saldo": 100
+                        },
+        "type": "cliente",
+        "film_preferiti":   [   {"id": "105"},
+                                {"id":"77950"}
+                            ],
+
+        "generi_preferiti": [],
+
+        "film_acquistati":  [],
+
+        "film_noleggiati": []
+    },
       
   ]
 }
 
+// TODO: non serve
 var structData = {
     "venditoreold" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita" : []},
     "clienteold" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
@@ -375,17 +401,6 @@ function createCard(film){
             return card;
 }
 
-
-// TODO: a cosa serve? non mi sembra che venga chiamata da nessuna parte, forse ho combinato io qualcosa, era qella per fare in modo che il link user se non sei loggato mandi al login o alla pagina personale, possibile?
-function pagPersonale(){
-    if ( window.localStorage.getItem('active_user')!='null'){
-        console.log(window.localStorage.getItem('active_user'));
-        document.getElementById('user').href='paginaPersonale.html';
-    } else {
-         alert("Nessun Utente attivo ");
-    }
-}
-
 function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
 
     /*
@@ -426,6 +441,8 @@ function AcquistaFilm(emailCliente, emailVenditore, idFilm, price) {
     window.localStorage.setItem("active_user", JSON.stringify(active_user));
     window.localStorage.setItem("clienti", JSON.stringify(clienti));
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
+
+    alert("film acquistato correttamente")
 
     window.location.reload()
 
@@ -492,6 +509,13 @@ function checkparameters_registrazione2(type) {
         ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
     } else if (type == "Venditore") {
         ListToCheck = [document.getElementById('NomeNegozio'), document.getElementById('Telefono'), document.getElementById('PartitaIva'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
+    } else if (type == "ClienteAggiorna") {
+        ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento')]
+        if (document.getElementById("PWD").style.display != "none") {
+            ListToCheck.push(document.getElementById('Password'), document.getElementById('ConfermaPassword'))
+        }
+    } else if (type == "VenditoreAggiorna") {
+        
     }
 
     tuttok = true;
@@ -630,3 +654,26 @@ function controllo2(nome, value){
 
 }
 
+
+function setActiveNavbar() {
+
+    navbarSupportedContent = document.getElementById('navbarSupportedContent');
+    allLink = navbarSupportedContent.getElementsByClassName('nav-link');
+
+    for (Link of allLink) {
+        if ( (window.location.href).search(Link.href) != -1 ) {
+            Link.className = 'nav-link active';
+        } else {
+            Link.className = 'nav-link';
+        }
+    }
+
+    active_user = getActiveUser()
+    if (active_user == null) {
+        document.getElementById('LinkAccedi').href = "./signup.html";
+    } else {
+        document.getElementById('LinkAccedi').href = "#";
+
+    }
+
+}

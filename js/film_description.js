@@ -1,6 +1,12 @@
 function genera_descrizione() {
     id = get_from_url("id="); // id da usare nella richiesta per ottenere info del film da descrivere
 
+    active_user = getActiveUser();
+    if (active_user != null && active_user.type == "cliente" ) {
+        document.getElementById("Review").style.display = "";
+    }
+
+
     get("https://api.themoviedb.org/3/movie/"+id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
         var film = response;
         console.log(film);
@@ -74,7 +80,6 @@ function genera_descrizione() {
         var btn_trailer = document.createElement("button");
         btn_trailer.setAttribute("type", "button");
 
-        active_user = getActiveUser();
 
         //coding
         if (active_user != null) {
@@ -128,7 +133,7 @@ function genera_descrizione() {
                         <button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i> già Acquistato</button>
                     </div>
                     `;
-                    alert('acquistati: si');
+                    //alert('acquistati: si');
                 } else {
                     bottoni += `
                     <div class="col-md" style="margin-top: 2em;">
@@ -138,7 +143,7 @@ function genera_descrizione() {
                     </div>
                     `;
                     foundNoleggio = active_user.film_noleggiati.find(noleggioAttivo, id)
-                    alert('acquistati: no');
+                    //alert('acquistati: no');
                 }
 
 
@@ -160,7 +165,7 @@ function genera_descrizione() {
                         <button type="button" class="btn btn-light"><i class="fas fa-shopping-cart"></i> già noleggiato</button>
                     </div>
                     `;
-                    alert('noleggio: si');
+                    //alert('noleggio: si');
                 } else if (found == undefined) {
                     bottoni += `
                     <div class="col-md" style="margin-top: 2em;">
@@ -169,7 +174,7 @@ function genera_descrizione() {
                         </a>
                     </div>
                     `;
-                    alert('noleggio: no');
+                    //alert('noleggio: no');
                 }
 
                 col8.innerHTML += `
@@ -180,61 +185,6 @@ function genera_descrizione() {
 
             }
         }
-
-
-
-
-
-/*
-        if (window.localStorage.hasOwnProperty("active_user")) {
-            active_user = JSON.parse(window.localStorage.getItem("active_user"));
-
-            if (active_user.type == "venditore") {
-
-                if (active_user.film_vendita.find(searchFilminArray, id) == undefined ) {
-                    col8.innerHTML += `
-                    <div class="col-md-4" style="margin-top: 2em;">
-                    <button id="add_pref" type="button" class="btn btn-outline-light" onclick="PopUpPrezzi()"><i class="far fa-thumbs-up"></i> Aggiungi ai venduti</button></div></div>
-                    `;
-                } else {
-                    col8.innerHTML += `
-                    <div class="col-md-4" style="margin-top: 2em;">
-                    <button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già in vendita </button></div></div>
-                    `;
-
-                }
-
-                
-
-            } else {
-
-                col8.innerHTML += `
-                <div class="row" id="rigaPulsanti">
-                    <div class="col-md" style="margin-top: 2em;">
-                        <a target="_blank" rel="noopener noreferrer">
-                            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#NegoziModal"><i class="fas fa-shopping-cart"></i> Acquista</button>
-                        </a>
-                    </div>
-                    <div class="col-md" style="margin-top: 2em;">
-                        <button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock"></i> Noleggia</button>
-                    </div>
-                `;
-
-
-                if (active_user.film_preferiti.find(searchFilminArray, id) == undefined ) {
-                    col8.innerHTML += `
-                    <div class="col-md" style="margin-top: 2em;">
-                    <button id="add_pref" type="button" class="btn btn-outline-light" onclick="aggiungiPreferiti(get_from_url('id='))"><i class="far fa-thumbs-up"></i> Aggiungi ai preferiti</button></div></div>
-                    `;
-                } else {
-                    col8.innerHTML += '<div class="col-md" style="margin-top: 2em;">'+
-                    '<button id="add_pref" type="button" class="btn btn-outline-light"><i class="far fa-thumbs-up"></i> Già nei preferiti</button></div></div>'
-                }
-
-            }
-
-        }
-        */
 
         for (venditore of JSON.parse(window.localStorage.getItem("venditori")) ) {
 
@@ -256,14 +206,6 @@ function genera_descrizione() {
                 </div>
                 `;
             }
-
-            //console.log(index); // 3
-            //console.log(fruits[index]); // blueberries
-
-            //email_cliente =
-            //email_venditore = 
-            //id
-            //document.getElementById("elencoNegozi").innerHTML +=
 
         }
         
@@ -419,4 +361,47 @@ function getFilmCorr(id){
             scroller.appendChild(card);
         }
     });
+}
+
+function RatingFilm() {
+    idFilm = get_from_url("id=");
+    vote = document.getElementById("rating").value;
+    if (idFilm != null && vote >= 1 && vote <= 10) {
+        //alert("film: "+id+" voto: "+vote)
+        get("https://api.themoviedb.org/3/authentication/guest_session/new?api_key="+"2bb75004dddb3cae50be3c30cc0f551d", function(response){
+            
+            //console.log("get response: ", response);
+            
+            idFilm = get_from_url("id=");
+            vote = Number(document.getElementById("rating").value);
+
+            endpoint = "https://api.themoviedb.org/3/movie/"+idFilm+"/rating?api_key=2bb75004dddb3cae50be3c30cc0f551d&guest_session_id="+response.guest_session_id;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", endpoint);
+
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.responseType = 'json';
+
+            xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status == 201) {
+                    alert("grazie per la tua recensione");
+                } else {
+                    alert("mi dispiace c'è stato un problema, riprova");
+                }
+                //console.log("post response", xhr.response);
+                //console.log("post status: ", xhr.status);
+
+            }};
+
+            var data = '{"value":'+vote+'}';
+            //console.log(data)
+
+            xhr.send(data);
+
+            //window.location.reload();
+        });
+    }
+    
 }

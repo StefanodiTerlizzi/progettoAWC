@@ -33,7 +33,7 @@ function CreatePage() {
         getFilms( document.getElementById("div_film_preferiti"), active_user.film_preferiti);
         getFilms( document.getElementById("rowStoricoAcquisti"), active_user.film_acquistati ,'noButton');
         
-        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButton" );
+        getFilms( document.getElementById("rowStoricoNoleggi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) > 72), "noButtonNonDisponibile" );
                     // funzione anonima : definisce senza bisongo di crare una funzione , il comportamento della filter . 
                   //  differenza in millisecondi trasformata in secondi e poi in ore . se è maggiore di 72 ore il noleggio , non è più disponibile --> storico . 
         getFilms( document.getElementById("rowNoleggiAttivi"), active_user.film_noleggiati.filter(film => ( ((Date.now()-new Date(film.data).getTime() ) / 1000 ) / 3600) <= 72), "noButton" );
@@ -44,7 +44,7 @@ function CreatePage() {
 
 
 // !ps: typeCard di default è "complete" a meno che si specificaquando viene chiamata la funzione
-//'complete' = card con bottoni , 'noButton'=no bottoni sulla card .  
+//'complete' = card con bottoni , 'noButton'=no bottoni sulla card, 'noButton'=no bottoni sulla card e film non disponibile  
 // crea card con film e le appende nel div .
 function getFilms(divToAppend, films, typeCard = "complete", price = false ){
     
@@ -78,6 +78,9 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
                 case "noButton":
                     card = cardOverlayNoButton(response);
                     break;
+                case "noButtonNonDisponibile":
+                    card = cardOverlayNoButton(response, true);
+                    break;
                 default:
                     break;
             }
@@ -88,7 +91,7 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
 
 }
 
-function cardOverlayNoButton(film) {
+function cardOverlayNoButton(film, NonDisponibile = false) {
     var card = document.createElement("div");
     card.className = "card bg-dark text-white rounded";
     card.style = "width: 190px!important;margin: 0.5em;";
@@ -96,6 +99,11 @@ function cardOverlayNoButton(film) {
     card.setAttribute("id", film.id);
     //console.log(card);
     card.style.borderRadius = "1.5em";
+
+    TXTdisponib = '';
+    if (NonDisponibile) {
+        TXTdisponib = '<p class="text-danger">Non disponibile</p>';
+    }
 
     card.innerHTML += `
         <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
@@ -105,12 +113,11 @@ function cardOverlayNoButton(film) {
                     <br>${film.original_title}
                 </h6>
             </a>
+            ${TXTdisponib}
         </div>
     `;
-
     
     return card;
-    //document.getElementById("idFilm").value = this.parentNode.parentNode.parentnode.value
 }
 
 function cardOverlay(film, price = null) {
@@ -524,10 +531,25 @@ function createVenditore2(venditore) {
     <button type="button" id="Elimina_Account" style="width: 150px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
     `;
 }
-// TODO: fare select box con i imetodi e far apparire quello scelto dall'utente come default
+// TODO: fare select box con i metodi e far apparire quello scelto dall'utente come default
 // crea anagrafica del cliente passandogli i dati di un cliente registrato;
 // TODO: sistemare aggionra onclick
 function createCliente2(cliente) {
+    
+    SelectMetodoPagamento = '';
+
+    if (cliente.portafogli.metodo == "CartaDiCredito") {
+        SelectMetodoPagamento = `
+        <option value="CartaDiCredito" selected>carta di credito</option>
+        <option value="CartaPrepagata">carta prepagata</option>
+        `;  
+    } else {
+        SelectMetodoPagamento = `
+        <option value="CartaPrepagata" selected>carta prepagata</option>
+        <option value="CartaDiCredito">carta di credito</option>
+        `;
+    }
+
     return `
     <div class="mb-3">
         <label class="form-label" for="Nome"><b>Nome:</b></label>
@@ -539,7 +561,7 @@ function createCliente2(cliente) {
     </div>
     <div class="mb-3">
         <label class="form-label" for="Data di nascita"><b>Data di nascita:</b></label>
-        <input type="date" value="${cliente.data}" id="Data di nascita" name="data" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="date" value="${cliente.data}" id="DataNascita" name="data" onchange="checkparameters_registrazione()" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Telefono"><b>Telefono:</b></label>
@@ -551,11 +573,11 @@ function createCliente2(cliente) {
     </div>
     <div class="mb-3">
         <label class="form-label" for="Numero Civico"><b>Numero Civico:</b></label>
-        <input type="text" value="${cliente.numcivico}" id="Numero Civico" name="numcivico" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.numcivico}" id="NumeroCivico" name="numcivico" onchange="checkparameters_registrazione()" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Città"><b>Città:</b></label>
-        <input type="text" value="${cliente.citta}" id="Città" name="citta" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${cliente.citta}" id="Citta" name="citta" onchange="checkparameters_registrazione()" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Provincia"><b>Provincia:</b></label>
@@ -567,33 +589,37 @@ function createCliente2(cliente) {
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Metodo di pagamento:</b></label>
-        <input class="form-control" type="text" value="${cliente.portafogli.metodo}">
+        <select id="metodoPagamento" name="metodoPagamento" class="form-control" onchange="checkparameters_registrazione2('ClienteAggiorna')">
+            ${SelectMetodoPagamento}
+        </select></div>
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Saldo:</b></label>
-        <input class="form-control" type="text" value="${cliente.portafogli.saldo}"  disabled readonly>
+        <input class="form-control" type="text" id="saldo" value="${cliente.portafogli.saldo}" readonly>
     </div>
     <div style="margin-bottom: 1em;">
         <a href="#" onclick="cambiaPassword()">Cambia Password</a>
     </div>
-    <div class="mb-3" id="changePassword" style="display: none; margin-bottom: 1em;"><label class="form-label" for="Password"><b>Password:</b></label>
-        <input type="password" id="Password" name="password" onchange="checkparameters_registrazione()" class="form-control">
-    </div>
-    <div class="mb-3" id="changeConfPassword" style="display: none; margin-bottom: 1em;">
-        <label class="form-label" for="Conferma password"><b>Conferma password:</b></label>
-        <input type="password" id="Conferma password" name="conferma_password" onchange="checkparameters_registrazione()" class="form-control">
+    <div id="PWD" style="display: none;">
+        <div class="mb-3" id="changePassword" style="margin-bottom: 1em;">
+            <label class="form-label" for="Password"><b>Password:</b></label>
+            <input type="password" id="Password" name="password" class="form-control">
+        </div>
+        <div class="mb-3" style="margin-bottom: 1em;">
+            <label class="form-label" for="Conferma password"><b>Conferma password:</b></label>
+            <input type="password" id="ConfermaPassword" name="conferma_password" class="form-control">
+        </div>
     </div>
     <a>
-        <button type="submit" style="display: block;" id="Aggiorna_Parametri" disabled="" onclick="AggiornaParametri()">Aggiorna</button>
+        <button id="submit_registrazione" disabled="" onclick="AggiornaAnagrafica()">Aggiorna</button>
     </a>
     <button type="button" id="Elimina_Account" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
-
     `;
 }
 
 function cambiaPassword(){
-    password = document.getElementById("changePassword");
-    password.style.display="block";
+    password = document.getElementById("PWD");
+    password.style.display="";
 
     /*conf_password = document.getElementById("changeConfPassword");
     conf_password.style.display="block";
@@ -601,6 +627,8 @@ function cambiaPassword(){
   
 }
 
+
+//TODO: non funziona, da rifare 
 function AggiornaParametri(){
     // si attiva quando schiaccio bottone aggiorna 
     var utenteAttivo = JSON.parse(window.localStorage.getItem("active_user"));
@@ -648,6 +676,61 @@ function AggiornaParametri(){
     
 }
 
+
+function AggiornaAnagrafica() {
+    active_user = getActiveUser()
+    if (active_user == null) {
+        return
+    }
+
+    password = active_user.password;
+    if (document.getElementById("PWD").style.display != "none") {
+        password = document.getElementById("Password").value
+    }
+
+    if (active_user.type == "cliente") {
+        AggiornaCliente(password)
+    } else if (active_user.type == "venditore") {
+        AggiornaVenditore(password)
+    }
+    
+    function AggiornaCliente(password) {
+        
+        clienti = JSON.parse(window.localStorage.getItem("clienti"));
+        
+        cliente = {
+            "nome": document.getElementById('Nome').value,
+            "cognome": document.getElementById('Cognome').value,
+            "data": document.getElementById('DataNascita').value,
+            "telefono": document.getElementById('Telefono').value,
+            "via": document.getElementById('Via').value,
+            "numcivico": document.getElementById('NumeroCivico').value,
+            "citta": document.getElementById('Citta').value,
+            "provincia": document.getElementById('Provincia').value,
+            "nazione": document.getElementById('Nazione').value,
+            "email": active_user.email,
+            "password": password,
+            "portafogli":  { "metodo": document.getElementById('metodoPagamento').value, "saldo":  document.getElementById('saldo').value},
+            "type": "cliente",
+            "film_preferiti":   active_user.film_preferiti,
+            "generi_preferiti": active_user.generi_preferiti,
+            "film_acquistati":  active_user.film_acquistati,
+            "film_noleggiati": active_user.film_noleggiati
+        }
+
+        objIndex = clienti.findIndex(c => c.email == active_user.email) ;
+        clienti[objIndex] = cliente;
+
+        window.localStorage.setItem('active_user',JSON.stringify(cliente));
+        window.localStorage.setItem('clienti',JSON.stringify(clienti));
+        window.location.reload()  
+
+    }
+
+    function Venditore() {
+        //cliente
+    }
+}
 
 
 function getStatsNegozio() {
@@ -747,7 +830,7 @@ function createCarouselRecensioni(recensioni) {
         if (first) {
            // console.log(rating);
             elementi += `
-                <div style='margin:0.5em;'class="carousel-item active">
+                <div style="margin-left: 8em; margin-right: 8em;" class="carousel-item active">
                 <p>Voto: ${rating} </p>
                 <p>Titolo: ${recensione.titolo}</p>
                 <p>Autore: ${recensione.autore}</p>
@@ -757,7 +840,7 @@ function createCarouselRecensioni(recensioni) {
             first = false;
         } else {
             elementi += `
-                <div style='margin:0.5em;' class="carousel-item">
+                <div style="margin-left: 8em; margin-right: 8em;" class="carousel-item">
                 <p>Voto: ${rating}</p>
                 <p>Titolo: ${recensione.titolo}</p>
                 <p>Autore: ${recensione.autore}</p>

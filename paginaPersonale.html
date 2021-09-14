@@ -26,7 +26,7 @@
 
     <title>Pagina Personale</title>
   </head>
-  <body onload="CreatePage(),scegli_genere_preferenze()" >
+  <body onload="CreatePage(),scegli_genere_preferenze(), setActiveNavbar()" >
 
     <!-- navigation -->
     <script>document.write(navbar)</script>
@@ -77,9 +77,11 @@
             <div class="col-md-4" id="anagrafica"> 
               <!-- anagrafica -->
               <h5>Riepilogo Dati</h5>
-              <form id="form_anagrafica" action="" method="POST" style='width:350px;'>
+                <div id="form_anagrafica">
 
-              </form>
+                </div>
+
+
               
 
             </div>

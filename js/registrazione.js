@@ -1,4 +1,4 @@
-
+// TODO: eliuminare rifatto
 function create_form() {
     var type = document.getElementById('typeRegistrazione').value;
     var form = document.getElementById('formRegistrazione');
@@ -122,7 +122,7 @@ function create_form() {
   
 }
 
-
+// TODO: eliuminare rifatto
 function createFormElement(elemento, id, nameforjson) {
     /*Incapsulamento elemento in div per form*/
     // elemento = input incapsulato nel div 

@@ -27,10 +27,9 @@
     <title>Hello, world!</title>
   </head>
   
-  <body onload="genera_descrizione()">
+  <body onload="genera_descrizione(), setActiveNavbar()">
     <!--
-        TODO: far in modo che se il film è nei preferiti appaia togli dai preferiti, altrimenti aggiungi nei preferiti
-        TODO: sistemare aggiungi ai preferiti (non va, cambiato struttura dati, push oggetto e non diretto in lista)
+        TODO: far in modo che se il film è nei preferiti appaia togli dai preferiti, altrimenti aggiungi nei preferiti, non importante
     -->
     <!-- navigation -->
     <script>document.write(navbar)</script>
@@ -81,7 +80,7 @@
                         <button id="recensione" class="btn btn-outline-warning" onclick="overlay_rec_on('overlay')" >Lascia una recensione</button>
                         -->
                         <a target="_blank" rel="noopener noreferrer">
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#ReviewModal"><i class="fab fa-youtube" style="font-size: 1em; margin-right: 0.2em;"></i><span> Review</span></button>
+                            <button type="button" class="btn btn-outline-warning" id="Review" style="display: none;" data-bs-toggle="modal" data-bs-target="#ReviewModal"><i class="fab fa-youtube" style="font-size: 1em; margin-right: 0.2em;"></i><span> Review</span></button>
                         </a>
                         <!-- OVERLAY REVIEW -->
                         <div class="modal fade" id="ReviewModal" tabindex="-1" aria-labelledby="ReviewModalLabel" aria-hidden="true">
@@ -261,48 +260,3 @@
     -->
   </body>
 </html>
-
-<script>
-function RatingFilm() {
-    idFilm = get_from_url("id=");
-    vote = document.getElementById("rating").value;
-    if (idFilm != null && vote >= 1 && vote <= 10) {
-        //alert("film: "+id+" voto: "+vote)
-        get("https://api.themoviedb.org/3/authentication/guest_session/new?api_key="+"2bb75004dddb3cae50be3c30cc0f551d", function(response){
-            
-            //console.log("get response: ", response);
-            
-            idFilm = get_from_url("id=");
-            vote = Number(document.getElementById("rating").value);
-
-            endpoint = "https://api.themoviedb.org/3/movie/"+idFilm+"/rating?api_key=2bb75004dddb3cae50be3c30cc0f551d&guest_session_id="+response.guest_session_id;
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", endpoint);
-
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.responseType = 'json';
-
-            xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status == 201) {
-                    alert("grazie per la tua recensione");
-                } else {
-                    alert("mi dispiace c'è stato un problema, riprova");
-                }
-                //console.log("post response", xhr.response);
-                //console.log("post status: ", xhr.status);
-
-            }};
-
-            var data = '{"value":'+vote+'}';
-            //console.log(data)
-
-            xhr.send(data);
-
-            //window.location.reload();
-        });
-    }
-    
-}
-</script>

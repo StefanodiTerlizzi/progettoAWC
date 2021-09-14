@@ -13,16 +13,16 @@ init()
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav  mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./paginaPersonale.html">User <i class="fas fa-users-cog"></i></a>
+                <a class="nav-link" aria-current="page" href="./paginaPersonale.html">User <i class="fas fa-users-cog"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./venditori.html">Venditori <i class="fas fa-dollar-sign"></i></a>
+                <a class="nav-link" aria-current="page" href="./venditori.html">Venditori <i class="fas fa-dollar-sign"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./registrazione.html">Registrazione</a>
+                <a class="nav-link" aria-current="page" href="./registrazione.html">Registrazione</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./signup.html">Accedi</a>
+                <a class="nav-link" aria-current="page" href="#" id="LinkAccedi">Accedi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">complete search</a>
@@ -35,22 +35,9 @@ init()
         <form action="./search.html" class="d-flex" style="margin-left:auto; margin-right:auto; width:60%;">
             <input class="form-control me-2 search_bar" type="search" placeholder="Search Movie and Person" aria-label="Search" name="QueryToSearch">
             <input type="hidden" name="TypeOfSearch" value="multi">
-            <!--
-            <select id="TypeOfSearch" name="TypeOfSearch">
-                <option value="movie">movie</option>
-                <option value="person">person</option>
-                <option value="company">company</option>
-                <option value="collection">collection</option>
-                <option value="keyword">keyword</option>
-                <option value="multi">multi</option>
-            </select>
-            -->
-            
             <button type='submit' class="search" ><i class="fas fa-search"></i></button>
         </form>
-        <form action="./signup.html">
-            <button   id='submit_logout' type="submit" onclick="window.localStorage.setItem('active_user', null); alert('Logout eseguito con sucesso')">Logout <i class="fas fa-sign-out-alt"></i></button>
-        </form>
+        <button id='submit_logout' onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
     </div>
     </div>
 </nav>
@@ -153,5 +140,14 @@ function init() {
     } else {
         window.localStorage.setItem("venditori", JSON.stringify(data.venditori));
         window.localStorage.setItem("clienti", JSON.stringify(data.clienti));
+    }
+}
+
+function logout() {
+    active_user = getActiveUser()
+    if (active_user != null) {
+        window.localStorage.setItem('active_user', null)
+        alert('Logout eseguito con sucesso')
+        window.location.assign('./signup.html');
     }
 }
