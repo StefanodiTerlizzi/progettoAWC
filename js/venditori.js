@@ -45,6 +45,8 @@ function compilaModal(emailVenditore) {
     index = venditori.findIndex(vend => vend.email == emailVenditore)
     venditore = venditori[index]
 
+    document.getElementById('ModalFullscreenLabel').innerHTML = venditore.nomenegozio
+
     if (active_user != null && active_user.type == "cliente") {
         // bottone lascia recensione, compra, noleggia
         generaCardFilms(venditore.film_vendita, {"emailCliente": active_user.email,"emailVenditore": venditore.email})
