@@ -506,16 +506,27 @@ function checkparameters_registrazione2(type) {
     var ListToCheck;
 
     if (type == "Cliente") {
+
         ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
+    
     } else if (type == "Venditore") {
+
         ListToCheck = [document.getElementById('NomeNegozio'), document.getElementById('Telefono'), document.getElementById('PartitaIva'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
+    
     } else if (type == "ClienteAggiorna") {
+
         ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento')]
         if (document.getElementById("PWD").style.display != "none") {
             ListToCheck.push(document.getElementById('Password'), document.getElementById('ConfermaPassword'))
         }
+
     } else if (type == "VenditoreAggiorna") {
-        
+
+        ListToCheck = [document.getElementById('NomeNegozio'), document.getElementById('Telefono'), document.getElementById('PartitaIva')]
+        if (document.getElementById("PWD").style.display != "none") {
+            ListToCheck.push(document.getElementById('Password'), document.getElementById('ConfermaPassword'))
+        }
+
     }
 
     tuttok = true;

@@ -501,33 +501,41 @@ function conferma_la_password(pass, campo){
 function createVenditore2(venditore) {
     return `
     <div class="mb-3">
+        <label class="form-label" for="email"><b>Email:</b></label>
+        <input type="text" value="${venditore.email}" id="email" name="email" class="form-control" readonly>
+    </div>
+    <div class="mb-3">
         <label class="form-label" for="Nome del negozio"><b>Nome del negozio:</b></label>
-        <input type="text" value="${venditore.nomenegozio}" id="Nome del negozio" name="nomenegozio" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${venditore.nomenegozio}" id="NomeNegozio" name="nomenegozio" onchange="checkparameters_registrazione2('VenditoreAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Numero di Telefono"><b>Numero di Telefono:</b></label>
-        <input type="text" value="${venditore.telefono}" id="Numero di Telefono" name="telefono" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${venditore.telefono}" id="Telefono" name="telefono" onchange="checkparameters_registrazione2('VenditoreAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label" for="Partita Iva"><b>Partita Iva:</b></label>
-        <input type="text" value="${venditore.partitaiva}" id="Partita Iva" name="partitaiva" onchange="checkparameters_registrazione()" class="form-control">
+        <input type="text" value="${venditore.partitaiva}" id="PartitaIva" name="partitaiva" onchange="checkparameters_registrazione2('VenditoreAggiorna')" class="form-control">
     </div>
     <div class="mb-3">
         <label class="form-label"><b>Saldo:</b></label>
-        <input class="form-control" type="text" value="${venditore.portafogli.saldo}"  disabled readonly>
+        <input class="form-control" type="text" value="${venditore.portafogli.saldo}" readonly>
     </div>
     <div style="margin-bottom: 1em;">
         <a href="#" onclick="cambiaPassword()">Cambia Password</a>
     </div>
-    <div class="mb-3" id="changePassword" style="display: none; margin-bottom: 1em;">
-        <label class="form-label" for="Password"><b>Password:</b></label>
-        <input type="password" id="Password" name="password" onchange="checkparameters_registrazione()" class="form-control">
+    <div id="PWD" style="display: none;">
+        <div class="mb-3" id="changePassword" style="margin-bottom: 1em;">
+            <label class="form-label" for="Password"><b>Password:</b></label>
+            <input type="password" id="Password" name="password" onchange="checkparameters_registrazione2('VenditoreAggiorna')" class="form-control">
+        </div>
+        <div class="mb-3" style="margin-bottom: 1em;">
+            <label class="form-label" for="Conferma password"><b>Conferma password:</b></label>
+            <input type="password" id="ConfermaPassword" name="conferma_password" onchange="checkparameters_registrazione2('VenditoreAggiorna')" class="form-control">
+        </div>
     </div>
-    <div class="mb-3" id="changeConfPassword" style="display: none; margin-bottom: 1em;">
-        <label class="form-label" for="Conferma password" style="margin-right: 0.2em !important;"><b>Conferma password:</b></label>
-        <input type="password" id="Conferma password" name="conferma_password" onchange="checkparameters_registrazione()" class="form-control">
-    </div>
-    <a><button type="submit" id="Aggiorna_Parametri" style="display: block;" disabled="" onclick="AggiornaParametri()">Aggiorna</button></a>
+    <a>
+        <button id="submit_registrazione" disabled="" onclick="AggiornaAnagrafica()">Aggiorna</button>
+    </a>
     <button type="button" id="Elimina_Account" style="width: 150px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
     `;
 }
@@ -551,6 +559,10 @@ function createCliente2(cliente) {
     }
 
     return `
+    <div class="mb-3">
+        <label class="form-label" for="email"><b>Email:</b></label>
+        <input type="text" value="${cliente.email}" id="email" name="email" class="form-control" readonly>
+    </div>
     <div class="mb-3">
         <label class="form-label" for="Nome"><b>Nome:</b></label>
         <input type="text" value="${cliente.nome}" id="Nome" name="nome" onchange="checkparameters_registrazione()" class="form-control">
@@ -710,7 +722,7 @@ function AggiornaAnagrafica() {
             "nazione": document.getElementById('Nazione').value,
             "email": active_user.email,
             "password": password,
-            "portafogli":  { "metodo": document.getElementById('metodoPagamento').value, "saldo":  document.getElementById('saldo').value},
+            "portafogli":  { "metodo": document.getElementById('metodoPagamento').value, "saldo":  active_user.portafogli.saldo},
             "type": "cliente",
             "film_preferiti":   active_user.film_preferiti,
             "generi_preferiti": active_user.generi_preferiti,
@@ -727,8 +739,29 @@ function AggiornaAnagrafica() {
 
     }
 
-    function Venditore() {
-        //cliente
+    function AggiornaVenditore(password) {
+
+        venditori = JSON.parse(window.localStorage.getItem("venditori"));
+        //coding
+
+        venditore = {
+            "nomenegozio": document.getElementById('NomeNegozio').value,
+            "telefono": document.getElementById('Telefono').value,
+            "partitaiva": document.getElementById('PartitaIva').value,
+            "email": active_user.email,
+            "password": password,
+            "portafogli":   active_user.portafogli,
+            "type": "venditore",
+            "film_vendita": active_user.film_vendita,
+            "recensioni": active_user.recensioni
+        }
+
+        objIndex = venditori.findIndex(v => v.email == active_user.email) ;
+        venditori[objIndex] = venditore;
+
+        window.localStorage.setItem('active_user',JSON.stringify(venditore));
+        window.localStorage.setItem('venditori',JSON.stringify(venditori));
+        window.location.reload()  
     }
 }
 
