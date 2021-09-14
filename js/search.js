@@ -26,7 +26,7 @@ function genereSearchResult(genere) {
 
 function companySearchResult(company) {
     get("https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+company, function(response){                
-        console.log("company", response.results)
+        //console.log("company", response.results)
         x = response.results
         for (obj of response.results) {
             document.getElementById("resultsCompanies").innerHTML += createCompany(obj)

@@ -854,9 +854,9 @@ function createCarouselRecensioni(recensioni) {
     first = true;
     
     for (recensione of recensioni) {
-        console.log(recensione);
+        //console.log(recensione);
         var rating ='';
-            console.log(recensione.voto);
+            //console.log(recensione.voto);
             for ( i=0 ; i<recensione.voto; i++){
                 rating += `<i class="fas fa-star"></i>`;
             }

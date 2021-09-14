@@ -91,7 +91,7 @@
         // generi non li ha presi così ... riguarda 
         get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_genres="+generi, function(response){          
           scroller2=document.getElementById('scroller_scelti_per_te');     
-          console.log(response); 
+          //console.log(response); 
             for (i=0 ; i<response.results.length; i++) {
               film = response.results[i];
               card = createCard(film);

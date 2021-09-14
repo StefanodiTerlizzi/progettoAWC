@@ -280,7 +280,7 @@ function sfondo_reg(){
         div.appendChild(img);
         listadiv.push(div);
     }
-    console.log(listadiv[0].childNodes[0]);
+    //console.log(listadiv[0].childNodes[0]);
     for ( i=0 ; i<listadiv.length; i++){
         scroller.appendChild(listadiv[i]);
     }

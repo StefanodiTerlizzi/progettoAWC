@@ -9,7 +9,7 @@ function genera_descrizione() {
 
     get("https://api.themoviedb.org/3/movie/"+id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){
         var film = response;
-        console.log(film);
+        //console.log(film);
         //riga Descrizione
         var rigaDescrizione = document.getElementById("rigaDescrizione");
         rigaDescrizione.style= "background-image: url('https://www.themoviedb.org/t/p/original"+film.poster_path+"'); background-repeat: no-repeat; background-size: cover; background-position: center;";
@@ -191,7 +191,7 @@ function genera_descrizione() {
             index = venditore.film_vendita.findIndex(film => film.id === id);
 
             if (index != -1) {
-                console.log(venditore.film_vendita[index])
+                //console.log(venditore.film_vendita[index])
                 document.getElementById("elencoNegozi").innerHTML += `
                 <div class="card text-white bg-dark" style="border: 1px, solid,  white;">
                     <div class="card-header">

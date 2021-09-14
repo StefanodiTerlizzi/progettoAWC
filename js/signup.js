@@ -12,7 +12,7 @@ function login() {
             window.localStorage.setItem("active_user", JSON.stringify(clienti[i]));
            // alert('login corretto');
             btn = document.getElementById('submit');
-            console.log(btn);
+            //console.log(btn);
            // btn.setAttribute=("href",'./paginaPersonale.html');
             //window.location.href='./paginaPersonale.html';
             return;
