@@ -6,7 +6,7 @@ function elencoVenditori() {
     
     for (venditore of venditori) {
         txt += `
-        <div class="card bg-dark border border-white m-2" style="max-width: 20em;">
+        <div class="card bg-dark border border-white mt-4 ms-2" style="max-width: 20em;">
             <h5 class="card-header">${venditore.nomenegozio}</h5>
             <div class="card-body">
                 <h5 class="card-title">email: <a href="mailto:${venditore.email}">${venditore.email}</a></h5>
@@ -103,7 +103,7 @@ function compilaModal(emailVenditore) {
 
         if (ParametroEmail != null) {
             document.getElementById("rowRecensione").innerHTML = `
-            <h5>lascia una recensione</h5>
+            <h5 >Lascia una recensione</h5>
             <div class="row border border-white">
 <!--email-->
                 <div class="mb-3 row">
@@ -114,9 +114,22 @@ function compilaModal(emailVenditore) {
                 </div>
 <!--voto-->
                 <div class="mb-3 row">
-                    <label for="voto" class="col-sm-1 col-form-label">voto</label>
+                    <label for="voto" class="col-sm-1 col-form-label">Voto :</label>
                     <div class="col-sm-11">
-                    <input id="rating" type="hidden" />
+                    <input id="rating" type="hidden"/>
+
+                    <div class="rate">
+                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                    </div>
     
                     <input class="form-check-input" name="rating" type="radio" id="rate1" value=1 onclick="document.getElementById('rating').value = this.value" /> 
                     <label for="rate1">1</label>
@@ -133,7 +146,7 @@ function compilaModal(emailVenditore) {
                 
 <!--titolo-->
                 <div class="mb-3 row">
-                    <label for="titolo" class="col-sm-1 col-form-label">titolo</label>
+                    <label for="titolo" class="col-sm-1 col-form-label">Titolo : </label>
                     <div class="col-sm-11">
                     <input type="text" class="form-control" id="titolo">
                     </div>
@@ -141,7 +154,7 @@ function compilaModal(emailVenditore) {
 
 <!--contenuto-->
                 <div class="mb-3">
-                    <label class="form-label">scrivi recensione</label>
+                    <label class="form-label">Scrivi recensione</label>
                     <textarea class="form-control" id="Recensione-contenuto" rows="3"></textarea>
                 </div>
 <!-- button -->

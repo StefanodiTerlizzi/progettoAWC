@@ -25,7 +25,7 @@ init()
                     <a class="nav-link" aria-current="page" href="./signup.html" id="LinkAccedi">Accedi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">search <i class="fas fa-search"></i></a>
+                    <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">Search <i class="fas fa-search"></i></a>
                 </li>
             </ul>
             <div class="d-flex mx-auto"></div>
@@ -37,18 +37,19 @@ init()
 
 navbar += `
 <!-- OVERLAY SEARCH -->
+
 <div style='margin-right:2em;'class="modal fade" id="SearchModal" tabindex="-1" aria-labelledby="SearchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header" style="border-bottom: 0px;">
-                <h5 class="modal-title" id="SearchModalLabel">complete search</h5>
+                <h5 class="modal-title" id="SearchModalLabel">Complete search</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div class="modal-body">
 
                 <!-- search genere -->
                 <form action="./search.html" class="d-flex mx-auto mb-3">
-                    <label>search by genere</label>
+                    <label>Search by genere</label>
                     <select name="genere" id="genere" class="form-select" aria-label="Default select example" onchange="(this.value == 'null') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
                         <option value=null selected>seleziona genere</option>
                     </select>
@@ -59,7 +60,7 @@ navbar += `
                 <!-- search company -->
                 <form action="./search.html" class="d-flex mx-auto mb-3">
 
-                    <label>search by company</label>
+                    <label>Search by company</label>
                     <input type="text" name="company" placeholder="Company name" class="form-text" style="width: 100%;" onchange="(this.value == '') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
 
                     <button disabled type='submit' class="search" id="searchGenere" ><i class="fas fa-search"></i></button>
@@ -68,7 +69,7 @@ navbar += `
                 
                 <!-- search multi -->
                 <form action="./search.html" class="d-flex mx-auto mb-3" >
-                    <label>search by title or actor</label>
+                    <label>Search by title or actor</label>
                     <input type="text" name="multiSearch" placeholder="title or actor" class="form-text" style="width: 100%;" onchange="(this.value == '') ? (this.parentNode.lastElementChild.disabled =  true) : (this.parentNode.lastElementChild.disabled =  false)">
                     <button disabled type='submit' class="search"><i class="fas fa-search"></i></button>
                 </form>
