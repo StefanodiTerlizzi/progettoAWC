@@ -15,7 +15,11 @@ function get(url, callback) {
 }
 
 function CreatePage() {
+    
+    attivaElementiPagina()
+
     active_user = JSON.parse(window.localStorage.getItem("active_user"))
+
     if (active_user==null) {
        
     } else if (active_user.type == "venditore") {
@@ -929,37 +933,87 @@ function createCarouselRecensioni(recensioni) {
 
 }
 
+function attivaElementiPagina() {
+
+    active_user = getActiveUser();
+    listID = []; //Id da attivare
+    
+    if (active_user == null) {
+    document.getElementById('row1').display='none';
+    listID = ["errorLogin"]
+    } else if (active_user.type == "venditore") {
+    listID = ["Statistiche", "div_film_venduti", "Recensioni"]
+    } else if (active_user.type == "cliente") {
+    listID = ["completa_account", "div_film_preferiti", "rowStoricoAcquisti", "rowStoricoNoleggi", "rowNoleggiAttivi"]
+    }
+
+    for (id of listID) {
+    document.getElementById(id).style.display = "";
+    }
+
+}
+
 function getGeneri() {
     console.log("getGeneri()")
 
     active_user = getActiveUser();
-    divToAppend = document.getElementById('completa_account_form');
+    divToAppend = document.getElementById('GeneriPreferiti');
 
     get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
         // console.log(response);
 
         for (genere of response.genres) {
+
             if ( active_user.generi_preferiti.includes(genere.id) ) {
                 //check attivo
                 divToAppend.innerHTML += `
-                <input name="Action" type="checkbox" class="btn-check" id="${genere.id}">
-                <label class="btn btn-secondary mr-1" for="${genere.id}">${genere.name}</label>
+                <input type="checkbox" checked class="btn-check" id="${genere.id}">
+                <label class="btn btn-outline-secondary mr-1" for="${genere.id}">${genere.name}</label>
                 `;
             } else {
                 //check disattivo
                 divToAppend.innerHTML += `
-                <input name="Action" type="checkbox" class="btn-check" id="${genere.id}">
+                <input type="checkbox" class="btn-check" id="${genere.id}">
                 <label class="btn btn-outline-secondary mr-1" for="${genere.id}">${genere.name}</label>
                 `;
             }
         }
 
         divToAppend.innerHTML += `
-        <input type="submit" class="btn btn-primary" onclick="gestisci_generi_preferiti()" style="margin-top: 0.5em; float: left;" />
+        <button class="btn btn-primary" onclick="GestisciGeneri()" style="margin-top: 0.5em; float: left;">invia</button>
         `;
 
     });
 
+}
+
+function GestisciGeneri() {
     
+    div = document.getElementById('GeneriPreferiti');
+    allInput = div.getElementsByClassName("btn-check");
+    
+    //creo array di generi scelti
+    array_generi_scelti = [];
+    for (input of allInput) {
+        if (input.checked) {
+            array_generi_scelti.push(Number(input.id));
+        }
+    }
+
+    //modifico active user
+    active_user = getActiveUser();
+    active_user.generi_preferiti = array_generi_scelti;
+
+    //modifico clienti
+    clienti=JSON.parse(window.localStorage.getItem('clienti'));
+    
+    i = clienti.findIndex(c => c.email == active_user.email) ;
+    clienti[i] = active_user;
+
+    //carico nel localStorage + reload pagina
+    window.localStorage.setItem('active_user',JSON.stringify(active_user));
+    window.localStorage.setItem('clienti',JSON.stringify(clienti));
+    window.location.reload();
 
 }
+

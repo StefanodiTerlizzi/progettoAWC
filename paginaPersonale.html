@@ -90,17 +90,15 @@
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti">Preferenze e Privacy</h5>
                     <!-- javascript -->
                     <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
-                        <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" aria-label="Basic checkbox toggle button group">
-                          <form id='completa_account_form'>
-                            
-                          </form>
+                        <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" id='GeneriPreferiti' aria-label="Basic checkbox toggle button group">
+
                         </div>
                         <!---->
                         <script>
                           act = JSON.parse(window.localStorage.getItem('active_user'));
                           //console.log(act);
                           var array_generi=[];
-                          // TODO: generi preferiti devono essere già selezionati quando atterro utente
+                          // TODO: rifatti nel js, eliminare
                           function scegli_genere_preferenze(){
                             form = document.getElementById('completa_account_form');
                             get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
@@ -138,6 +136,7 @@
                               
                               
                           }
+
                           function gestisci_generi_preferiti(){
 
                             var array_generi_scelti =[];
@@ -160,17 +159,8 @@
 
                               window.localStorage.setItem('active_user',JSON.stringify(active_user));
                               window.localStorage.setItem('clienti',JSON.stringify(clienti));
-                              window.reload();
+                              window.location.reload();
                             }
-
-
-                          
-
-                            
-                          
-
-                          
-                          
 
                         </script>
               </div>
@@ -240,28 +230,7 @@
               </div>
             </div>
         </div>
-        
-        
 
-        <script>
-          active_user = getActiveUser();
-          listID = []; //Id da attivare
-          
-          if (active_user == null) {
-            document.getElementById('row1').display='none';
-            listID = ["errorLogin"]
-          } else if (active_user.type == "venditore") {
-            listID = ["Statistiche", "div_film_venduti", "Recensioni"]
-          } else if (active_user.type == "cliente") {
-            listID = ["completa_account", "div_film_preferiti", "rowStoricoAcquisti", "rowStoricoNoleggi", "rowNoleggiAttivi"]
-          }
-
-          for (id of listID) {
-            document.getElementById(id).style.display = "";
-          }
-          
-        </script>
-      
       <!-- Modal -->
       <div style='color: black!important;' class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
