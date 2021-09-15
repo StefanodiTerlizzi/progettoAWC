@@ -89,7 +89,7 @@ function compilaModal(emailVenditore) {
                 rowFilmVendita.innerHTML += `
                 <div class="card text-white bg-dark mb-3" style="max-width: 15rem; margin: 1em;">
                     <a href="./film_description.html?id=${response.id}">
-                        <img src="https://www.themoviedb.org/t/p/original${response.poster_path}" class="card-img-top" alt="...">
+                        <img ${setSrcImgApi(response.poster_path)} class="card-img-top">
                     </a>
                     <div class="card-body" style="text-align: center;">
                         <h5 class="card-title">${response.title}</h5>

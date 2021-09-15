@@ -37,7 +37,7 @@ function companySearchResult(company) {
 function createFilm(obj) {
     return card = `
     <div class="card text-white bg-dark mb-3" style="max-width: 18rem; margin: 1em;">
-        <img src="https://www.themoviedb.org/t/p/original${obj.poster_path}" class="card-img-top" alt="...">
+        <img ${setSrcImgApi(obj.poster_path)} class="card-img-top">
         <div class="card-body">
             <h5 class="card-title">${obj.title}</h5>
             
@@ -54,7 +54,7 @@ function createActor(obj) {
         <div class="row g-0">
             <div class="col-md-4">
             <div class="card bg-dark text-white">
-                <img src="https://www.themoviedb.org/t/p/original${obj.profile_path}" class="card-img" alt="...">
+                <img ${setSrcImgApi(obj.profile_path)} class="card-img">
                 <div class="card-img-overlay">
                     <h5 class="card-title">${obj.name}</h5>
                 </div>
@@ -88,7 +88,7 @@ function createCarousel(id, films) {
         if (first) {
             carousel += `
                 <div class="carousel-item active">
-                <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
+                <img ${setSrcImgApi(film.poster_path)} class="d-block w-100">
                 <div class="carousel-caption d-none d-md-block">
                     <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
                 </div>
@@ -98,7 +98,7 @@ function createCarousel(id, films) {
         } else {
             carousel += `
                 <div class="carousel-item">
-                <img src="https://www.themoviedb.org/t/p/original${film.poster_path}" class="d-block w-100" alt="...">
+                <img ${setSrcImgApi(film.poster_path)} class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <a href="./film_description.html?id=${film.id}" class="btn btn-primary">visualizza</a>
                 </div>
@@ -135,7 +135,7 @@ function createCompany(obj) {
             <div class="card bg-dark text-white">
     `;
     if (obj.logo_path != null) {
-        card += `<img src="https://www.themoviedb.org/t/p/original${obj.logo_path}" class="card-img" alt="...">`;
+        card += `<img ${setSrcImgApi(obj.logo_path)} class="card-img">`;
     } else {
         card += `<img src="" class="card-img" alt="...">`;
     }

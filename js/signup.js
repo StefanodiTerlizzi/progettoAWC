@@ -37,7 +37,9 @@ function sfondo(){
         var immagini = [];
         len = response.results.length;
         for ( i = 0 ; i<response.results.length; i++){
-            immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
+            if (response.results[i].backdrop_path) {
+                immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
+            }
         }
         
         num =  getRandomInt(len);

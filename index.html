@@ -19,13 +19,13 @@
     <script src="./js/NavbarAndFooter.js"></script>
 
     <!-- page -->
-    <!--<script src="./js/index.js"></script>-->
+    <script src="./js/index.js"></script>
     
     <script src="https://kit.fontawesome.com/e83dbc42ef.js" crossorigin="anonymous"></script>
 
     <title>home</title>
   </head>
-  <body onload='setActiveNavbar(), creazionePag(JSON.parse(window.localStorage.getItem("active_user")).generi_preferiti)'> 
+  <body onload='setActiveNavbar(), creazionePag()'> 
     <!-- navigation -->
     <script>document.write(navbar)
     // a lato : nested nav in bootstrap
@@ -57,55 +57,6 @@
         <div id="scroller_upcoming" class="align-top overflow-auto scroller_index" style="white-space: nowrap"></div>
       </div>
     </div>
-
-    <!-- script recupero film x scroller -->
-    <script>
-      function creazionePag(generi){
-        get("https://api.themoviedb.org/3/movie/popular?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-          scroller = document.getElementById('scroller_popolari');
-          for ( i = 0 ; i<response.results.length; i++){
-              film = response.results[i];
-              card = createCard(film);
-              scroller.appendChild(card);
-          }
-      });
-
-      get("https://api.themoviedb.org/3/movie/top_rated?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-            scroller1 = document.getElementById("scroller_toprated");
-          for ( i = 0 ; i<response.results.length; i++){
-              film = response.results[i];
-              card = createCard(film);
-              scroller1.appendChild(card); 
-          }
-      });
-      
-      get("https://api.themoviedb.org/3/movie/upcoming?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US&page=1", function(response){
-          scroller2 = document.getElementById("scroller_upcoming");
-        for ( i = 0 ; i<response.results.length; i++){
-            film = response.results[i];
-            card = createCard(film);
-            scroller2.appendChild(card); 
-        }
-      });
-    
-        // generi non li ha presi così ... riguarda 
-        get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_genres="+generi, function(response){          
-          scroller2=document.getElementById('scroller_scelti_per_te');     
-          //console.log(response); 
-            for (i=0 ; i<response.results.length; i++) {
-              film = response.results[i];
-              card = createCard(film);
-              scroller2.appendChild(card); 
-            }
-        });
-        
-    }
-
-      
-      
-
-
-    </script>
 
     <script>document.write(footer)</script>
   

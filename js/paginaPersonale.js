@@ -110,7 +110,7 @@ function cardOverlayNoButton(film, NonDisponibile = false) {
     }
 
     card.innerHTML += `
-        <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
+        <img class="card-img rounded" style="height: 268px !important;" ${setSrcImgApi(film.poster_path)}>
         <div class=" rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
             <a href="./film_description.html?id=${film.id}" style="color: white; text-align: center;">
                 <h6 class="card-title" style="font-size: small;">
@@ -165,7 +165,7 @@ function cardOverlay(film, price = null) {
 
     //${ }--> consente di prendere il valore della variabile e concatenare testo
     card.innerHTML += `
-    <img class="card-img rounded" style="height: 268px !important;" src="https://www.themoviedb.org/t/p/original${film.poster_path}">
+    <img class="card-img rounded" style="height: 268px !important;" ${setSrcImgApi(film.poster_path)}>
     <div class="rounded" style="background-color: rgba(0, 0, 0, 0.2); text-align: center;">
         <a href="./film_description.html?id=${film.id}" style="color: white; text-align: center;">
             <h6 class="card-title" style="font-size: lighter;">

@@ -12,13 +12,17 @@ function genera_descrizione() {
         //console.log(film);
         //riga Descrizione
         var rigaDescrizione = document.getElementById("rigaDescrizione");
-        rigaDescrizione.style= "background-image: url('https://www.themoviedb.org/t/p/original"+film.poster_path+"'); background-repeat: no-repeat; background-size: cover; background-position: center;";
+        
 
         var col4 = rigaDescrizione.children[0].children[0];
         var col8 = rigaDescrizione.children[0].children[1];
 
         var img = col4.children[0];
-        img.src = "https://www.themoviedb.org/t/p/original"+film.poster_path;
+
+        if (film.poster_path) {
+            rigaDescrizione.style= "background-image: url('https://www.themoviedb.org/t/p/original"+film.poster_path+"'); background-repeat: no-repeat; background-size: cover; background-position: center;";
+            img.src = "https://www.themoviedb.org/t/p/original"+film.poster_path;  
+        }
 
         var title = col8.children[0];
         title.innerHTML = film.original_title;
@@ -223,7 +227,7 @@ function genera_descrizione() {
 
             var logo = document.createElement("img");
             logo.style = "background-color: white; border-radius: 100%; border: 0.1em solid white; width: 3em; height: 3em;";
-            if (film.production_companies[i].logo_path != null) {
+            if (film.production_companies[i].logo_path) {
                 logo.src = "https://www.themoviedb.org/t/p/original"+film.production_companies[i].logo_path;
             }
             div.appendChild(logo);

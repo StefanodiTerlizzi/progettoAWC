@@ -379,7 +379,9 @@ function createCard(film){
             immagine_link.setAttribute("href","./film_description.html?id="+ film.id);
             
             image = document.createElement("img");
-            image.src="https://www.themoviedb.org/t/p/original"+ film.poster_path;
+            if (film.poster_path) {
+                image.src="https://www.themoviedb.org/t/p/original"+ film.poster_path;                
+            }
             image.className = "card-img-top";
             image.style="box-shadow: 8px 8px 15px rgba(120,120,120,0.9);"
 
@@ -693,4 +695,12 @@ function setActiveNavbar() {
 
     }
 
+}
+
+function setSrcImgApi(imgUrl) {
+    if (imgUrl) {
+        return `src='https://www.themoviedb.org/t/p/original${imgUrl}'`;
+    } else {
+        return "alt='we could not find the image'";
+    }
 }
