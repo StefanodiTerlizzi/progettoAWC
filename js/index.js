@@ -27,9 +27,9 @@ function creazionePag(generi){
     }
     });
 
-    // generi non li ha presi così ... riguarda 
     active_user =  getActiveUser();
-    if (active_user) {
+    if (active_user && active_user.privacy) {
+        
 
         generi = (active_user.generi_preferiti).toString()
 

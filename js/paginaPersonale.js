@@ -73,7 +73,8 @@ function getFilms(divToAppend, films, typeCard = "complete", price = false ){
             objIndex = active_user.film_vendita.findIndex(obj => obj.id == film.id)
             prices = {"vendita": active_user.film_vendita[objIndex].prezzoVendita, "noleggio": active_user.film_vendita[objIndex].prezzoNoleggio} 
         }
-     
+        // Mi serve il terzo parametro perchè altrimenti , dato che la richiesta è asincrona , il parametro prezzo che devo inserire 
+        // se sono nel caso complete è sballato per via di tempismi diversi tra il for e la risposta del server. 
         get("https://api.themoviedb.org/3/movie/"+film.id+"?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response, otherParams){
             switch (typeCard) {
                 case "complete":
@@ -743,7 +744,9 @@ function AggiornaAnagrafica() {
             "film_preferiti":   active_user.film_preferiti,
             "generi_preferiti": active_user.generi_preferiti,
             "film_acquistati":  active_user.film_acquistati,
-            "film_noleggiati": active_user.film_noleggiati
+            "film_noleggiati": active_user.film_noleggiati,
+            "privacy": document.getElementById('Privacy').value,
+
         }
 
         objIndex = clienti.findIndex(c => c.email == active_user.email) ;

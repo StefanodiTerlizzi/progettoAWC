@@ -112,7 +112,7 @@ var footer = `
         </div>
     </div>
     <div class="col-md-4"> 
-    <h5 style='font-weight:medium;'>Assistenza</h5>
+    <h5 style='font-weight:medium;margin:0.5em;'>Assistenza</h5>
     <div style = "font-size:15px;">
         <div>Chi siamo</div>
         <div> FAQ </div>
@@ -122,6 +122,7 @@ var footer = `
 </div>
 `;
 
+// scarica lista generi da mettere in ricerca
 function generate_complete_search() {
     //genere search
     get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d", function(response){                
@@ -138,6 +139,7 @@ function generate_complete_search() {
 }
 
 function init() {
+    // hasownproperty: esiste un venditore nel localstorage?
     if (window.localStorage.hasOwnProperty("venditori") && window.localStorage.hasOwnProperty("clienti")) {
         return
     } else {

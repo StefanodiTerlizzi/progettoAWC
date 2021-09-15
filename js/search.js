@@ -1,10 +1,12 @@
-function multiSearchResult(query) {
+function multiSearchResult(query) { // query = parametro della ricerca 
     get("https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query="+query, function(response){                
         //console.log("get response: ", response.results);
 
         for (obj of response.results) {
+            // lista di oggetti che matchano con query chiave .
             //console.log(obj.media_type, obj)
             switch (obj.media_type) {
+                // media_type = movie , person , tvshow;
                 case "movie":
                     document.getElementById("resultsFilms").innerHTML += createFilm(obj)
                     break;
@@ -65,8 +67,8 @@ function createActor(obj) {
     `;
 
     films = obj.known_for.filter(film => film.media_type == "movie") // tiene film con media_type == "movie"
-
-    card += createCarousel(obj.id, films)
+    // arrow function , tipo funzione anonima di java... definita inline . 
+    card += createCarousel(obj.id, films) // films = lista film per cui è conosciuta
     
 
     card += "</div></div></div></div>";
@@ -75,7 +77,7 @@ function createActor(obj) {
 
 function createCarousel(id, films) {
     if (films.length == 0) {
-        return "<p>no films</p>";
+        return "<p>No films</p>";
     }
     var carousel = `
     <div id="carousel${id}" class="carousel slide" data-bs-ride="carousel">
@@ -134,11 +136,9 @@ function createCompany(obj) {
             <div class="col-md-4">
             <div class="card bg-dark text-white">
     `;
-    if (obj.logo_path != null) {
-        card += `<img ${setSrcImgApi(obj.logo_path)} class="card-img">`;
-    } else {
-        card += `<img src="" class="card-img" alt="...">`;
-    }
+   
+        //card += `<img ${setSrcImgApi(obj.logo_path)} class="card-img">`;
+   
     card += `
                 <div class="card-img-overlay">
                     <h5 class="card-title">${obj.name}</h5>
@@ -149,8 +149,10 @@ function createCompany(obj) {
             <div class="card-body">
     `;
 
+
+    // TODO : fare get asincrona e basta ciau cuuuuucciolooo TIAMO 
     var request = new XMLHttpRequest();
-    
+    // filtro per comapgnia i film da scoprire dopo aver trovato la lista di compagnie. 
     request.open('GET', "https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&with_companies="+obj.id, false);  // `false` makes the request synchronous
     
     request.send();

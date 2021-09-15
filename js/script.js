@@ -64,13 +64,15 @@ var data = {
         "film_noleggiati": [    {"id": "420818","data": "2021-09-10T13:43:12.297Z"}, 
                                 {"id": "566525","data": "2021-09-10T13:43:12.297Z"},
                                 {"id": "155","data": "2021-09-13T15:45:42.721Z"}
-                            ]
+                            ],
+
+        "privacy": true , 
     },
     {   "nome": "Luca",
         "cognome":"Colombo",
         "data":"1995-07-03",
-        "telefono":"3465889485",
-        "via":"viale Eupropa",
+        "telefono":"3456557890",
+        "via":"viale Europa",
         "numcivico":"3",
         "citta":"milano",
         "provincia":"milano",
@@ -89,48 +91,14 @@ var data = {
 
         "film_acquistati":  [],
 
-        "film_noleggiati": []
+        "film_noleggiati": [],
+        "privacy": false , 
     },
       
   ]
 }
 
-// TODO: non serve
-var structData = {
-    "venditoreold" : {"nomenegozio": "", "telefono": "", "partitaiva": "", "email": "", "password": "", "portafogli":   {"saldo": 0}, "type": "venditore", "film_vendita" : []},
-    "clienteold" : {"nome": "", "cognome":"" ,"data":"", "telefono":"", "via":"","numcivico":"","citta":"","provincia":"","nazione":"","email":"","password":"","portafogli": {"metodo": "", "saldo": 0}, "type": "cliente"},
-    "venditore" :   {
-                        "nomenegozio": "",
-                        "telefono": "",
-                        "partitaiva": "",
-                        "email": "",
-                        "password": "",
-                        "portafogli":   { "saldo": 0 },
-                        "type": "venditore",
-                        "film_vendita": [],
-                        "recensioni": []
-                    },
 
-    "cliente" :     {
-                        "nome": "",
-                        "cognome":"",
-                        "data":"",
-                        "telefono":"",
-                        "via":"",
-                        "numcivico":"",
-                        "citta":"",
-                        "provincia":"",
-                        "nazione":"",
-                        "email":"",
-                        "password":"",
-                        "portafogli":  { "metodo": "", "saldo": 0 },
-                        "type": "cliente",
-                        "film_preferiti":   [],
-                        "generi_preferiti": [],
-                        "film_acquistati":  [],
-                        "film_noleggiati": []
-                    },
-}
 
 var key = "?api_key=2bb75004dddb3cae50be3c30cc0f551d";
 
@@ -513,15 +481,15 @@ function getActiveUser() {
 function checkparameters_registrazione2(type) {
     var ListToCheck;
 
-    if (type == "Cliente") {
-
+    if (type == "Cliente") { // registrazione 
+        // cose da controllare 
         ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
     
     } else if (type == "Venditore") {
 
         ListToCheck = [document.getElementById('NomeNegozio'), document.getElementById('Telefono'), document.getElementById('PartitaIva'), document.getElementById('email'), document.getElementById('Password'), document.getElementById('ConfermaPassword')]
     
-    } else if (type == "ClienteAggiorna") {
+    } else if (type == "ClienteAggiorna") { // aggiornamento nella pag. personale 
 
         ListToCheck = [document.getElementById('Nome'), document.getElementById('Cognome'), document.getElementById('DataNascita'), document.getElementById('Telefono'), document.getElementById('Via'), document.getElementById('NumeroCivico'), document.getElementById('Citta'), document.getElementById('Provincia'), document.getElementById('Nazione'), document.getElementById('metodoPagamento')]
         if (document.getElementById("PWD").style.display != "none") {
@@ -539,7 +507,7 @@ function checkparameters_registrazione2(type) {
 
     tuttok = true;
 
-    for (item of ListToCheck) {
+    for (item of ListToCheck) {// item è oggetto 
         // rimuove il messaggio di errore
         if (item.nextSibling != null) {
             item.nextSibling.remove();
@@ -578,6 +546,8 @@ function checkparameters_registrazione2(type) {
 }
 
 function controllo2(nome, value){
+    // nome = id ; 
+    // value = valore del div con id = nome ;
 
     //console.log(`controllo2: ${nome} ,  ${value}`);
 
@@ -596,7 +566,7 @@ function controllo2(nome, value){
         if (checkmetodoPagamento(value)) {
             return {msgError: "Looks good!", ok: true}
         } else {
-            return {msgError: "slezionare un metodo di pagamento", ok: false}
+            return {msgError: "Selezionare un metodo di pagamento", ok: false}
         }
 
     } else if (nome == "ConfermaPassword") {
@@ -612,27 +582,15 @@ function controllo2(nome, value){
     
 
     function checkWithRegex(regex, value) {
-        if (value.match(regex)) {
-            return true;
-        } else {
-            return false;
-        }
+      return value.match(regex);
     }
 
     function checkmetodoPagamento(value) {
-        if (value == "CartaDiCredito" || value == "CartaPrepagata") {
-            return true;
-        } else {
-            return false;
-        }
+       return ( value == "CartaDiCredito" || value == "CartaPrepagata" ) ; 
     }
 
     function checkConfermaPassword(value, otherPassword) {
-        if (value == otherPassword) {
-            return true;
-        } else {
-            return false;
-        }
+      return value==otherPassword;
     }
 
 
@@ -677,9 +635,10 @@ function controllo2(nome, value){
 function setActiveNavbar() {
 
     navbarSupportedContent = document.getElementById('navbarSupportedContent');
-    allLink = navbarSupportedContent.getElementsByClassName('nav-link');
+    allLink = navbarSupportedContent.getElementsByClassName('nav-link'); // tutti i figli 
 
     for (Link of allLink) {
+
         if ( (window.location.href).search(Link.href) != -1 ) {
             Link.className = 'nav-link active';
         } else {
@@ -692,6 +651,7 @@ function setActiveNavbar() {
         document.getElementById('LinkAccedi').href = "./signup.html";
     } else {
         document.getElementById('LinkAccedi').href = "#";
+        // non posso accedere;
 
     }
 

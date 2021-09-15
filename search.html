@@ -32,18 +32,21 @@
     <script>document.write(navbar)</script>
 
     
-
+    <div class='container'>
     <!-- content -->
-    <div class="row" id="resultsFilms">
-        <h5>FILMS</h5>
+    <div class="row mt-4" id="resultsFilms">
+        <h3 >Films</h3>
     </div>
-    <div class="row" id="resultsActors">
-        <h5>ACTORS</h5>
+    <div class="row mt-4" id="resultsActors">
+        <h3 >Actors</h3>
     </div>
 
-    <div class="row" id="resultsCompanies">
-        <h5>COMPANIES</h5>
+    <div class="row mt-4" id="resultsCompanies">
+        <h3 >Companies</h3>
     </div>
+
+
+</div>
 
     <script>
         if ( (query = get_from_url("multiSearch=")) != false ) {
@@ -79,46 +82,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
     -->
+
   </body>
 </html>
 
-<!--
- examples
-https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-companies search
-
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_companies=query
-
-
-
-people
-
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&with_people=query
-
-
-anno
-
-
-https://api.themoviedb.org/3/discover/movie?api_key=chiave&sort_by=popularity.desc&year=key
-
-
-examples
-https://api.themoviedb.org/3/search/person?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-https://api.themoviedb.org/3/search/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-https://api.themoviedb.org/3/search/company?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-https://api.themoviedb.org/3/search/collection?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-https://api.themoviedb.org/3/search/keyword?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
-https://api.themoviedb.org/3/search/multi?api_key=2bb75004dddb3cae50be3c30cc0f551d&query=ciao
-
--->

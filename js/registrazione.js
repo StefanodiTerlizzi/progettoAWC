@@ -146,7 +146,7 @@ function createFormElement(elemento, id, nameforjson) {
 function CreateForm2(type) {
   var form = document.getElementById('formRegistrazione')
   if (type == "Cliente") {
-    form.style.display ="";
+    form.style.display =""; 
     form.innerHTML = `
     <div class="mb-3">
         <label class="form-label"><b>Nome:</b></label>
@@ -185,7 +185,7 @@ function CreateForm2(type) {
         <input type="text" id="Nazione" name="nazione" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
-        <label class="form-label"><b>metodoPagamento:</b></label>
+        <label class="form-label"><b>Metodo di Pagamento:</b></label>
         <select id="metodoPagamento" name="metodoPagamento" onchange="checkparameters_registrazione2('${type}')" class="form-control form-select">
             <option selected value="">Scegliere l'opzione</option>
             <option value="CartaDiCredito">carta di credito</option>
@@ -203,6 +203,10 @@ function CreateForm2(type) {
         <label class="form-label"><b>Conferma password:</b></label>
         <input type="password" id="ConfermaPassword" name="conferma_password" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
+    <div class="mb-3">
+    <label class="form-label"><b>Privacy e preferenze:</b></label>
+    <input type="checkbox" id="Privacy" name="privacy" >
+</div>
     <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2('${type}')">Invia</button>
     `;
   } else if (type == "Venditore") {
@@ -240,27 +244,7 @@ function CreateForm2(type) {
   }
 }
 
-// TODO: sostituita registrazione() con registrazione2()
-function registrazione() {  
-  var select = document.getElementById("typeRegistrazione").value;
-  if ( select == "Venditore") {
-    venditori = window.localStorage.getItem("venditori");
-   // console.log(venditori);
-    venditori = JSON.parse(venditori);
-   //aggiungo al local storage la lista con il nuovo contatto 
-    venditori.push(structData.venditore);
-   // console.log(structData.venditore);
-    window.localStorage.setItem("venditori", JSON.stringify(venditori));
-    window.localStorage.setItem("active_user",JSON.stringify(structData.venditore));
-  } else {
-    clienti = window.localStorage.getItem("clienti");
-    clienti = JSON.parse(clienti);
-    clienti.push(structData.cliente);
-    window.localStorage.setItem("clienti", JSON.stringify(clienti));
-    window.localStorage.setItem("active_user",JSON.stringify(structData.cliente));
-  }  
 
-}
 
 function sfondo_reg(){
   scroller=document.getElementById('scroller_reg');
@@ -319,7 +303,8 @@ function Registrazione2(type) {
             "film_preferiti":   [],
             "generi_preferiti": [],
             "film_acquistati":  [],
-            "film_noleggiati": []
+            "film_noleggiati": [],
+            "privacy": document.getElementById('Privacy').checked,
         }
         
 
