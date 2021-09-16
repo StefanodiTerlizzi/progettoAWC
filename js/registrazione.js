@@ -204,9 +204,9 @@ function CreateForm2(type) {
         <input type="password" id="ConfermaPassword" name="conferma_password" onchange="checkparameters_registrazione2('${type}')" class="form-control">
     </div>
     <div class="mb-3">
-    <label class="form-label"><b>Privacy e preferenze:</b></label>
-    <input type="checkbox" id="Privacy" name="privacy" >
-</div>
+        <input class="form-check-input" type="checkbox" id="Privacy" onchange="checkparameters_registrazione2('${type}')">
+        <label class="form-check-label" for="Privacy">Privacy e preferenze</label>
+    </div>
     <button class="btn btn-primary" id="submit_registrazione" disabled="" onclick="Registrazione2('${type}')">Invia</button>
     `;
   } else if (type == "Venditore") {

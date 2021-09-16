@@ -619,6 +619,11 @@ function createCliente2(cliente) {
         <input class="form-control" type="text" id="saldo" value="${cliente.portafogli.saldo}" readonly>
     </div>
 
+    <div class="mb-3">
+        <input class="form-check-input" type="checkbox" id="Privacy" onchange="checkparameters_registrazione2('ClienteAggiorna')" ${(cliente.privacy) ? 'checked' : ''} >
+        <label class="form-check-label" for="Privacy">Privacy e preferenze</label>
+    </div>
+
     <div style="margin-bottom: 1em;">
         <button type="button" onclick="cambiaPassword('Cliente')" class="btn btn-outline-light">Cambia Password</button>
     </div>
@@ -745,7 +750,7 @@ function AggiornaAnagrafica() {
             "generi_preferiti": active_user.generi_preferiti,
             "film_acquistati":  active_user.film_acquistati,
             "film_noleggiati": active_user.film_noleggiati,
-            "privacy": document.getElementById('Privacy').value,
+            "privacy": document.getElementById('Privacy').checked,
 
         }
 
