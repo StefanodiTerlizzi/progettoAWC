@@ -646,12 +646,13 @@ function setActiveNavbar() {
         }
     }
 
-    active_user = getActiveUser()
-    if (active_user == null) {
-        document.getElementById('LinkAccedi').href = "./signup.html";
-    } else {
+    if ( getActiveUser() ) {
         document.getElementById('LinkAccedi').href = "#";
-        // non posso accedere;
+        document.getElementById("Logout_Btn").disabled = false;
+
+    } else {
+        document.getElementById('LinkAccedi').href = "./signup.html";
+        document.getElementById("Logout_Btn").disabled = true;
 
     }
 
@@ -676,4 +677,28 @@ function Rating(voto) {
             Label.className = "deactive_rating"
         }
     }
+}
+
+function sfondo(){
+    sfondo = document.getElementsByTagName("body")[0]; 
+    get("https://api.themoviedb.org/3/discover/movie?api_key=2bb75004dddb3cae50be3c30cc0f551d&sort_by=popularity.desc&include_adult=true&include_video=false", function(response){
+        var immagini = [];
+        len = response.results.length;
+        for ( i = 0 ; i<response.results.length; i++){
+            if (response.results[i].backdrop_path) {
+                immagini.push("https://www.themoviedb.org/t/p/original"+response.results[i].backdrop_path);
+            }
+        }
+        
+        num =  getRandomInt(len);
+        
+        sfondo.background = immagini[num];
+        sfondo.className = 'background_100'
+
+    });
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+      
 }

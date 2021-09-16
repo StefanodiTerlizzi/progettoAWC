@@ -2,7 +2,7 @@ var navbar = `
 <script>
 init()
 </script>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="./index.html"><i class="fas fa-home"></i></a>
@@ -29,7 +29,7 @@ init()
                 </li>
             </ul>
             <div class="d-flex mx-auto"></div>
-            <button id='submit_logout' onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+            <button id="Logout_Btn" type="button" class="btn btn-danger" disabled onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
 </nav>
@@ -88,8 +88,9 @@ generate_complete_search()
 
 
 var footer = `
-<div style='margin:2em;border-top:2px solid gray;'class="row">
-    <div class="col-md-4" style ="margin-top:1em; margin-bottom:2em; color:#c1c1c1">
+<div class="row bg-dark mt-auto p-5">
+
+    <div class="col-md-4" style ="color:#c1c1c1">
         <h5 style='font-weight: medium;'>Metodi di pagamento</h5>
             <div style = "font-size:30px;">
             <i class="fab fa-cc-visa"></i>
@@ -103,7 +104,7 @@ var footer = `
             <i class="fab fa-cc-discover"></i>
             </div>
     </div>
-    <div class="col-md-4" style ="margin-top:1em; margin-bottom:2em; color:#c1c1c1">
+    <div class="col-md-4" style =" color:#c1c1c1">
         <h5 style='font-weight: medium;'>Guarda su</h5>
         <div style = "font-size:30px;">
             <i class="fas fa-laptop"></i>
@@ -113,13 +114,14 @@ var footer = `
         </div>
     </div>
     <div class="col-md-4"> 
-    <h5 style='font-weight:medium;margin:0.5em;'>Assistenza</h5>
-    <div style = "font-size:15px;">
-        <div>Chi siamo</div>
-        <div> FAQ </div>
-        <div> Contatti </div>
+        <h5 style='font-weight:medium;margin:0.5em;'>Assistenza</h5>
+        <div style = "font-size:15px;">
+            <div>Chi siamo</div>
+            <div> FAQ </div>
+            <div> Contatti </div>
+        </div>
     </div>
-    </div>
+
 </div>
 `;
 
@@ -157,3 +159,4 @@ function logout() {
         window.location.assign('./signup.html');
     }
 }
+

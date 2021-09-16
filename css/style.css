@@ -364,3 +364,19 @@
 	color: yellow;
 	cursor: pointer;
 }
+
+.background_100 {
+ background-repeat:no-repeat;
+ background-size:cover;
+ background-position:center;
+ background-color:rgba(0,0,0,0.5);
+}
+
+.form_login {
+  margin:5em;
+  width:20em;
+  background-color:rgba(213, 203, 203, 0.85);
+  padding:2em;
+  border-radius: 2em;
+  color:black;
+}
