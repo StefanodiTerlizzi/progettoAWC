@@ -245,7 +245,6 @@
   transition: .2s;
  }
  #Elimina_Account {
-  border-radius: 5em;
   border: #524f4e;
   display: inline-block;
   box-shadow: 0 8px 15px rgba(0,0,0,.1);
@@ -393,4 +392,8 @@ body {
 
 .padding_index {
   padding-top: 60px;
+}
+
+.rounded-btn {
+  border-radius: 5em;
 }

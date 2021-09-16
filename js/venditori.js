@@ -16,7 +16,7 @@ function elencoVenditori() {
                     totale film in vendita: ${venditore.film_vendita.length}<br>
                     media voti: ${MediaVotoRecensioni(venditore.recensioni)}<br>
                 </p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalFullscreen" onclick="compilaModal('${venditore.email}')">Dettagli</button>
+                <button type="button" class="btn btn-primary rounded-btn" data-bs-toggle="modal" data-bs-target="#ModalFullscreen" onclick="compilaModal('${venditore.email}')">Dettagli</button>
             </div>
         </div>
         `; 

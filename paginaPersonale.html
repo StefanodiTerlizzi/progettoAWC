@@ -37,7 +37,7 @@
             <div class="modal-content bg-dark text-white">
                 <div class="modal-header" style="border-bottom: 0px;">
                     <h3 class="modal-title" id="PriceModalLabel">Aggiornamento Prezzi</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
+                    <button type="button" class="btn-close btn-close-white rounded-btn" data-bs-dismiss="modal" aria-label="Close" ></button>
                 </div>
                 <div class="modal-body">
                   <div class='prezzo'>
@@ -49,7 +49,7 @@
                     <label>New price : </label>
                     <input type="number" id="newPriceVendita" min="0">
                     <br>
-                    <button onclick="modificaPrezzoVendita(document.getElementById('idFilm').value, document.getElementById('newPriceVendita').value)">Aggiorna prezzo di vendita</button>
+                    <button class="rounded-btn" onclick="modificaPrezzoVendita(document.getElementById('idFilm').value, document.getElementById('newPriceVendita').value)">Aggiorna prezzo di vendita</button>
                   </div>
                   <div class='prezzo'>
                     <h5>Prezzo di noleggio</h3>
@@ -59,7 +59,7 @@
                     <label>New price : </label>
                     <input type="number" id="newPriceNoleggio" min="0">
                     <br>
-                    <button onclick="modificaPrezzoNoleggio(document.getElementById('idFilm').value, document.getElementById('newPriceNoleggio').value)">Aggiorna prezzo di noleggio</button>
+                    <button class="rounded-btn" onclick="modificaPrezzoNoleggio(document.getElementById('idFilm').value, document.getElementById('newPriceNoleggio').value)">Aggiorna prezzo di noleggio</button>
                   </div>
                   
                 </div>
@@ -90,7 +90,7 @@
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti">Preferenze e Privacy</h5>
                     <!-- javascript -->
                     <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
-                        <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" id='GeneriPreferiti' aria-label="Basic checkbox toggle button group">
+                        <div style='white-space: nowrap'  class="align-top overflow-auto m-3 pb-3" role="group" id='GeneriPreferiti' aria-label="Basic checkbox toggle button group">
 
                         </div>
               </div>
@@ -177,7 +177,7 @@
                   si ricaricano gli utenti e risulta come se non lo avessi davvero eliminato ma solo fatto Logout
                 -->
               <form action="./signup.html">
-              <button id='Elimina_Account' type="submit" class="btn btn-danger" href='./signup.html' onclick="elimina_account()">Elimina Account</button>
+              <button id='Elimina_Account' type="submit" class="btn btn-danger rounded-btn" href='./signup.html' onclick="elimina_account()">Elimina Account</button>
             </form>
               </div>
           </div>

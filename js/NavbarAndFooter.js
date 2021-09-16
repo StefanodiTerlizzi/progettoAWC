@@ -29,7 +29,7 @@ init()
                 </li>
             </ul>
             <div class="d-flex mx-auto"></div>
-            <button id="Logout_Btn" type="button" class="btn btn-danger" disabled onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
+            <button id="Logout_Btn" type="button" class="btn btn-danger rounded-btn" disabled onclick="logout()">Logout <i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
 </nav>

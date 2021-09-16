@@ -526,11 +526,11 @@ function createVenditore2(venditore) {
     </div>
 
     <div style="margin-bottom: 1em;">
-        <button type="button" onclick="cambiaPassword('Venditore')" class="btn btn-outline-light">Cambia Password</button>
+        <button type="button" onclick="cambiaPassword('Venditore')" class="btn btn-outline-light rounded-btn">Cambia Password</button>
     </div>
 
     <div style="margin-bottom: 1em;">
-        <button type="button" onclick="nascondiPassword('Venditore')" class="btn btn-outline-light">Nascondi Password</button>
+        <button type="button" onclick="nascondiPassword('Venditore')" class="btn btn-outline-light rounded-btn">Nascondi Password</button>
     </div>
         
     <div id="PWD" style="display: none;">
@@ -546,7 +546,7 @@ function createVenditore2(venditore) {
     <a>
         <button id="submit_registrazione" disabled="" onclick="AggiornaAnagrafica()">Aggiorna</button>
     </a>
-    <button type="button" id="Elimina_Account" style="width: 150px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
+    <button type="button" id="Elimina_Account" style="width: 150px !important;" class="rounded-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
     `;
 }
 
@@ -625,11 +625,11 @@ function createCliente2(cliente) {
     </div>
 
     <div style="margin-bottom: 1em;">
-        <button type="button" onclick="cambiaPassword('Cliente')" class="btn btn-outline-light">Cambia Password</button>
+        <button type="button" onclick="cambiaPassword('Cliente')" class="btn btn-outline-light rounded-btn">Cambia Password</button>
     </div>
 
     <div style="margin-bottom: 1em;">
-        <button type="button" onclick="nascondiPassword('Cliente')" class="btn btn-outline-light">Nascondi Password</button>
+        <button type="button" onclick="nascondiPassword('Cliente')" class="btn btn-outline-light rounded-btn">Nascondi Password</button>
     </div>
     
     <div id="PWD" style="display: none;">
@@ -645,7 +645,7 @@ function createCliente2(cliente) {
     <a>
         <button id="submit_registrazione" disabled="" onclick="AggiornaAnagrafica()">Aggiorna</button>
     </a>
-    <button type="button" id="Elimina_Account" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
+    <button type="button" id="Elimina_Account" class="rounded-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Elimina Account</button>
     `;
 }
 
@@ -975,22 +975,18 @@ function getGeneri() {
             if ( active_user.generi_preferiti.includes(genere.id) ) {
                 //check attivo
                 divToAppend.innerHTML += `
-                <input type="checkbox" checked class="btn-check" id="${genere.id}">
+                <input type="checkbox" checked class="btn-check" id="${genere.id}" onchange="GestisciGeneri()">
                 <label class="btn btn-outline-secondary mr-1" for="${genere.id}">${genere.name}</label>
                 `;
             } else {
                 //check disattivo
                 divToAppend.innerHTML += `
-                <input type="checkbox" class="btn-check" id="${genere.id}">
+                <input type="checkbox" class="btn-check" id="${genere.id}" onchange="GestisciGeneri()">
                 <label class="btn btn-outline-secondary mr-1" for="${genere.id}">${genere.name}</label>
                 `;
             }
         }
-
-        divToAppend.innerHTML += `
-        <button class="btn btn-primary" onclick="GestisciGeneri()" style="margin-top: 0.5em; float: left;">invia</button>
-        `;
-
+        
     });
 
 }
@@ -1005,6 +1001,9 @@ function GestisciGeneri() {
     for (input of allInput) {
         if (input.checked) {
             array_generi_scelti.push(Number(input.id));
+            document.getElementById(input.id).checked = true;
+        } else {
+            document.getElementById(input.id).checked = false;
         }
     }
 
@@ -1021,7 +1020,6 @@ function GestisciGeneri() {
     //carico nel localStorage + reload pagina
     window.localStorage.setItem('active_user',JSON.stringify(active_user));
     window.localStorage.setItem('clienti',JSON.stringify(clienti));
-    window.location.reload();
 
 }
 
