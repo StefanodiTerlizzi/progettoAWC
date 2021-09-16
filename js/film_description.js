@@ -2,6 +2,7 @@ function genera_descrizione() {
     id = get_from_url("id="); // id da usare nella richiesta per ottenere info del film da descrivere
 
     active_user = getActiveUser();
+
     if (active_user != null && active_user.type == "cliente" ) {
         document.getElementById("Review").style.display = "";
     }
@@ -86,6 +87,8 @@ function genera_descrizione() {
 
 
         //coding
+        active_user = JSON.parse(active_user);
+        
         if (active_user != null) {
             if (active_user.type == "venditore") {
 
@@ -110,6 +113,7 @@ function genera_descrizione() {
                 bottoni ='';
 
                 found = active_user.film_preferiti.find(film => film.id == id)
+
 
                 if (found != undefined) {
                     bottoni += `
