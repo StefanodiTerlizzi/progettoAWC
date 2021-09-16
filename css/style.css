@@ -380,3 +380,9 @@
   border-radius: 2em;
   color:black;
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
