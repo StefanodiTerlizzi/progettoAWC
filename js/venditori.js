@@ -118,29 +118,22 @@ function compilaModal(emailVenditore) {
                     <div class="col-sm-11">
                     <input id="rating" type="hidden"/>
 
-                    <div class="rate">
-                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                    <input type="radio" onclick="document.getElementById('rating')=this.value " id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
+
+                    <div class="rating" id="stars">
+
+                        <input name="stars" id="5" type="radio" value="5" onclick="Rating(this.value)" >
+                        <label class="deactive_rating" for="5">★</label>
+                        <input name="stars" id="4" type="radio" value="4" onclick="Rating(this.value)">
+                        <label class="deactive_rating" for="4">★</label>
+                        <input name="stars" id="3" type="radio" value="3" onclick="Rating(this.value)">
+                        <label class="deactive_rating" for="3">★</label>
+                        <input name="stars" id="2" type="radio" value="2" onclick="Rating(this.value)">
+                        <label class="deactive_rating" for="2">★</label>
+                        <input name="stars" id="1" type="radio" value="1" onclick="Rating(this.value)">
+                        <label class="deactive_rating" for="1">★</label>
+                        
                     </div>
-    
-                    <input class="form-check-input" name="rating" type="radio" id="rate1" value=1 onclick="document.getElementById('rating').value = this.value" /> 
-                    <label for="rate1">1</label>
-                    <input class="form-check-input" name="rating" type="radio" id="rate2" value=2 onclick="document.getElementById('rating').value = this.value" /> 
-                    <label for="rate2">2</label>
-                    <input class="form-check-input" name="rating" type="radio" id="rate3" value=3 onclick="document.getElementById('rating').value = this.value" /> 
-                    <label for="rate3">3</label>
-                    <input class="form-check-input" name="rating" type="radio" id="rate4" value=4 onclick="document.getElementById('rating').value = this.value" /> 
-                    <label for="rate4">4</label>
-                    <input class="form-check-input" name="rating" type="radio" id="rate5" value=5 onclick="document.getElementById('rating').value = this.value" /> 
-                    <label for="rate5">5</label>
+
                     </div>
                 </div>
                 
@@ -201,13 +194,9 @@ function InviaRecensioneVenditore(emailAutore, emailNegozio) {
     index = venditori.findIndex(venditore => venditore.email === emailNegozio);
     venditori[index].recensioni.push(recensione)
 
-//    console.log("voto", voto)
-//    console.log("titolo", titolo)
-//    console.log("contenuto",contenuto)
-//    console.log("emailAutore",emailAutore)
-//    console.log("data", new Date())
-//    console.log("emailNegozio",emailNegozio)
-
     window.localStorage.setItem("venditori", JSON.stringify(venditori));
 
+    alert(`Grazie per aver recensito ${ venditori[index].nomenegozio}`)
+
 }
+

@@ -664,3 +664,16 @@ function setSrcImgApi(imgUrl) {
         return "alt='we could not find the image'";
     }
 }
+
+function Rating(voto) {
+    document.getElementById('rating').value = voto;
+    s = document.getElementById("stars")
+    AllLabel = s.getElementsByTagName("label")
+    for (Label of AllLabel) {
+        if (Number(Label.attributes.for.value) <= voto) {
+            Label.className = "active_rating"
+        } else {
+            Label.className = "deactive_rating"
+        }
+    }
+}

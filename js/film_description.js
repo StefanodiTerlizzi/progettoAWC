@@ -394,6 +394,7 @@ function RatingFilm() {
                 } else {
                     alert("mi dispiace c'è stato un problema, riprova");
                 }
+                window.location.reload();
                 //console.log("post response", xhr.response);
                 //console.log("post status: ", xhr.status);
 
@@ -407,5 +408,7 @@ function RatingFilm() {
             //window.location.reload();
         });
     }
+
+    
     
 }
