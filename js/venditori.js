@@ -141,7 +141,7 @@ function compilaModal(emailVenditore) {
                 <div class="mb-3 row">
                     <label for="titolo" class="col-sm-1 col-form-label">Titolo : </label>
                     <div class="col-sm-11">
-                    <input type="text" class="form-control" id="titolo">
+                    <input type="text" class="form-control" class="titolo">
                     </div>
                 </div>
 

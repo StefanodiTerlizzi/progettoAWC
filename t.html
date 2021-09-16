@@ -28,52 +28,42 @@
 
 
     <title>Registrazione</title>
-    <style>
-        #formRegistrazione input {
-            border-radius: 1.5em;
-        }
-    </style>
 
 </head>
 
-<body onload='sfondo_reg()'>
+<body>
     <!-- navigation -->
     <script>
         document.write(navbar)
         
     </script>
 
+<nav id="navbar-example2" class="ps-3 pe-3 navbar navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="#fat">@fat</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#mdo">@mdo</a>
+        </li>
+        </ul>
+    </div>
+</nav>
 
-        <div class="mb-3">
-            <label class="form-label"><b>Nome del Negozio:</b></label>
-            <input type="text" id="NomeNegozio" onchange="checkparameters_registrazione()" class="form-control">
+<div class="container-fluid p-5 bg-black">
+    <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+        
+        <div class="padding_index" id="fat">
+
         </div>
-        <div class="mb-3">
-            <label class="form-label"><b>Telefono:</b></label>
-            <input type="text" id="Telefono" onchange="checkparameters_registrazione()" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><b>Partita Iva:</b></label>
-            <input type="text" id="PartitaIva" onchange="checkparameters_registrazione()" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><b>email:</b></label>
-            <input type="email" id="email" onchange="checkparameters_registrazione()" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><b>Password:</b></label>
-            <input type="password" id="Password" onchange="checkparameters_registrazione()" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label class="form-label"><b>Conferma password:</b></label>
-            <input type="password" id="ConfermaPassword" onchange="checkparameters_registrazione()" class="form-control">
+        <div class="padding_index" id="mdo">
+
         </div>
 
-
-
-
-
-
+    </div>
+</div>
 
 
     <!-- footer -->

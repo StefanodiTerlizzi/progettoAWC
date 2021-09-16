@@ -1,4 +1,4 @@
-#titolo {width:150px;margin:5px;}
+.titolo {width:150px;margin:5px;}
 #immagine { border-radius:15px; width:150px;}
   #overlay {
     position: fixed; /* Sit on top of the page content */
@@ -32,11 +32,8 @@
   background: white;
   transition: .2s;
   }
-  body{
-    background-color: black!important;
-    color:white!important;
-    font-weight: lighter!important;
-  }
+
+
   #submit_login:hover  , #submit_registrazione:hover  {
   box-shadow: 0 8px 15px rgba(120,120,120,0.9);
   color:white;
@@ -385,4 +382,15 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: rgb(20, 20, 20)!important;
+  color:white!important;
+  font-weight: lighter!important;
+}
+
+.bg-black {
+  background-color: #111;
+}
+
+.padding_index {
+  padding-top: 60px;
 }

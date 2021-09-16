@@ -86,83 +86,13 @@
 
             </div>
             <div class="col-md-8" id="funzionalità">
-              <div id="completa_account" class="border border-dark rounded" style="display: none; background-color: black; color:white;">
+              <div id="completa_account" class="border border-dark rounded bg-black" style="display: none; color:white;">
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti">Preferenze e Privacy</h5>
                     <!-- javascript -->
                     <h7 style='font-weight: lighter; margin:1em;'>Scegli i generi che preferisci :</h7>
                         <div style='margin:1em;white-space: nowrap'  class="align-top overflow-auto" role="group" id='GeneriPreferiti' aria-label="Basic checkbox toggle button group">
 
                         </div>
-                        <!---->
-                        <script>
-                          act = JSON.parse(window.localStorage.getItem('active_user'));
-                          //console.log(act);
-                          var array_generi=[];
-                          // TODO: rifatti nel js, eliminare
-                          function scegli_genere_preferenze(){
-                            form = document.getElementById('completa_account_form');
-                            get("https://api.themoviedb.org/3/genre/movie/list?api_key=2bb75004dddb3cae50be3c30cc0f551d&language=en-US", function(response){
-                              // console.log(response);
-                              
-                              for ( i=0; i<response.genres.length ; i++){
-                                generi = response.genres[i];
-                                array_generi.push(generi.id);   
-                              // array_generi[i]=  new Array();
-                                input = document.createElement('input');
-                              
-                                input.setAttribute('name',generi.name);
-                                input.setAttribute('type',"checkbox");
-                                input.className='btn-check';
-                                input.setAttribute('id',generi.id);
-                                label = document.createElement('label');
-                                label.style='margin-right:0.2em!important; ';
-
-                                label.className='btn btn-outline-secondary';
-                                label.setAttribute('for',generi.id);
-                                label.innerHTML=generi.name;
-                                form.appendChild(input);
-                                form.appendChild(label);
-                              }
-                              button = document.createElement('input');
-                              button.setAttribute('type','submit');
-                              button.className='btn btn-primary';
-                              button.innerHTML='Invia';
-                              button.style='margin-top:0.5em;float:left';
-                              button.setAttribute('onclick','gestisci_generi_preferiti()');
-                              form.appendChild(button);
-
-                          
-                              });
-                              
-                              
-                          }
-
-                          function gestisci_generi_preferiti(){
-
-                            var array_generi_scelti =[];
-                            //console.log(array_generi);
-
-                              for (i=0 ; i<array_generi.length; i++ ){
-                                  // console.log(array_generi[i]);
-                                  if(document.getElementById(array_generi[i]).checked){
-                                    array_generi_scelti.push(array_generi[i]);
-                                  }
-                              }
-                            //   window.localStorage.getItem('clienti')
-                              //console.log(array_generi_scelti);
-                              active_user=JSON.parse(window.localStorage.getItem('active_user'));
-                              clienti=JSON.parse(window.localStorage.getItem('clienti'));
-                              active_user.generi_preferiti=array_generi_scelti;
-                              
-                              objIndex = clienti.findIndex(obj => obj.email == active_user.email) ;
-                              clienti[objIndex] = active_user;
-
-                              window.localStorage.setItem('active_user',JSON.stringify(active_user));
-                              window.localStorage.setItem('clienti',JSON.stringify(clienti));
-                              window.location.reload();
-                            }
-
-                        </script>
               </div>
               <!--statistiche-->
               <div class="accordion accordion-flush text-dark" id="Statistiche" style="display: none;">
@@ -188,7 +118,7 @@
               </div>
               <!--ststistiche-->
 
-              <div id = "div_film_venduti" class="border border-dark rounded" style="display: none; background-color: rgb(0, 0, 0); color:white">
+              <div id = "div_film_venduti" class="border border-dark rounded bg-black" style="display: none; color:white">
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;'id="venduti"> Film in vendita</h5>
                   <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">
                     <button type="button" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
@@ -196,26 +126,27 @@
               </div>
               
               
-              <div id = "div_film_preferiti" class="border border-dark rounded" style="display: none; background-color: black; color:white">
+              <div id = "div_film_preferiti" class="border border-dark rounded bg-black" style="display: none; color:white">
                 <h5 style='margin-left:0.4em;margin-top:0.3em;font-weight: lighter;' id="venduti"> Film Preferiti</h5>
-                    <button style='display:block;margin-left:0,5em' type="button" onclick="alert('link a pagina ricerca')" id='aggiungibutton'><a href="index.html" style='text-decoration: none;color:black'><i class="fas fa-plus"></i> Aggiungi un film</a> </button>
-
+                <a class="nav-link" href="#" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#SearchModal">
+                  <button type="button" id='aggiungibutton'><i class="fas fa-plus"></i> Aggiungi un film</button>
+                </a>
               </div> 
               
 
-              <div id='rowStoricoAcquisti' class="border-dark rounded border" style="display: none; background-color: black; color:white">
+              <div id='rowStoricoAcquisti' class="border-dark rounded border bg-black" style="display: none; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Film Acquistati</h5>
               </div>
 
-              <div id='rowStoricoNoleggi' class="border-dark rounded border" style="display: none; background-color: black; color:white">
+              <div id='rowStoricoNoleggi' class="border-dark rounded border bg-black" style="display: none; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Storico Noleggi</h5>
               </div>
 
-              <div id='rowNoleggiAttivi' class="border-dark rounded border" style="display: none; background-color: black; color:white">
+              <div id='rowNoleggiAttivi' class="border-dark rounded border bg-black" style="display: none; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Noleggi Attivi</h5>
               </div>
 
-              <div id='Recensioni' class="border-dark rounded border" style="display: none; background-color: black; color:white">
+              <div id='Recensioni' class="border-dark rounded border bg-black" style="display: none; color:white">
                 <h5 style="margin-left:0.4em;margin-top:0.3em;font-weight: lighter;">Recensioni</h5>
                 <script>
                   active_user = getActiveUser();
