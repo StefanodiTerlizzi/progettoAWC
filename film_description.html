@@ -34,7 +34,7 @@
     <!-- navigation -->
     <script>document.write(navbar)</script>
 
-    <div class="alert alert-primary" role="alert" id="inserisciPrezzo" style="display: none; width:100%;">
+    <div class="alert bg-dark text-dark" role="alert" id="inserisciPrezzo" style="display: none; width:100%;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">
@@ -102,8 +102,7 @@
                                             <label class="deactive_rating" for="8">★</label>
                                             <input name="stars" id="7" type="radio" value="7" onclick="Rating(this.value)" >
                                             <label class="deactive_rating" for="7">★</label>
-                                            <input name="stars" id="6" type="radio" value="6" onclick="Rating(this.value)" >
-                                            <label class="deactive_rating" for="6">★</label>
+                                          
                                             <input name="stars" id="6" type="radio" value="6" onclick="Rating(this.value)" >
                                             <label class="deactive_rating" for="6">★</label>
                                             <input name="stars" id="5" type="radio" value="5" onclick="Rating(this.value)" >
@@ -190,7 +189,7 @@
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content bg-dark text-white">
                                 <div class="modal-header" style="border-bottom: 0px;">
-                                    <h5 class="modal-title" id="NegoziModalLabel">negozi</h5>
+                                    <h5 class="modal-title" id="NegoziModalLabel">Negozi</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="elencoNegozi">
@@ -209,7 +208,8 @@
             
         </div>
 
-        <div class="row" id="rigaCorrelati" ><!-- correlati -->
+        <div class="row" id="rigaCorrelati" >
+            <!-- correlati -->
             <div id="scroller_film_correlati" class="align-top overflow-auto" style="white-space: nowrap" >
             </div>
         </div>

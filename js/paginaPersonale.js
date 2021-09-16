@@ -945,9 +945,9 @@ function attivaElementiPagina() {
 
     active_user = getActiveUser();
     listID = []; //Id da attivare
-    
+    console.log(active_user);
     if (active_user == null) {
-    document.getElementById('row1').display='none';
+    document.getElementById('row1').style.display='none';
     listID = ["errorLogin"]
     } else if (active_user.type == "venditore") {
     listID = ["Statistiche", "div_film_venduti", "Recensioni"]

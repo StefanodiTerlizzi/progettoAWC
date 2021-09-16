@@ -341,7 +341,7 @@ function createCard(film){
 
     card = document.createElement("div");
             card.className = "card";
-            card.style = "width: 18rem; margin:2em; display:inline-block; background-color: rgb(0,0,0)";
+            card.style = "width: 18rem; margin:2em; display:inline-block; background-color: rgb(20, 20, 20)!important";
 
             immagine_link = document.createElement("a");
             immagine_link.setAttribute("href","./film_description.html?id="+ film.id);
@@ -351,7 +351,7 @@ function createCard(film){
                 image.src="https://www.themoviedb.org/t/p/original"+ film.poster_path;                
             }
             image.className = "card-img-top";
-            image.style="box-shadow: 8px 8px 15px rgba(120,120,120,0.9);"
+            image.style="box-shadow: 6px 6px 10px rgba(120,120,120,0.9);"
 
             immagine_link.appendChild(image);
           

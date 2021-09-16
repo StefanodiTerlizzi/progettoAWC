@@ -206,10 +206,10 @@ function genera_descrizione() {
                         ${venditore.nomenegozio}
                     </div>
                     <div class="card-body">
-                        <p class="card-text">prezzo di vendita: ${venditore.film_vendita[index].prezzoVendita}</p>
+                        <p class="card-text">Prezzo di vendita: ${venditore.film_vendita[index].prezzoVendita}</p>
                         <button class="btn btn-primary rounded-btn" onclick="AcquistaFilm(JSON.parse(window.localStorage.getItem('active_user')).email, '${venditore.email}', '${id}', ${venditore.film_vendita[index].prezzoVendita})">Compra</button>
-                        <p class="card-text">prezzo di noleggio: ${venditore.film_vendita[index].prezzoNoleggio}</p>
-                        <a href="#" class="btn btn-primary" onclick="NoleggiaFilm(JSON.parse(window.localStorage.getItem('active_user')).email, '${venditore.email}', '${id}', ${venditore.film_vendita[index].prezzoNoleggio})">Noleggia</a>
+                        <p class="card-text mt-2">Prezzo di noleggio: ${venditore.film_vendita[index].prezzoNoleggio}</p>
+                        <a href="#" class="btn btn-primary rounded-btn" onclick="NoleggiaFilm(JSON.parse(window.localStorage.getItem('active_user')).email, '${venditore.email}', '${id}', ${venditore.film_vendita[index].prezzoNoleggio})">Noleggia</a>
                     </div>
                 </div>
                 `;
