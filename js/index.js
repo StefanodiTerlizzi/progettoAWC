@@ -28,8 +28,11 @@ function creazionePag(generi){
     });
 
     active_user =  getActiveUser();
+
     if (active_user && active_user.privacy) {
         
+        document.getElementById("film_scelti_per_te").style.display = ""; 
+        document.getElementById("link-film_scelti_per_te").style.display = ""; 
 
         generi = (active_user.generi_preferiti).toString()
 
@@ -41,8 +44,12 @@ function creazionePag(generi){
                 card = createCard(film);
                 scroller2.appendChild(card); 
             }
-
+            
         });
 
+    } else {
+        document.getElementById("film_scelti_per_te").style.display = "none"; 
+        document.getElementById("link-film_scelti_per_te").style.display = "none"; 
     }
+
 }

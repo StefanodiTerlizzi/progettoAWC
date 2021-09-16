@@ -42,7 +42,7 @@ navbar += `
     <div class="modal-dialog modal-xl">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header" style="border-bottom: 0px;">
-                <h5 class="modal-title" id="SearchModalLabel">Complete search</h5>
+                <h5 class="modal-title" id="SearchModalLabel">Search</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div class="modal-body">
